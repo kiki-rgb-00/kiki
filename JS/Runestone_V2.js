@@ -430,7 +430,7 @@ function main(config) {
   fixed["proxy-groups"].push({
     "name": "WhatsApp",
     "type": "select",
-    "icon": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/WhatsApp.png",
+    "icon": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/WhatsApp.svg",
     "proxies": [
       "🖥️ All-Nodes",
       "PROXY-Gate",
