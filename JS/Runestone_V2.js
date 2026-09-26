@@ -365,7 +365,7 @@ function main(config) {
   fixed["proxy-groups"].push({
     "name": "Google",
     "type": "select",
-    "icon": "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Google.png",
+    "icon": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/Google.PNG",
     "proxies": [
       "🖥️ All-Nodes",
       "PROXY-Gate",
