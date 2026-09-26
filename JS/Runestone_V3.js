@@ -249,7 +249,7 @@ function main(config) {
   fixed["proxy-groups"].push({
     "name": "X",
     "type": "select",
-    "icon": "https://fastly.jsdelivr.net/gh/shindgewongxj/WHATSINStash/icon/x.png",
+    "icon": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/X.png",
     "proxies": [
       "🖥️ All-Nodes",
       "PROXY-Gate",
