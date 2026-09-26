@@ -238,7 +238,7 @@ function main(config) {
   fixed["proxy-groups"].push({
     "name": "Apple",
     "type": "select",
-    "icon": "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Apple.png",
+    "icon": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_2.png",
     "proxies": [
       "🖥️ All-Nodes",
       "PROXY-Gate",
