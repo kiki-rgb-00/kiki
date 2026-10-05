@@ -1,5 +1,5 @@
 /*
- * 服务分类配置｜Hako版
+ * 完整配置脚本
  *
  * Hako 会将当前选中的多个节点来源合并到 config.proxies。
  * 本脚本不依赖任何 proxy-providers 名称。
