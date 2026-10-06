@@ -489,6 +489,12 @@ function main(config) {
     existingRegionalAutos.push(autoName);
   });
 
+  // Cross-region fallback is available only when regional Auto groups exist.
+  // It remains an explicit choice; service groups keep their first candidate.
+  const globalFallbackChoices = existingRegionalAutos.length
+    ? ["🌍 Global-Fallback"]
+    : [];
+
   // ============================================================
   // 4. 将实际存在的 Auto 组加入服务策略组
   //
@@ -497,6 +503,7 @@ function main(config) {
   //
   // YouTube:
   // All-Nodes
+  // Global-Fallback（如果存在）
   // US-Auto
   // SG-Auto
   // JP-Auto
@@ -508,6 +515,7 @@ function main(config) {
 
   const serviceProxyChoices = [
     "🖥️ All-Nodes",
+    ...globalFallbackChoices,
     ...existingRegionalAutos,
     "PROXY-Gate",
     "DIRECT"
@@ -558,6 +566,7 @@ function main(config) {
   if (proxyGate) {
     proxyGate.proxies = [
       "🖥️ All-Nodes",
+      ...globalFallbackChoices,
       ...existingRegionalAutos,
       "DIRECT"
     ];
@@ -566,7 +575,7 @@ function main(config) {
   // ============================================================
   // 6. Apple Push 专用 APNs-Fallback
   //
-  // 只引用实际生成的地区 Auto。
+  // 优先引用实际生成的地区 Auto；没有地区 Auto 时使用原始节点兜底。
   //
   // Apple Push 本身仍然保持：
   // Apple Push
@@ -588,6 +597,17 @@ function main(config) {
     url: "http://captive.apple.com/hotspot-detect.html",
     interval: 300
   });
+
+  if (globalFallbackChoices.length) {
+    fixed["proxy-groups"].push({
+      name: "🌍 Global-Fallback",
+      type: "fallback",
+      proxies: existingRegionalAutos.slice(),
+      icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png",
+      url: "http://www.gstatic.com/generate_204",
+      interval: 600
+    });
+  }
 
   // ============================================================
   // Rules
@@ -1105,7 +1125,8 @@ function main(config) {
     "🇯🇵 JP-Auto",
     "🇸🇬 SG-Auto",
     ...existingRegionalAutos,
-    "🖥️ All-Nodes"
+    "🖥️ All-Nodes",
+    ...globalFallbackChoices
   ];
 
   const serviceIcons = {
@@ -1118,7 +1139,9 @@ function main(config) {
     type: "select",
     icon: serviceIcons[name],
     proxies: [...new Set(choices)].filter(n =>
-      n === "🖥️ All-Nodes" || existingRegionalAutos.includes(n)
+      n === "🖥️ All-Nodes" ||
+      existingRegionalAutos.includes(n) ||
+      globalFallbackChoices.includes(n)
     )
   }));
 
