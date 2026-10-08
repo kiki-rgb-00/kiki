@@ -122,8 +122,6 @@ function main(config) {
         ]
       },
 
-      "fallback-lazy-query": true,
-
       "fake-ip-filter": [
         "geosite:cn",
         "*.lan",
