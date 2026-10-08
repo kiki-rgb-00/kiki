@@ -112,8 +112,6 @@ function main(config) {
         "https://anycast.uncensoreddns.org/dns-query"
       ],
 
-      "fallback-lazy-query": true
-
       "fallback-filter": {
         "geoip": true,
         "geoip-code": "CN",
@@ -123,6 +121,8 @@ function main(config) {
           "0.0.0.0/32"
         ]
       },
+
+      "fallback-lazy-query": true,
 
       "fake-ip-filter": [
         "geosite:cn",
@@ -148,7 +148,6 @@ function main(config) {
       "store-fake-ip": true
     }
   };
-
   // ============================================================
   // 节点池
   // ============================================================
