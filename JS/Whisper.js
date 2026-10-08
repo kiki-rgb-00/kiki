@@ -112,6 +112,8 @@ function main(config) {
         "https://anycast.uncensoreddns.org/dns-query"
       ],
 
+      "fallback-lazy-query": true
+
       "fallback-filter": {
         "geoip": true,
         "geoip-code": "CN",
