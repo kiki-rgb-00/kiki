@@ -109,7 +109,8 @@ function main(config) {
       },
 
       "fallback": [
-        "https://anycast.uncensoreddns.org/dns-query"
+        "https://anycast.uncensoreddns.org/dns-query",
+        "https://private.canadianshield.cira.ca/dns-query"
       ],
 
       "fallback-filter": {
