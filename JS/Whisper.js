@@ -1159,7 +1159,10 @@ function main(config) {
     "DOMAIN-SUFFIX,twitter.com,X",
     "DOMAIN-SUFFIX,t.co,X",
     "DOMAIN-SUFFIX,twimg.com,X",
-
+    "DOMAIN-SUFFIX,tweetdeck.com,X",
+    "DOMAIN-SUFFIX,pscp.tv,X",
+    "DOMAIN-SUFFIX,periscope.tv,X",
+    "DOMAIN-SUFFIX,twtrdns.net,X",
     // Telegram
     "DOMAIN-SUFFIX,telegram.org,Telegram",
     "DOMAIN-SUFFIX,telegram.me,Telegram",
