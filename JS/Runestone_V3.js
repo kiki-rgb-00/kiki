@@ -620,6 +620,13 @@ function main(config) {
     "IP-CIDR,127.0.0.0/8,DIRECT,no-resolve",
     "GEOIP,LAN,DIRECT,no-resolve",
 
+    // 检测站点优先使用 PROXY-Gate，避免上游 ChinaMax 的宽泛分类覆盖。
+    "DOMAIN-SUFFIX,browserleaks.com,PROXY-Gate",
+    "DOMAIN-SUFFIX,browserleaks.net,PROXY-Gate",
+    "DOMAIN,whoami.akamai.net,PROXY-Gate",
+    "DOMAIN,whatismyip.akamai.com,PROXY-Gate",
+    "DOMAIN-SUFFIX,surfshark.com,PROXY-Gate",
+
     // Apple Push 必须在普通 Apple 规则之前
     "DOMAIN-SUFFIX,push.apple.com,Apple Push",
     "DOMAIN-SUFFIX,push-apple.com.akadns.net,Apple Push",
@@ -645,6 +652,7 @@ function main(config) {
     "RULE-SET,Privacy_Domain,REJECT",
     "RULE-SET,ACL4SSR_BanAD,REJECT",
     "RULE-SET,ACL4SSR_BanProgramAD,REJECT",
+    "RULE-SET,ACL4SSR_BanProgramAD_IP,REJECT,no-resolve",
 
     // 加密货币App
     "DOMAIN-SUFFIX,aicoin.com,PROXY-Gate",
@@ -946,7 +954,6 @@ function main(config) {
     "RULE-SET,ChinaMax,DIRECT",
     "RULE-SET,ChinaMax_Domain,DIRECT",
     "RULE-SET,ChinaMax_IP,DIRECT",
-    "GEOSITE,CN,DIRECT",
     "GEOIP,CN,DIRECT,no-resolve",
 
     // 最终兜底
@@ -987,7 +994,7 @@ function main(config) {
       "behavior": "classical",
       "format": "yaml",
       "interval": 86400,
-      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/AdvertisingLite/AdvertisingLite.yaml"
+      "url": "https://raw.githubusercontent.com/" + RUNESTONE.repository + "/main/Rules/AdvertisingLite.yaml"
     },
 
     "AdvertisingLite_Domain": {
@@ -1028,6 +1035,14 @@ function main(config) {
       "format": "mrs",
       "interval": 86400,
       "url": "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/mrs/BanProgramAD_domain.mrs"
+    },
+
+    "ACL4SSR_BanProgramAD_IP": {
+      "type": "http",
+      "behavior": "ipcidr",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/mrs/BanProgramAD_ip.mrs"
     },
 
     "ChinaMax": {
