@@ -1,0 +1,933 @@
+name: Stash-VPS
+icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/GitHub.png
+category: Private
+
+desc: |-
+  Version: 2.2｜2026-6.5
+  TUN｜Fallback DNS｜Fake-iP
+  DNS｜Proxy Groups｜Rules
+  Encrypted DNS:
+   - DoH｜IPv6｜IPv4
+  Policy Groups:
+   - PROXY-Gate:Primary/US/SG/HK/TW/JP/CA/UK
+  Rules:
+   - Rule-Providers：Domain
+    （Some remote rule sets abandon IP rules）
+   - Customize｜CN
+   - MATCH -> PROXY-Gate (Default Fallback)
+
+#!override
+
+mixed-port: 7890
+allow-lan: true
+bind-address: '*'
+mode: rule
+log-level: info
+external-controller: '127.0.0.1:9090'
+unified-delay: true
+tcp-concurrent: true
+ipv6: true
+
+tun: #!replace
+  enable: true
+  stack: gvisor
+  auto-route: true
+  auto-detect-interface: true
+  strict-route: true
+  dns-hijack:
+    - any:53
+    - tcp://any:53
+
+dns: #!replace
+  enable: true
+  respect-rules: true
+  ipv6: true
+  prefer-h3: true
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+
+  default-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+    - 2400:3200::1
+
+  nameserver:
+    # 🇺🇸 US｜Cloudflare
+    - https://dns.cloudflare.com/dns-query
+    # 🇪🇺 EU｜DNS4EU Unfiltered
+    - https://unfiltered.joindns4.eu/dns-query
+
+  proxy-server-nameserver:
+    - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
+
+# 提前写入 #
+  direct-nameserver:
+    - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
+# =========================================== #
+
+  nameserver-policy:
+    'dns.cloudflare.com':
+      - 1.1.1.1
+      - 1.0.0.1
+    'dns.google':
+      - 8.8.8.8
+      - 8.8.4.4
+    'dns.alidns.com':
+      - 223.5.5.5
+      - 223.6.6.6
+    'doh.pub':
+      - 1.12.12.12
+      - 120.53.53.53
+    # CN DNS #
+    'geosite:cn':
+      - https://dns.alidns.com/dns-query
+      - https://doh.pub/dns-query
+    # Apple #
+    '+.apple.com':
+      - https://dns.alidns.com/dns-query
+    '+.mzstatic.com':
+      - https://dns.alidns.com/dns-query
+    '+.itunes.apple.com':
+      - https://dns.alidns.com/dns-query
+    '+.aaplimg.com':
+      - https://dns.alidns.com/dns-query
+
+  fallback:
+    # 🇺🇸 US｜Google
+    - https://dns.google/dns-query
+
+  fallback-filter:
+    geoip: true
+    geoip-code: CN
+    ipcidr:
+      - 240.0.0.0/4
+      - 127.0.0.0/8
+      - 0.0.0.0/32
+
+  fake-ip-filter:
+    - 'geosite:cn'
+    - '*.lan'
+    - '*.local'
+    - 'localhost'
+    - '*.msftconnecttest.com'
+    - '*.msftncsi.com'
+    - '*.msidentity.com'
+    - 'captive.apple.com'
+    - '*.push.apple.com'
+    - 'stun.*'
+    - '+.stun.*.*'
+    - '+.stun.*.*.*'
+    - '+.stun.*.*.*.*'
+    - '+.stun.*.*.*.*.*'
+    - 'speedtest.net'
+
+profile: #!replace
+  store-selected: true
+  store-fake-ip: true
+
+#-------------------#
+# proxies: #
+#-------------------#
+proxy-groups: #!replace
+
+  - name: PROXY-Gate
+    type: select
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png
+    proxies:
+      - 🔘 Primary-Manual
+      - 🇺🇸 US-Auto
+      - 🇸🇬 SG-Auto
+      - 🇭🇰 HK-Auto
+      - 🇹🇼 TW-Auto
+      - 🇯🇵 JP-Auto
+      - 🇨🇦 CA-Auto
+      - 🇬🇧 UK-Auto
+      - DIRECT
+
+  # ====== Custom ====== #
+  # ==================== #
+
+  - name: 🔘 Primary-Manual
+    type: select
+    include-all: true
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Server.png
+
+
+
+  # ======== Service Groups ======== #
+
+  - name: Apple Push
+    type: fallback
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_2.png
+    proxies:
+      -  APNs-Fallback
+      - DIRECT
+    url: http://captive.apple.com/hotspot-detect.html
+    interval: 600
+
+
+  - name: YouTube
+    type: select
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/YouTube.png
+    proxies:
+      - 🔘 Primary-Manual
+      - 🇺🇸 US-Auto
+      - 🇸🇬 SG-Auto
+      - 🇭🇰 HK-Auto
+      - 🇹🇼 TW-Auto
+      - 🇯🇵 JP-Auto
+      - 🇨🇦 CA-Auto
+      - 🇬🇧 UK-Auto
+      - PROXY-Gate
+      - DIRECT
+
+  - name: Netflix
+    type: select
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Netflix.png
+    proxies:
+      - 🔘 Primary-Manual
+      - 🇺🇸 US-Auto
+      - 🇸🇬 SG-Auto
+      - 🇭🇰 HK-Auto
+      - 🇹🇼 TW-Auto
+      - 🇯🇵 JP-Auto
+      - 🇨🇦 CA-Auto
+      - 🇬🇧 UK-Auto
+      - PROXY-Gate
+      - DIRECT
+
+  - name: Spotify
+    type: select
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Spotify.png
+    proxies:
+      - 🔘 Primary-Manual
+      - 🇺🇸 US-Auto
+      - 🇸🇬 SG-Auto
+      - 🇭🇰 HK-Auto
+      - 🇹🇼 TW-Auto
+      - 🇯🇵 JP-Auto
+      - 🇨🇦 CA-Auto
+      - 🇬🇧 UK-Auto
+      - PROXY-Gate
+      - DIRECT
+
+  - name: TikTok
+    type: select
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png
+    proxies:
+      - 🔘 Primary-Manual
+      - 🇺🇸 US-Auto
+      - 🇸🇬 SG-Auto
+      - 🇭🇰 HK-Auto
+      - 🇹🇼 TW-Auto
+      - 🇯🇵 JP-Auto
+      - 🇨🇦 CA-Auto
+      - 🇬🇧 UK-Auto
+      - PROXY-Gate
+      - DIRECT
+
+  - name: Twitch
+    type: select
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Twitch.png
+    proxies:
+      - 🔘 Primary-Manual
+      - 🇺🇸 US-Auto
+      - 🇸🇬 SG-Auto
+      - 🇭🇰 HK-Auto
+      - 🇹🇼 TW-Auto
+      - 🇯🇵 JP-Auto
+      - 🇨🇦 CA-Auto
+      - 🇬🇧 UK-Auto
+      - PROXY-Gate
+      - DIRECT
+
+  - name: ChatGPT
+    type: select
+    icon: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/ChatGPT.png
+    proxies:
+      - 🔘 Primary-Manual
+      - 🇺🇸 US-Auto
+      - 🇸🇬 SG-Auto
+      - 🇭🇰 HK-Auto
+      - 🇹🇼 TW-Auto
+      - 🇯🇵 JP-Auto
+      - 🇨🇦 CA-Auto
+      - 🇬🇧 UK-Auto
+      - PROXY-Gate
+      - DIRECT
+
+  - name: Gemini
+    type: select
+    icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/google-gemini.png
+    proxies:
+      - 🔘 Primary-Manual
+      - 🇺🇸 US-Auto
+      - 🇸🇬 SG-Auto
+      - 🇭🇰 HK-Auto
+      - 🇹🇼 TW-Auto
+      - 🇯🇵 JP-Auto
+      - 🇨🇦 CA-Auto
+      - 🇬🇧 UK-Auto
+      - PROXY-Gate
+      - DIRECT
+
+  - name: Claude
+    type: select
+    icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/anthropic.png
+    proxies:
+      - 🔘 Primary-Manual
+      - 🇺🇸 US-Auto
+      - 🇸🇬 SG-Auto
+      - 🇭🇰 HK-Auto
+      - 🇹🇼 TW-Auto
+      - 🇯🇵 JP-Auto
+      - 🇨🇦 CA-Auto
+      - 🇬🇧 UK-Auto
+      - PROXY-Gate
+      - DIRECT
+
+  - name: Grok
+    type: select
+    icon: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/Grok.svg
+    proxies:
+      - 🔘 Primary-Manual
+      - 🇺🇸 US-Auto
+      - 🇸🇬 SG-Auto
+      - 🇭🇰 HK-Auto
+      - 🇹🇼 TW-Auto
+      - 🇯🇵 JP-Auto
+      - 🇨🇦 CA-Auto
+      - 🇬🇧 UK-Auto
+      - PROXY-Gate
+      - DIRECT
+
+  - name: Microsoft
+    type: select
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png
+    proxies:
+      - 🔘 Primary-Manual
+      - 🇺🇸 US-Auto
+      - 🇸🇬 SG-Auto
+      - 🇭🇰 HK-Auto
+      - 🇹🇼 TW-Auto
+      - 🇯🇵 JP-Auto
+      - 🇨🇦 CA-Auto
+      - 🇬🇧 UK-Auto
+      - PROXY-Gate
+      - DIRECT
+
+  - name: OneDrive
+    type: select
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/OneDrive.png
+    proxies:
+      - 🔘 Primary-Manual
+      - 🇺🇸 US-Auto
+      - 🇸🇬 SG-Auto
+      - 🇭🇰 HK-Auto
+      - 🇹🇼 TW-Auto
+      - 🇯🇵 JP-Auto
+      - 🇨🇦 CA-Auto
+      - 🇬🇧 UK-Auto
+      - PROXY-Gate
+      - DIRECT
+
+  - name: Outlook
+    type: select
+    icon: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/Outlook.png
+    proxies:
+      - 🔘 Primary-Manual
+      - 🇺🇸 US-Auto
+      - 🇸🇬 SG-Auto
+      - 🇭🇰 HK-Auto
+      - 🇹🇼 TW-Auto
+      - 🇯🇵 JP-Auto
+      - 🇨🇦 CA-Auto
+      - 🇬🇧 UK-Auto
+      - PROXY-Gate
+      - DIRECT
+
+  - name: Google
+    type: select
+    icon: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/Google.PNG
+    proxies:
+      - 🔘 Primary-Manual
+      - 🇺🇸 US-Auto
+      - 🇸🇬 SG-Auto
+      - 🇭🇰 HK-Auto
+      - 🇹🇼 TW-Auto
+      - 🇯🇵 JP-Auto
+      - 🇨🇦 CA-Auto
+      - 🇬🇧 UK-Auto
+      - PROXY-Gate
+      - DIRECT
+
+  - name: Meta
+    type: select
+    icon: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/Meta.png
+    proxies:
+      - 🔘 Primary-Manual
+      - 🇺🇸 US-Auto
+      - 🇸🇬 SG-Auto
+      - 🇭🇰 HK-Auto
+      - 🇹🇼 TW-Auto
+      - 🇯🇵 JP-Auto
+      - 🇨🇦 CA-Auto
+      - 🇬🇧 UK-Auto
+      - PROXY-Gate
+      - DIRECT
+
+  - name: WhatsApp
+    type: select
+    icon: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/WhatsApp.svg
+    proxies:
+      - 🔘 Primary-Manual
+      - 🇺🇸 US-Auto
+      - 🇸🇬 SG-Auto
+      - 🇭🇰 HK-Auto
+      - 🇹🇼 TW-Auto
+      - 🇯🇵 JP-Auto
+      - 🇨🇦 CA-Auto
+      - 🇬🇧 UK-Auto
+      - PROXY-Gate
+      - DIRECT
+
+  - name: Telegram
+    type: select
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png
+    proxies:
+      - 🔘 Primary-Manual
+      - 🇺🇸 US-Auto
+      - 🇸🇬 SG-Auto
+      - 🇭🇰 HK-Auto
+      - 🇹🇼 TW-Auto
+      - 🇯🇵 JP-Auto
+      - 🇨🇦 CA-Auto
+      - 🇬🇧 UK-Auto
+      - PROXY-Gate
+      - DIRECT
+
+  - name: X
+    type: select
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/X.png
+    proxies:
+      - 🔘 Primary-Manual
+      - 🇺🇸 US-Auto
+      - 🇸🇬 SG-Auto
+      - 🇭🇰 HK-Auto
+      - 🇹🇼 TW-Auto
+      - 🇯🇵 JP-Auto
+      - 🇨🇦 CA-Auto
+      - 🇬🇧 UK-Auto
+      - PROXY-Gate
+      - DIRECT
+
+  - name: Github
+    type: select
+    icon: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/GitHub.png
+    proxies:
+      - 🔘 Primary-Manual
+      - 🇺🇸 US-Auto
+      - 🇸🇬 SG-Auto
+      - 🇭🇰 HK-Auto
+      - 🇹🇼 TW-Auto
+      - 🇯🇵 JP-Auto
+      - 🇨🇦 CA-Auto
+      - 🇬🇧 UK-Auto
+      - PROXY-Gate
+      - DIRECT
+
+  - name: Speedtest
+    type: select
+    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Speedtest.png
+    proxies:
+      - 🔘 Primary-Manual
+      - 🇺🇸 US-Auto
+      - 🇸🇬 SG-Auto
+      - 🇭🇰 HK-Auto
+      - 🇹🇼 TW-Auto
+      - 🇯🇵 JP-Auto
+      - 🇨🇦 CA-Auto
+      - 🇬🇧 UK-Auto
+      - PROXY-Gate
+      - DIRECT
+
+
+  - name:  APNs-Fallback
+    type: fallback
+    proxies:
+      - 🇺🇸 US-Auto
+      - 🇸🇬 SG-Auto
+      - 🇭🇰 HK-Auto
+      - 🇹🇼 TW-Auto
+      - 🇯🇵 JP-Auto
+      - 🇨🇦 CA-Auto
+      - 🇬🇧 UK-Auto
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available.png
+    url: http://captive.apple.com/hotspot-detect.html
+    interval: 600
+
+
+  # ======== AUTO ======== #
+  # ====================== #
+
+  - name: 🇺🇸 US-Auto
+    type: url-test
+    include-all: true
+    filter: '(?i)(\[US\]|^US$|USA|United States|\bUS\b|美国)'
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+    url: http://www.gstatic.com/generate_204
+    interval: 600
+    timeout: 15
+    tolerance: 50
+
+  - name: 🇸🇬 SG-Auto
+    type: url-test
+    include-all: true
+    filter: '(?i)(\[SG\]|^SG$|Singapore|\bSG\b|新加坡|狮城)'
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+    url: http://www.gstatic.com/generate_204
+    interval: 900
+    timeout: 15
+    tolerance: 50
+
+  - name: 🇭🇰 HK-Auto
+    type: url-test
+    include-all: true
+    filter: '(?i)(\[HK\]|^HK$|Hong Kong|\bHK\b|香港|🇨🇳香港)'
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+    url: http://www.gstatic.com/generate_204
+    interval: 900
+    timeout: 15
+    tolerance: 50
+
+  - name: 🇹🇼 TW-Auto
+    type: url-test
+    include-all: true
+    filter: '(?i)(\[TW\]|^TW$|Taiwan|\bTW\b|台湾|台北|🇹🇼台湾)'
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+    url: http://www.gstatic.com/generate_204
+    interval: 900
+    timeout: 15
+    tolerance: 50
+
+  - name: 🇯🇵 JP-Auto
+    type: url-test
+    include-all: true
+    filter: '(?i)(\[JP\]|^JP$|Japan|\bJP\b|日本|东京|大阪|🇯🇵日本)'
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+    url: http://www.gstatic.com/generate_204
+    interval: 900
+    timeout: 15
+    tolerance: 50
+
+  - name: 🇨🇦 CA-Auto
+    type: url-test
+    include-all: true
+    filter: '(?i)(\[CA\]|^CA$|Canada|加拿大|Toronto|Vancouver|Montreal)'
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+    url: http://www.gstatic.com/generate_204
+    interval: 900
+    timeout: 15
+    tolerance: 50
+
+  - name: 🇬🇧 UK-Auto
+    type: url-test
+    include-all: true
+    filter: '(?i)(?!.*Ukraine)(\[UK\]|^UK$|United Kingdom|Britain|\bUK\b|英国|伦敦)'
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+    url: http://www.gstatic.com/generate_204
+    interval: 900
+    timeout: 15
+    tolerance: 50
+
+
+
+rules: #!replace
+
+  # GitHub
+  - DOMAIN-SUFFIX,github.com,PROXY-Gate
+  - DOMAIN-SUFFIX,githubusercontent.com,PROXY-Gate
+  - DOMAIN-SUFFIX,githubassets.com,PROXY-Gate
+  - DOMAIN-SUFFIX,raw.githubusercontent.com,PROXY-Gate
+
+  # Local area network and e-mail
+  - IP-CIDR,192.168.0.0/16,DIRECT,no-resolve
+  - IP-CIDR,10.0.0.0/8,DIRECT,no-resolve
+  - IP-CIDR,172.16.0.0/12,DIRECT,no-resolve
+  - IP-CIDR,127.0.0.0/8,DIRECT,no-resolve
+  - DST-PORT,465,DIRECT
+  - DST-PORT,587,DIRECT
+  - DST-PORT,993,DIRECT
+  - DST-PORT,995,DIRECT
+  - GEOIP,LAN,DIRECT,no-resolve
+
+  # Remote rule set
+  - RULE-SET,AdvertisingLite,REJECT
+  - RULE-SET,AdvertisingLite_Domain,REJECT
+  - RULE-SET,Privacy,REJECT
+  - RULE-SET,Privacy_Domain,REJECT
+  - RULE-SET,ACL4SSR_BanAD,REJECT
+  - RULE-SET,ACL4SSR_BanProgramAD,REJECT
+
+  #=========Custom rules=========#
+
+  # Apple
+  # (Basic connection and time)
+  - DOMAIN,time.apple.com,DIRECT
+  - DOMAIN,captive.apple.com,DIRECT
+
+  # (Push service)
+  - DOMAIN-SUFFIX,push.apple.com,Apple Push
+  - DOMAIN-SUFFIX,push-apple.com.akadns.net,Apple Push
+  - DOMAIN-SUFFIX,courier-push-apple.com.akadns.net,Apple Push
+  #- DOMAIN-SUFFIX,akadns.net,Apple Push
+  - DOMAIN-KEYWORD,apple.com.edgekey.net,Apple Push
+  - DOMAIN-KEYWORD,push.apple,Apple Push
+  - DOMAIN,feedback.push-apple.com.akadns.net,Apple Push
+  - IP-CIDR,17.249.0.0/16,Apple Push,no-resolve
+  - IP-CIDR,17.252.0.0/16,Apple Push,no-resolve
+  - IP-CIDR,17.57.144.0/22,Apple Push,no-resolve
+  - IP-CIDR,17.188.128.0/18,Apple Push,no-resolve
+  - IP-CIDR,17.188.20.0/23,Apple Push,no-resolve
+  - IP-CIDR6,2620:149:a44::/48,Apple Push,no-resolve
+  - IP-CIDR6,2403:300:a42::/48,Apple Push,no-resolve
+  - IP-CIDR6,2403:300:a51::/48,Apple Push,no-resolve
+  - IP-CIDR6,2a01:b740:a42::/48,Apple Push,no-resolve
+
+  # (iCloud)
+  - DOMAIN-SUFFIX,icloud.com.cn,DIRECT
+  - DOMAIN-SUFFIX,icloud.com,DIRECT
+  - DOMAIN-SUFFIX,icloud-content.com,DIRECT
+  - DOMAIN-SUFFIX,icloud.com.akadns.net,DIRECT
+  - DOMAIN-SUFFIX,apple-cloudkit.com,DIRECT
+  - DOMAIN,gateway.icloud.com,DIRECT
+
+  # （Apple Music）
+  - DOMAIN-SUFFIX,music.apple.com,DIRECT
+  - DOMAIN-SUFFIX,api.music.apple.com,DIRECT
+  - DOMAIN-SUFFIX,amp-api.music.apple.com,DIRECT
+  - DOMAIN,aod.itunes.apple.com,DIRECT
+  - DOMAIN,play.itunes.apple.com,DIRECT
+
+
+  #策略组规则#
+  - DOMAIN-SUFFIX,youtube.com,YouTube
+  - DOMAIN-SUFFIX,youtu.be,YouTube
+  - DOMAIN-SUFFIX,youtube-nocookie.com,YouTube
+  - DOMAIN-SUFFIX,youtubei.googleapis.com,YouTube
+  - DOMAIN-SUFFIX,youtube.googleapis.com,YouTube
+  - DOMAIN-SUFFIX,ytimg.com,YouTube
+  - DOMAIN-SUFFIX,googlevideo.com,YouTube
+  - DOMAIN-SUFFIX,ggpht.com,YouTube
+
+  - DOMAIN-SUFFIX,netflix.com,Netflix
+  - DOMAIN-SUFFIX,netflix.net,Netflix
+  - DOMAIN-SUFFIX,netflix.ca,Netflix
+  - DOMAIN-SUFFIX,nflxext.com,Netflix
+  - DOMAIN-SUFFIX,nflximg.com,Netflix
+  - DOMAIN-SUFFIX,nflximg.net,Netflix
+  - DOMAIN-SUFFIX,nflxsearch.net,Netflix
+  - DOMAIN-SUFFIX,nflxso.net,Netflix
+  - DOMAIN-SUFFIX,nflxvideo.net,Netflix
+  - DOMAIN-SUFFIX,netflixdnstest0.com,Netflix
+  - DOMAIN-SUFFIX,netflixdnstest1.com,Netflix
+  - DOMAIN-SUFFIX,netflixdnstest2.com,Netflix
+  - DOMAIN-SUFFIX,netflixdnstest3.com,Netflix
+  - DOMAIN-SUFFIX,netflixdnstest4.com,Netflix
+  - DOMAIN-SUFFIX,netflixdnstest5.com,Netflix
+  - DOMAIN-SUFFIX,netflixdnstest6.com,Netflix
+  - DOMAIN-SUFFIX,netflixdnstest7.com,Netflix
+  - DOMAIN-SUFFIX,netflixdnstest8.com,Netflix
+  - DOMAIN-SUFFIX,netflixdnstest9.com,Netflix
+  - DOMAIN-SUFFIX,netflixdnstest10.com,Netflix
+  - DOMAIN-SUFFIX,netflixinvestor.com,Netflix
+  - DOMAIN-SUFFIX,netflixtechblog.com,Netflix
+  - DOMAIN,netflix.com.edgesuite.net,Netflix
+
+  - DOMAIN-SUFFIX,spotify.com,Spotify
+  - DOMAIN-SUFFIX,spotifycdn.com,Spotify
+  - DOMAIN-SUFFIX,scdn.co,Spotify
+  - DOMAIN-SUFFIX,spclient.wg.spotify.com,Spotify
+  - DOMAIN-SUFFIX,api-partner.spotify.com,Spotify
+  - DOMAIN-SUFFIX,heads4-ak-spotify-com.akamaized.net,Spotify
+  - DOMAIN-SUFFIX,spotifycdn.com,Spotify
+
+  - DOMAIN-SUFFIX,tiktok.com,TikTok
+  - DOMAIN-SUFFIX,tiktokcdn.com,TikTok
+  - DOMAIN-SUFFIX,tiktokcdn-us.com,TikTok
+  - DOMAIN-SUFFIX,tiktokv.com,TikTok
+  - DOMAIN-SUFFIX,tiktokd.org,TikTok
+  - DOMAIN-SUFFIX,ibytedtos.com,TikTok
+  - DOMAIN-SUFFIX,ibyteimg.com,TikTok
+  - DOMAIN-SUFFIX,byteoversea.com,TikTok
+  - DOMAIN-SUFFIX,muscdn.com,TikTok
+  - DOMAIN-SUFFIX,musical.ly,TikTok
+
+  - DOMAIN-SUFFIX,twitch.tv,Twitch
+  - DOMAIN-SUFFIX,twitchcdn.net,Twitch
+  - DOMAIN-SUFFIX,jtvnw.net,Twitch
+  - DOMAIN-SUFFIX,ttvnw.net,Twitch
+  - DOMAIN-SUFFIX,twitchsvc.net,Twitch
+
+  - DOMAIN-SUFFIX,chatgpt.com,ChatGPT
+  - DOMAIN-SUFFIX,openai.com,ChatGPT
+  - DOMAIN-SUFFIX,auth.openai.com,ChatGPT
+  - DOMAIN-SUFFIX,oaistatic.com,ChatGPT
+  - DOMAIN-SUFFIX,oaiusercontent.com,ChatGPT
+  - DOMAIN,android.chat.openai.com,ChatGPT
+  - DOMAIN,auth0.openai.com,ChatGPT
+  - DOMAIN,chat.openai.com,ChatGPT
+  - DOMAIN,desktop.chat.openai.com,ChatGPT
+  - DOMAIN,ios.chat.openai.com,ChatGPT
+  - DOMAIN,tcr9i.chat.openai.com,ChatGPT
+  - DOMAIN,cdn.openaimerge.com,ChatGPT
+  - DOMAIN,ws.chatgpt.com,ChatGPT
+  - DOMAIN,setup.auth.openai.com,ChatGPT
+  - DOMAIN,cdn.workos.com,ChatGPT
+  - DOMAIN,forwarder.workos.com,ChatGPT
+  - DOMAIN,images.workoscdn.com,ChatGPT
+  - DOMAIN,workos.imgix.net,ChatGPT
+  - DOMAIN,setup.workos.com,ChatGPT
+  - DOMAIN,ct.sendgrid.net,ChatGPT
+  - DOMAIN,oaistatsig.com,ChatGPT
+  - DOMAIN,intercom.io,ChatGPT
+  - DOMAIN,intercomcdn.com,ChatGPT
+  - DOMAIN,js.intercomcdn.com,ChatGPT
+  - DOMAIN,js.stripe.com,ChatGPT
+  - DOMAIN,o207216.ingest.sentry.io,ChatGPT
+  - DOMAIN,o33249.ingest.sentry.io,ChatGPT
+  - DOMAIN,rum.browser-intake-datadoghq.com,ChatGPT
+  - DOMAIN,challenges.cloudflare.com,ChatGPT
+  - DOMAIN,humb.apple.com,ChatGPT
+
+  - DOMAIN-SUFFIX,gemini.google.com,Gemini
+  - DOMAIN-SUFFIX,aistudio.google.com,Gemini
+  - DOMAIN-SUFFIX,deepmind.com,Gemini
+  - DOMAIN-SUFFIX,deepmind.google,Gemini
+  - DOMAIN-SUFFIX,gemini.googleusercontent.com,Gemini
+  - DOMAIN-SUFFIX,makersuite.google.com,Gemini
+
+  - DOMAIN-SUFFIX,claude.ai,Claude
+  - DOMAIN-SUFFIX,anthropic.com,Claude
+  - DOMAIN-SUFFIX,claudeusercontent.com,Claude
+  - DOMAIN-SUFFIX,claudeusercontent.com.cdn.cloudflare.net,Claude
+
+  - DOMAIN-SUFFIX,grok.com,Grok
+  - DOMAIN-SUFFIX,x.ai,Grok
+  - DOMAIN-KEYWORD,grok,Grok
+
+  # Microsoft / Copilot
+  - RULE-SET,Copilot_Domain,Microsoft
+  - RULE-SET,Copilot_IP,Microsoft
+  - RULE-SET,Microsoft,Microsoft
+
+  # OneDrive
+  - DOMAIN-SUFFIX,1drv.com,OneDrive
+  - DOMAIN-SUFFIX,1drv.ms,OneDrive
+  - DOMAIN-SUFFIX,livefilestore.com,OneDrive
+  - DOMAIN-SUFFIX,microsoftpersonalcontent.com,OneDrive
+  - DOMAIN-SUFFIX,oneclient.sfx.ms,OneDrive
+  - DOMAIN-SUFFIX,onedrive.com,OneDrive
+  - DOMAIN-SUFFIX,onedrive.co,OneDrive
+  - DOMAIN-SUFFIX,onedrive.co.uk,OneDrive
+  - DOMAIN-SUFFIX,onedrive.eu,OneDrive
+  - DOMAIN-SUFFIX,onedrive.live.com,OneDrive
+  - DOMAIN-SUFFIX,onedrive.net,OneDrive
+  - DOMAIN-SUFFIX,onedrive.org,OneDrive
+  - DOMAIN-SUFFIX,photos.live.com,OneDrive
+  - DOMAIN-SUFFIX,skydrive.wns.windows.com,OneDrive
+  - DOMAIN-SUFFIX,storage.live.com,OneDrive
+  - DOMAIN-SUFFIX,storage.msn.com,OneDrive
+
+  # Outlook
+  - DOMAIN-SUFFIX,acompli.com,Outlook
+  - DOMAIN-SUFFIX,acompli.net,Outlook
+  - DOMAIN-SUFFIX,hotmail.com,Outlook
+  - DOMAIN-SUFFIX,hotmail.co,Outlook
+  - DOMAIN-SUFFIX,hotmail.eu,Outlook
+  - DOMAIN-SUFFIX,hotmail.net,Outlook
+  - DOMAIN-SUFFIX,hotmail.org,Outlook
+  - DOMAIN-SUFFIX,outlook.cn,Outlook
+  - DOMAIN-SUFFIX,outlook.com,Outlook
+  - DOMAIN-SUFFIX,outlookgroups.ms,Outlook
+  - DOMAIN-SUFFIX,outlookmobile.com,Outlook
+  - DOMAIN-SUFFIX,microsoftemail.com,Outlook
+
+  - DOMAIN-SUFFIX,whatsapp.com,WhatsApp
+  - DOMAIN-SUFFIX,whatsapp.net,WhatsApp
+  - DOMAIN-SUFFIX,whatsapp.org,WhatsApp
+  - DOMAIN-SUFFIX,whatsapp.biz,WhatsApp
+  - DOMAIN-SUFFIX,whatsapp.info,WhatsApp
+  - DOMAIN-SUFFIX,wa.me,WhatsApp
+  - DOMAIN-KEYWORD,whatsapp,WhatsApp
+  - DOMAIN,graph.facebook.com,WhatsApp
+
+  - DOMAIN-SUFFIX,meta.com,Meta
+  - DOMAIN-SUFFIX,facebook.com,Meta
+  - DOMAIN-SUFFIX,facebook.net,Meta
+  - DOMAIN-SUFFIX,facebook.org,Meta
+  - DOMAIN-SUFFIX,facebook.co,Meta
+  - DOMAIN-SUFFIX,facebook-hardware.com,Meta
+  - DOMAIN-SUFFIX,fb.com,Meta
+  - DOMAIN-SUFFIX,fb.me,Meta
+  - DOMAIN-SUFFIX,fb.gg,Meta
+  - DOMAIN-SUFFIX,fbcdn.net,Meta
+  - DOMAIN-SUFFIX,fbcdn.com,Meta
+  - DOMAIN-SUFFIX,fbsbx.com,Meta
+  - DOMAIN-SUFFIX,facebooklive.com,Meta
+  - DOMAIN-SUFFIX,fb.watch,Meta
+  - DOMAIN-SUFFIX,instagram.com,Meta
+  - DOMAIN-SUFFIX,instagram.net,Meta
+  - DOMAIN-SUFFIX,graph.instagram.com,Meta
+  - DOMAIN-SUFFIX,cdninstagram.com,Meta
+  - DOMAIN-SUFFIX,cdninstagram.net,Meta
+  - DOMAIN-SUFFIX,ig.me,Meta
+  - DOMAIN-SUFFIX,threads.com,Meta
+  - DOMAIN-SUFFIX,threads.net,Meta
+  - DOMAIN-SUFFIX,threadsusercontent.com,Meta
+  - DOMAIN-SUFFIX,messenger.com,Meta
+  - DOMAIN-SUFFIX,m.me,Meta
+  - DOMAIN-SUFFIX,messengerplatform.com,Meta
+  - DOMAIN-SUFFIX,meta.ai,Meta
+  - DOMAIN-SUFFIX,ai.meta.com,Meta
+  - DOMAIN-SUFFIX,muse.ai,Meta
+  - IP-CIDR,157.240.0.0/16,Meta,no-resolve
+  - IP-CIDR,31.13.64.0/18,Meta,no-resolve
+  - IP-CIDR,69.171.224.0/19,Meta,no-resolve
+  - IP-CIDR,173.252.64.0/18,Meta,no-resolve
+
+  - DOMAIN-SUFFIX,telegram.org,Telegram
+  - DOMAIN-SUFFIX,telegram.me,Telegram
+  - DOMAIN-SUFFIX,t.me,Telegram
+  - DOMAIN-SUFFIX,tdesktop.com,Telegram
+  - DOMAIN-SUFFIX,telegra.ph,Telegram
+  - DOMAIN-SUFFIX,telegram.dog,Telegram
+  - IP-CIDR,91.108.4.0/22,Telegram,no-resolve
+  - IP-CIDR,91.108.8.0/22,Telegram,no-resolve
+  - IP-CIDR,91.108.12.0/22,Telegram,no-resolve
+  - IP-CIDR,91.108.16.0/22,Telegram,no-resolve
+  - IP-CIDR,91.108.20.0/22,Telegram,no-resolve
+  - IP-CIDR,91.108.56.0/22,Telegram,no-resolve
+  - IP-CIDR,149.154.160.0/20,Telegram,no-resolve
+  - IP-CIDR6,2001:b28:f23d::/48,Telegram,no-resolve
+  - IP-CIDR6,2001:b28:f23f::/48,Telegram,no-resolve
+  - IP-CIDR6,2001:67c:4e8::/48,Telegram,no-resolve
+
+  - DOMAIN-KEYWORD,google,Google
+  - DOMAIN-SUFFIX,gmail.com,Google
+  - DOMAIN-SUFFIX,googleusercontent.com,Google
+  - DOMAIN-SUFFIX,gstatic.com,Google
+  - DOMAIN-SUFFIX,googleapis.com,Google
+  - DOMAIN-SUFFIX,googleusercontent.com,Google
+
+  - DOMAIN-SUFFIX,x.com,X
+  - DOMAIN-SUFFIX,twitter.com,X
+  - DOMAIN-SUFFIX,t.co,X
+  - DOMAIN-SUFFIX,twimg.com,X
+
+  - DOMAIN-SUFFIX,github.com,Github
+  - DOMAIN-SUFFIX,githubusercontent.com,Github
+  - DOMAIN-SUFFIX,githubassets.com,Github
+  - DOMAIN-SUFFIX,raw.githubusercontent.com,Github
+  - DOMAIN-SUFFIX,github.io,Github
+  - DOMAIN-SUFFIX,github.dev,Github
+  - DOMAIN-SUFFIX,githubstatus.com,Github
+
+  - DOMAIN-SUFFIX,speedtest.net,Speedtest
+  - DOMAIN-SUFFIX,speedtest.com,Speedtest
+  - DOMAIN-SUFFIX,ookla.com,Speedtest
+  - DOMAIN-SUFFIX,ooklaserver.net,Speedtest
+  - DOMAIN-SUFFIX,ookla.net,Speedtest
+  - DOMAIN-SUFFIX,speedtestcustom.com,Speedtest
+
+  #=========End of custom rules=========#
+
+  # Bottom-up strategy
+  - RULE-SET,ChinaMax,DIRECT
+  - RULE-SET,ChinaMax_Domain,DIRECT
+  - RULE-SET,ChinaMax_IP,DIRECT
+  - GEOSITE,CN,DIRECT
+  - GEOIP,CN,DIRECT,no-resolve
+  - MATCH,PROXY-Gate
+
+rule-providers: #!replace
+
+  Microsoft:
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Microsoft.mrs
+
+  Copilot_Domain:
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Copilot_Domain.mrs
+
+  Copilot_IP:
+    behavior: ipcidr
+    format: mrs
+    interval: 86400
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Copilot_IP.mrs
+
+  AdvertisingLite:
+    behavior: classical
+    format: yaml
+    interval: 86400
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Rules/AdvertisingLite.yaml
+
+  AdvertisingLite_Domain:
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/AdvertisingLite_Domain.mrs
+
+  Privacy:
+    behavior: classical
+    format: yaml
+    interval: 86400
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Rules/Privacy.yaml
+
+  Privacy_Domain:
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Privacy_Domain.mrs
+
+  ACL4SSR_BanAD:
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/mrs/BanAD_domain.mrs
+
+  ACL4SSR_BanProgramAD:
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/mrs/BanProgramAD_domain.mrs
+
+  ACL4SSR_BanProgramAD_iP:
+    behavior: ipcidr
+    format: mrs
+    interval: 86400
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/mrs/BanProgramAD_ip.mrs
+
+  ChinaMax:
+    behavior: classical
+    format: yaml
+    interval: 86400
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Rules/ChinaMax.yaml
+
+  ChinaMax_Domain:
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/ChinaMax_Domain.mrs
+
+  ChinaMax_IP:
+    behavior: ipcidr
+    format: mrs
+    interval: 86400
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/ChinaMax_IP.mrs
