@@ -100,6 +100,11 @@ function main(config) {
           "1.12.12.12",
           "120.53.53.53"
         ],
+
+        "geosite:cn": [
+          "https://dns.alidns.com/dns-query",
+          "https://doh.pub/dns-query"
+        ]
       },
 
       "fallback": [
