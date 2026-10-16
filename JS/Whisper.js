@@ -69,6 +69,8 @@ function main(config) {
         "https://dns.google/dns-query"
       ],
 
+      "proxy-server-nameserver-policy": null,
+
       "proxy-server-nameserver": [
         "https://dns.alidns.com/dns-query",
         "https://doh.pub/dns-query"
@@ -107,8 +109,7 @@ function main(config) {
       },
 
       "fallback": [
-        "https://dns10.quad9.net/dns-query",
-        "https://private.canadianshield.cira.ca/dns-query"
+        "https://anycast.uncensoreddns.org/dns-query"
       ],
 
       "fallback-filter": {
