@@ -397,6 +397,13 @@ function main(config) {
     },
 
     {
+      key: "MO",
+      name: "🇲🇴 MO",
+      filter: /([\[]MO[\]]|^MO$|Macau|Macao|\bMO\b|澳门|澳門|🇲🇴)/i,
+      icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"
+    },
+
+    {
       key: "JP",
       name: "🇯🇵 JP",
       filter: /([\[]JP[\]]|^JP$|Japan|\bJP\b|日本|东京|大阪|🇯🇵)/i,
