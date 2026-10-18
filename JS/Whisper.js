@@ -917,7 +917,7 @@ function main(config) {
     "RULE-SET,Spotify_Domain,Spotify",
 
     // TikTok
-    "RULE-SET,Tiktok_Domain,Tiktok",
+    "RULE-SET,TikTok_Domain,Tiktok",
 
     // Twitch
     "DOMAIN-SUFFIX,twitch.tv,Twitch",
@@ -1265,12 +1265,12 @@ function main(config) {
       "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Spotify_Domain.mrs"
     },
 
-    "Tiktok_Domain": {
+    "TikTok_Domain": {
       "type": "http",
       "behavior": "domain",
       "format": "mrs",
       "interval": 86400,
-      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Tiktok_Domain.mrs"
+      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/TikTok_Domain.mrs"
     },
 
     "YouTube_Domain": {
