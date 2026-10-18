@@ -917,7 +917,7 @@ function main(config) {
     "RULE-SET,Spotify_Domain,Spotify",
 
     // TikTok
-    "RULE-SET,TikTok_Domain,Tiktok",
+    "RULE-SET,TikTok_Domain,TikTok",
 
     // Twitch
     "DOMAIN-SUFFIX,twitch.tv,Twitch",
