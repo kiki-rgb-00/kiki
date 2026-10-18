@@ -74,7 +74,74 @@ jobs:
           wget -O Rules/Apple.yaml \
             https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Apple/Apple.yaml
 
+      # =========================
+      # Google
+      #
+      # Download upstream Google.yaml.
+      # Keep only:
+      # DOMAIN
+      # DOMAIN-SUFFIX
+      # DOMAIN-KEYWORD
+      #
+      # IP and other rules are
+      # maintained separately.
+      # =========================
 
+      - name: Download Google Rules
+        run: |
+          wget -O .tmp/rules/Google.yaml \
+            https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Google/Google.yaml
+
+      - name: Prepare Google Domain Rules
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import yaml
+
+          source = Path(".tmp/rules/Google.yaml")
+          output = Path(".tmp/rules/Google_Domain.yaml")
+
+          data = yaml.safe_load(source.read_text(encoding="utf-8"))
+
+          if not isinstance(data, dict) or not isinstance(data.get("payload"), list):
+              raise ValueError("Invalid Google YAML: missing payload list")
+
+          allowed_types = {
+              "DOMAIN",
+              "DOMAIN-SUFFIX",
+              "DOMAIN-KEYWORD",
+          }
+
+          rules = data["payload"]
+          filtered = [
+              rule for rule in rules
+              if isinstance(rule, str)
+              and rule.split(",", 1)[0].strip().upper() in allowed_types
+          ]
+
+          if not filtered:
+              raise ValueError("No Google domain rules found")
+
+          output.write_text(
+              yaml.safe_dump(
+                  {"payload": filtered},
+                  allow_unicode=True,
+                  sort_keys=False,
+              ),
+              encoding="utf-8",
+          )
+
+          print(f"Original rules: {len(rules)}")
+          print(f"Domain rules: {len(filtered)}")
+          print(f"Excluded IP/other rules: {len(rules) - len(filtered)}")
+          PY
+
+      - name: Convert Google Domain Rules
+        run: |
+          ./mihomo convert-ruleset \
+            domain yaml \
+            .tmp/rules/Google_Domain.yaml \
+            MRS/Google_Domain.mrs
 
       # =========================
       # OpenAI
