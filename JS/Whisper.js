@@ -969,36 +969,7 @@ function main(config) {
     "DOMAIN-SUFFIX,twitchsvc.net,Twitch",
 
     // GPT
-    "DOMAIN-SUFFIX,chatgpt.com,GPT",
-    "DOMAIN-SUFFIX,openai.com,GPT",
-    "DOMAIN-SUFFIX,auth.openai.com,GPT",
-    "DOMAIN-SUFFIX,oaistatic.com,GPT",
-    "DOMAIN-SUFFIX,oaiusercontent.com,GPT",
-    "DOMAIN,android.chat.openai.com,GPT",
-    "DOMAIN,auth0.openai.com,GPT",
-    "DOMAIN,chat.openai.com,GPT",
-    "DOMAIN,desktop.chat.openai.com,GPT",
-    "DOMAIN,ios.chat.openai.com,GPT",
-    "DOMAIN,tcr9i.chat.openai.com,GPT",
-    "DOMAIN,cdn.openaimerge.com,GPT",
-    "DOMAIN,ws.chatgpt.com,GPT",
-    "DOMAIN,setup.auth.openai.com,GPT",
-    "DOMAIN,cdn.workos.com,GPT",
-    "DOMAIN,forwarder.workos.com,GPT",
-    "DOMAIN,images.workoscdn.com,GPT",
-    "DOMAIN,workos.imgix.net,GPT",
-    "DOMAIN,setup.workos.com,GPT",
-    "DOMAIN,ct.sendgrid.net,GPT",
-    "DOMAIN,oaistatsig.com,GPT",
-    "DOMAIN,intercom.io,GPT",
-    "DOMAIN,intercomcdn.com,GPT",
-    "DOMAIN,js.intercomcdn.com,GPT",
-    "DOMAIN,js.stripe.com,GPT",
-    "DOMAIN,o207216.ingest.sentry.io,GPT",
-    "DOMAIN,o33249.ingest.sentry.io,GPT",
-    "DOMAIN,rum.browser-intake-datadoghq.com,GPT",
-    "DOMAIN,challenges.cloudflare.com,GPT",
-    "DOMAIN,humb.apple.com,GPT",
+    "RULE-SET,OpenAI_Domain,GPT",
 
     // Gemini
     "DOMAIN-SUFFIX,gemini.google.com,Gemini",
@@ -1074,44 +1045,10 @@ function main(config) {
     // ========================================================
     // Amazon
     // ========================================================
-
-    "DOMAIN-SUFFIX,amazon.com,Amazon",
-    "DOMAIN-SUFFIX,amazon.co.uk,Amazon",
-    "DOMAIN-SUFFIX,amazon.de,Amazon",
-    "DOMAIN-SUFFIX,amazon.fr,Amazon",
-    "DOMAIN-SUFFIX,amazon.it,Amazon",
-    "DOMAIN-SUFFIX,amazon.es,Amazon",
-    "DOMAIN-SUFFIX,amazon.co.jp,Amazon",
-    "DOMAIN-SUFFIX,amazon.ca,Amazon",
-    "DOMAIN-SUFFIX,amazon.com.au,Amazon",
-    "DOMAIN-SUFFIX,amazon.in,Amazon",
-    "DOMAIN-SUFFIX,amazon.com.mx,Amazon",
-    "DOMAIN-SUFFIX,amazon.com.br,Amazon",
-    "DOMAIN-SUFFIX,amazon.nl,Amazon",
-    "DOMAIN-SUFFIX,amazon.pl,Amazon",
-    "DOMAIN-SUFFIX,amazon.se,Amazon",
-    "DOMAIN-SUFFIX,amazon.sg,Amazon",
-    "DOMAIN-SUFFIX,amazon.ae,Amazon",
-    "DOMAIN-SUFFIX,amazon.sa,Amazon",
-    "DOMAIN-SUFFIX,amazon.com.tr,Amazon",
-    "DOMAIN-SUFFIX,amazon.eg,Amazon",
-    "DOMAIN-SUFFIX,amazon.co.za,Amazon",
-
-    "DOMAIN-SUFFIX,images-amazon.com,Amazon",
-    "DOMAIN-SUFFIX,ssl-images-amazon.com,Amazon",
-    "DOMAIN-SUFFIX,media-amazon.com,Amazon",
-    "DOMAIN-SUFFIX,amazon-adsystem.com,Amazon",
-
-    "DOMAIN-SUFFIX,amazonpay.com,Amazon",
-    "DOMAIN-SUFFIX,amazonpay.in,Amazon",
-    "DOMAIN-SUFFIX,amazonpay.com.br,Amazon",
+    "RULE-SET,Amazon_Domain,Amazon",
 
     // Google
-    "DOMAIN-KEYWORD,google,Google",
-    "DOMAIN-SUFFIX,gmail.com,Google",
-    "DOMAIN-SUFFIX,googleusercontent.com,Google",
-    "DOMAIN-SUFFIX,gstatic.com,Google",
-    "DOMAIN-SUFFIX,googleapis.com,Google",
+    "RULE-SET,Google_Domain,Google",
 
     // WhatsApp
     "DOMAIN-SUFFIX,whatsapp.com,WhatsApp",
@@ -1322,6 +1259,31 @@ function main(config) {
       "interval": 86400,
       "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/ChinaMax_IP.mrs"
     },
+
+    "OpenAI_Domain": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/OpenAI_Domain.mrs"
+    },
+
+    "Google_Domain": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Google_Domain.mrs"
+    },
+
+    "Amazon_Domain": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Amazon_Domain.mrs"
+    },
+
 
     "Microsoft": {
       "type": "http",
