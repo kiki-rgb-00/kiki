@@ -887,7 +887,6 @@ function main(config) {
     "DOMAIN-SUFFIX,okx.com,PROXY-Gate",
     "DOMAIN-SUFFIX,bybit.com,PROXY-Gate",
     "DOMAIN-SUFFIX,bitget.com,PROXY-Gate",
-    "DOMAIN-SUFFIX,gemini.com,PROXY-Gate",
     "DOMAIN-SUFFIX,metamask.io,PROXY-Gate",
     "DOMAIN-SUFFIX,phantom.com,PROXY-Gate",
     "DOMAIN-SUFFIX,trustwallet.com,PROXY-Gate",
