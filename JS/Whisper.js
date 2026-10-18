@@ -893,39 +893,11 @@ function main(config) {
     "DOMAIN-SUFFIX,ledger.com,PROXY-Gate",
 
     // YouTube
-    "DOMAIN-SUFFIX,youtube.com,YouTube",
-    "DOMAIN-SUFFIX,youtu.be,YouTube",
-    "DOMAIN-SUFFIX,youtube-nocookie.com,YouTube",
-    "DOMAIN-SUFFIX,youtubei.googleapis.com,YouTube",
-    "DOMAIN-SUFFIX,youtube.googleapis.com,YouTube",
-    "DOMAIN-SUFFIX,ytimg.com,YouTube",
-    "DOMAIN-SUFFIX,googlevideo.com,YouTube",
-    "DOMAIN-SUFFIX,ggpht.com,YouTube",
+    "RULE-SET,YouTube_Domain,YouTube",
 
     // Netflix
-    "DOMAIN-SUFFIX,netflix.com,Netflix",
-    "DOMAIN-SUFFIX,netflix.net,Netflix",
-    "DOMAIN-SUFFIX,netflix.ca,Netflix",
-    "DOMAIN-SUFFIX,nflxext.com,Netflix",
-    "DOMAIN-SUFFIX,nflximg.com,Netflix",
-    "DOMAIN-SUFFIX,nflximg.net,Netflix",
-    "DOMAIN-SUFFIX,nflxsearch.net,Netflix",
-    "DOMAIN-SUFFIX,nflxso.net,Netflix",
-    "DOMAIN-SUFFIX,nflxvideo.net,Netflix",
-    "DOMAIN-SUFFIX,netflixdnstest0.com,Netflix",
-    "DOMAIN-SUFFIX,netflixdnstest1.com,Netflix",
-    "DOMAIN-SUFFIX,netflixdnstest2.com,Netflix",
-    "DOMAIN-SUFFIX,netflixdnstest3.com,Netflix",
-    "DOMAIN-SUFFIX,netflixdnstest4.com,Netflix",
-    "DOMAIN-SUFFIX,netflixdnstest5.com,Netflix",
-    "DOMAIN-SUFFIX,netflixdnstest6.com,Netflix",
-    "DOMAIN-SUFFIX,netflixdnstest7.com,Netflix",
-    "DOMAIN-SUFFIX,netflixdnstest8.com,Netflix",
-    "DOMAIN-SUFFIX,netflixdnstest9.com,Netflix",
-    "DOMAIN-SUFFIX,netflixdnstest10.com,Netflix",
-    "DOMAIN-SUFFIX,netflixinvestor.com,Netflix",
-    "DOMAIN-SUFFIX,netflixtechblog.com,Netflix",
-    "DOMAIN,netflix.com.edgesuite.net,Netflix",
+    "RULE-SET,Netflix_Domain,Netflix",
+    "RULE-SET,Netflix_IP,Netflix",
 
     // Disney+
     "DOMAIN-SUFFIX,disneyplus.com,Disney+",
@@ -942,24 +914,10 @@ function main(config) {
     "RULE-SET,Emby,Emby",
 
     // Spotify
-    "DOMAIN-SUFFIX,spotify.com,Spotify",
-    "DOMAIN-SUFFIX,spotifycdn.com,Spotify",
-    "DOMAIN-SUFFIX,scdn.co,Spotify",
-    "DOMAIN-SUFFIX,spclient.wg.spotify.com,Spotify",
-    "DOMAIN-SUFFIX,api-partner.spotify.com,Spotify",
-    "DOMAIN-SUFFIX,heads4-ak-spotify-com.akamaized.net,Spotify",
+    "RULE-SET,Spotify_Domain,Spotify",
 
     // TikTok
-    "DOMAIN-SUFFIX,tiktok.com,TikTok",
-    "DOMAIN-SUFFIX,tiktokcdn.com,TikTok",
-    "DOMAIN-SUFFIX,tiktokcdn-us.com,TikTok",
-    "DOMAIN-SUFFIX,tiktokv.com,TikTok",
-    "DOMAIN-SUFFIX,tiktokd.org,TikTok",
-    "DOMAIN-SUFFIX,ibytedtos.com,TikTok",
-    "DOMAIN-SUFFIX,ibyteimg.com,TikTok",
-    "DOMAIN-SUFFIX,byteoversea.com,TikTok",
-    "DOMAIN-SUFFIX,muscdn.com,TikTok",
-    "DOMAIN-SUFFIX,musical.ly,TikTok",
+    "RULE-SET,Tiktok_Domain,Tiktok",
 
     // Twitch
     "DOMAIN-SUFFIX,twitch.tv,Twitch",
@@ -1112,7 +1070,6 @@ function main(config) {
     "DOMAIN-SUFFIX,tdesktop.com,Telegram",
     "DOMAIN-SUFFIX,telegra.ph,Telegram",
     "DOMAIN-SUFFIX,telegram.dog,Telegram",
-
     "IP-CIDR,91.108.4.0/22,Telegram,no-resolve",
     "IP-CIDR,91.108.8.0/22,Telegram,no-resolve",
     "IP-CIDR,91.108.12.0/22,Telegram,no-resolve",
@@ -1284,6 +1241,45 @@ function main(config) {
       "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Amazon_Domain.mrs"
     },
 
+    "Netflix_Domain": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Netflix_Domain.mrs"
+    },
+
+    "Netflix_IP": {
+      "type": "http",
+      "behavior": "ipcidr",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Netflix_IP.mrs"
+    },
+
+    "Spotify_Domain": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Spotify_Domain.mrs"
+    },
+
+    "Tiktok_Domain": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Tiktok_Domain.mrs"
+    },
+
+    "YouTube_Domain": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/YouTube_Domain.mrs"
+    },
 
     "Microsoft": {
       "type": "http",
