@@ -224,28 +224,6 @@ function main(config) {
   });
 
   fixed["proxy-groups"].push({
-    "name": "OneDrive",
-    "type": "select",
-    "icon": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/OneDrive.png",
-    "proxies": [
-      "🖥️ All-Nodes",
-      "PROXY-Gate",
-      "DIRECT"
-    ]
-  });
-
-  fixed["proxy-groups"].push({
-    "name": "Outlook",
-    "type": "select",
-    "icon": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/Outlook.png",
-    "proxies": [
-      "🖥️ All-Nodes",
-      "PROXY-Gate",
-      "DIRECT"
-    ]
-  });
-
-  fixed["proxy-groups"].push({
     "name": "Grok",
     "type": "select",
     "icon": "https://raw.githubusercontent.com/luestr/IconResource/main/App_icon/120px/Grok.png",
@@ -540,8 +518,6 @@ function main(config) {
     "Gemini",
     "Claude",
     "Microsoft",
-    "OneDrive",
-    "Outlook",
     "Grok",
     "Google",
     "Apple",
@@ -741,49 +717,6 @@ function main(config) {
     "RULE-SET,Copilot_Domain,Microsoft",
     "RULE-SET,Copilot_IP,Microsoft",
     "RULE-SET,Microsoft,Microsoft",
-
-    // ============================================================
-    // OneDrive
-    //
-    // 明确的 OneDrive 域名。
-    // SharePoint / SharePoint Online 保留给 Microsoft。
-    // ============================================================
-
-    "DOMAIN-SUFFIX,1drv.com,OneDrive",
-    "DOMAIN-SUFFIX,1drv.ms,OneDrive",
-    "DOMAIN-SUFFIX,livefilestore.com,OneDrive",
-    "DOMAIN-SUFFIX,microsoftpersonalcontent.com,OneDrive",
-    "DOMAIN-SUFFIX,oneclient.sfx.ms,OneDrive",
-    "DOMAIN-SUFFIX,onedrive.com,OneDrive",
-    "DOMAIN-SUFFIX,onedrive.co,OneDrive",
-    "DOMAIN-SUFFIX,onedrive.co.uk,OneDrive",
-    "DOMAIN-SUFFIX,onedrive.eu,OneDrive",
-    "DOMAIN-SUFFIX,onedrive.live.com,OneDrive",
-    "DOMAIN-SUFFIX,onedrive.net,OneDrive",
-    "DOMAIN-SUFFIX,onedrive.org,OneDrive",
-    "DOMAIN-SUFFIX,photos.live.com,OneDrive",
-    "DOMAIN-SUFFIX,skydrive.wns.windows.com,OneDrive",
-    "DOMAIN-SUFFIX,storage.live.com,OneDrive",
-    "DOMAIN-SUFFIX,storage.msn.com,OneDrive",
-
-    // ============================================================
-    // Outlook
-    //
-    // 明确的 Outlook / Hotmail / Outlook Mobile 域名。
-    // ============================================================
-
-    "DOMAIN-SUFFIX,acompli.com,Outlook",
-    "DOMAIN-SUFFIX,acompli.net,Outlook",
-    "DOMAIN-SUFFIX,hotmail.com,Outlook",
-    "DOMAIN-SUFFIX,hotmail.co,Outlook",
-    "DOMAIN-SUFFIX,hotmail.eu,Outlook",
-    "DOMAIN-SUFFIX,hotmail.net,Outlook",
-    "DOMAIN-SUFFIX,hotmail.org,Outlook",
-    "DOMAIN-SUFFIX,outlook.cn,Outlook",
-    "DOMAIN-SUFFIX,outlook.com,Outlook",
-    "DOMAIN-SUFFIX,outlookgroups.ms,Outlook",
-    "DOMAIN-SUFFIX,outlookmobile.com,Outlook",
-    "DOMAIN-SUFFIX,microsoftemail.com,Outlook",
 
     // Grok
     "DOMAIN-SUFFIX,grok.com,Grok",
