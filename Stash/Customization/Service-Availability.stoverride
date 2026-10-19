@@ -3,13 +3,13 @@ name: Service Availability
 tiles:
   - name: ChatGPT
     title: ChatGPT
-    icon: https://www.google.com/s2/favicons?domain=chatgpt.com&sz=64
+    icon: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/ChatGPT.png
     url: https://chatgpt.com
     collapsed: true
 
   - name: Gemini
     title: Gemini
-    icon: https://www.google.com/s2/favicons?domain=gemini.google.com&sz=64
+    icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/google-gemini.png
     url: https://gemini.google.com
     collapsed: true
 
@@ -21,7 +21,7 @@ tiles:
 
   - name: Copilot
     title: Copilot
-    icon: https://www.google.com/s2/favicons?domain=copilot.microsoft.com&sz=64
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Copilot.png
     url: https://copilot.microsoft.com
     collapsed: true
 
@@ -69,7 +69,7 @@ tiles:
 
   - name: YouTube
     title: YouTube
-    icon: https://www.google.com/s2/favicons?domain=youtube.com&sz=64
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png
     url: https://www.youtube.com
     collapsed: true
 
@@ -87,7 +87,7 @@ tiles:
 
   - name: Cloudflare
     title: Cloudflare
-    icon: https://www.google.com/s2/favicons?domain=cloudflare.com&sz=64
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Cloudflare.png
     url: https://www.cloudflare.com
     collapsed: true
 
