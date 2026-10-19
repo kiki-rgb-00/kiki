@@ -2,7 +2,7 @@ const name = "ChatGPT"; // Claude.js 改成 Claude
 const url = "https://chatgpt.com"; // Claude.js 改成 https://claude.ai
 const start = Date.now();
 
-$httpClient.get({
+$httpClient.head({
   url: url,
   timeout: 15,
   headers: {
