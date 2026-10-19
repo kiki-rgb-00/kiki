@@ -62,69 +62,6 @@ const services = {
     icon: 'https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/anthropic.png'
   },
 
-  Copilot: {
-    url: 'https://copilot.microsoft.com/',
-    successMin: 200,
-    successMax: 399,
-    icon: 'https://cdn.jsdelivr.net/gh/Hawaiine/Oasisic-Icons@main/icons/Microsoft/Copilot-1.png'
-  },
-
-  Grok: {
-    url: 'https://grok.com/',
-    successMin: 200,
-    successMax: 399,
-    icon: 'https://raw.githubusercontent.com/luestr/IconResource/main/App_icon/120px/Grok.png'
-  },
-
-  Google: {
-    url: 'https://www.gstatic.com/generate_204',
-    successCodes: [204],
-    icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Google.png'
-  },
-
-  X: {
-    url: 'https://x.com/',
-    successMin: 200,
-    successMax: 399,
-    icon: 'https://fastly.jsdelivr.net/gh/shindgewongxj/WHATSINStash/icon/x.png'
-  },
-
-  Facebook: {
-    url: 'https://www.facebook.com/',
-    successMin: 200,
-    successMax: 399,
-    icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Facebook.png'
-  },
-
-  Instagram: {
-    url: 'https://www.instagram.com/',
-    successMin: 200,
-    successMax: 399,
-    icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Instagram.png'
-  },
-
-  WhatsApp: {
-    url: 'https://www.whatsapp.com/',
-    successMin: 200,
-    successMax: 399,
-    icon: 'https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/whatsapp.png'
-  },
-
-  Telegram: {
-    url: 'https://web.telegram.org/',
-    successMin: 200,
-    successMax: 399,
-    icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Telegram.png'
-  },
-
-  Github: {
-    url: 'https://github.com/',
-    successMin: 200,
-    successMax: 399,
-    icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/GitHub.png'
-  }
-}
-
 const serviceName = String($argument || '').trim()
 const service = services[serviceName]
 
