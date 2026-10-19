@@ -156,7 +156,6 @@ if (!service) {
   $httpClient.head(
     {
       url: service.url,
-
       timeout: 10,
 
       headers: {
@@ -172,7 +171,6 @@ if (!service) {
 
       const elapsed = Date.now() - startTime
       const elapsedSeconds = (elapsed / 1000).toFixed(2)
-
 
       if (error) {
 
@@ -207,7 +205,6 @@ if (!service) {
         return
       }
 
-
       if (
         !response ||
         typeof response.status !== 'number'
@@ -227,11 +224,9 @@ if (!service) {
         return
       }
 
-
       const status = response.status
 
       let success = false
-
 
       if (service.successCodes) {
 
@@ -244,7 +239,6 @@ if (!service) {
           status <= service.successMax
 
       }
-
 
       if (success) {
 
