@@ -15,7 +15,7 @@ script-providers:
 
   Service-Availability-YouTube:
     interval: 86400
-
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js
 
   Service-Availability-Netflix:
     interval: 86400
