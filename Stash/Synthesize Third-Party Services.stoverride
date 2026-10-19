@@ -14,82 +14,82 @@ desc: |-
 script-providers:
 
   Service-Availability-YouTube:
-    interval: 86400
+    interval: 600
     url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js
 
   Service-Availability-Netflix:
-    interval: 86400
+    interval: 600
     url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js
 
   Service-Availability-Disney:
-    interval: 86400
+    interval: 600
     url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js
 
   Service-Availability-Spotify:
-    interval: 86400
+    interval: 600
     url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js
 
   Service-Availability-TikTok:
-    interval: 86400
+    interval: 600
     url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js
 
   Service-Availability-Twitch:
-    interval: 86400
+    interval: 600
     url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js
 
   Service-Availability-ChatGPT:
-    interval: 86400
+    interval: 600
     url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js
 
   Service-Availability-Gemini:
-    interval: 86400
+    interval: 600
     url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js
 
   Service-Availability-Claude:
-    interval: 86400
+    interval: 600
     url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js
 
   Service-Availability-Copilot:
-    interval: 86400
+    interval: 600
     url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js
 
   Service-Availability-Grok:
-    interval: 86400
+    interval: 600
     url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js
 
   Service-Availability-Google:
-    interval: 86400
+    interval: 600
     url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js
 
   Service-Availability-X:
-    interval: 86400
+    interval: 600
     url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js
 
   Service-Availability-Facebook:
-    interval: 86400
+    interval: 600
     url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js
 
   Service-Availability-Instagram:
-    interval: 86400
+    interval: 600
     url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js
 
   Service-Availability-WhatsApp:
-    interval: 86400
+    interval: 600
     url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js
 
   Service-Availability-Telegram:
-    interval: 86400
+    interval: 600
     url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js
 
   Service-Availability-Github:
-    interval: 86400
+    interval: 600
     url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js
 
 
 tiles:
   - name: Service-Availability-YouTube
     argument: 'YouTube'
-    interval: 3600
+    interval: 600
     title: 'YouTube'
     content: '检测中'
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/YouTube.png
@@ -97,7 +97,7 @@ tiles:
 
   - name: Service-Availability-Netflix
     argument: 'Netflix'
-    interval: 3600
+    interval: 600
     title: 'Netflix'
     content: '检测中'
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Netflix.png
@@ -105,7 +105,7 @@ tiles:
 
   - name: Service-Availability-Disney
     argument: 'Disney+'
-    interval: 3600
+    interval: 600
     title: 'Disney+'
     content: '检测中'
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Disney+.png
@@ -113,7 +113,7 @@ tiles:
 
   - name: Service-Availability-Spotify
     argument: 'Spotify'
-    interval: 3600
+    interval: 600
     title: 'Spotify'
     content: '检测中'
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Spotify.png
@@ -121,7 +121,7 @@ tiles:
 
   - name: Service-Availability-TikTok
     argument: 'TikTok'
-    interval: 3600
+    interval: 600
     title: 'TikTok'
     content: '检测中'
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/TikTok.png
@@ -129,7 +129,7 @@ tiles:
 
   - name: Service-Availability-Twitch
     argument: 'Twitch'
-    interval: 3600
+    interval: 600
     title: 'Twitch'
     content: '检测中'
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Twitch.png
@@ -137,7 +137,7 @@ tiles:
 
   - name: Service-Availability-ChatGPT
     argument: 'ChatGPT'
-    interval: 3600
+    interval: 600
     title: 'ChatGPT'
     content: '检测中'
     icon: https://fastly.jsdelivr.net/gh/shindgewongxj/WHATSINStash/icon/openai.png
@@ -145,7 +145,7 @@ tiles:
 
   - name: Service-Availability-Gemini
     argument: 'Gemini'
-    interval: 3600
+    interval: 600
     title: 'Gemini'
     content: '检测中'
     icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/google-gemini.png
@@ -153,7 +153,7 @@ tiles:
 
   - name: Service-Availability-Claude
     argument: 'Claude'
-    interval: 3600
+    interval: 600
     title: 'Claude'
     content: '检测中'
     icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/anthropic.png
@@ -161,7 +161,7 @@ tiles:
 
   - name: Service-Availability-Copilot
     argument: 'Copilot'
-    interval: 3600
+    interval: 600
     title: 'Copilot'
     content: '检测中'
     icon: https://cdn.jsdelivr.net/gh/Hawaiine/Oasisic-Icons@main/icons/Microsoft/Copilot-1.png
@@ -169,7 +169,7 @@ tiles:
 
   - name: Service-Availability-Grok
     argument: 'Grok'
-    interval: 3600
+    interval: 600
     title: 'Grok'
     content: '检测中'
     icon: https://raw.githubusercontent.com/luestr/IconResource/main/App_icon/120px/Grok.png
@@ -177,7 +177,7 @@ tiles:
 
   - name: Service-Availability-Google
     argument: 'Google'
-    interval: 3600
+    interval: 600
     title: 'Google'
     content: '检测中'
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Google.png
@@ -185,7 +185,7 @@ tiles:
 
   - name: Service-Availability-X
     argument: 'X'
-    interval: 3600
+    interval: 600
     title: 'X'
     content: '检测中'
     icon: https://fastly.jsdelivr.net/gh/shindgewongxj/WHATSINStash/icon/x.png
@@ -193,7 +193,7 @@ tiles:
 
   - name: Service-Availability-Facebook
     argument: 'Facebook'
-    interval: 3600
+    interval: 600
     title: 'Facebook'
     content: '检测中'
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Facebook.png
@@ -201,7 +201,7 @@ tiles:
 
   - name: Service-Availability-Instagram
     argument: 'Instagram'
-    interval: 3600
+    interval: 600
     title: 'Instagram'
     content: '检测中'
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Instagram.png
@@ -209,7 +209,7 @@ tiles:
 
   - name: Service-Availability-WhatsApp
     argument: 'WhatsApp'
-    interval: 3600
+    interval: 600
     title: 'WhatsApp'
     content: '检测中'
     icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/whatsapp.png
@@ -217,7 +217,7 @@ tiles:
 
   - name: Service-Availability-Telegram
     argument: 'Telegram'
-    interval: 3600
+    interval: 600
     title: 'Telegram'
     content: '检测中'
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Telegram.png
@@ -225,7 +225,7 @@ tiles:
 
   - name: Service-Availability-Github
     argument: 'Github'
-    interval: 3600
+    interval: 600
     title: 'Github'
     content: '检测中'
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/GitHub.png
