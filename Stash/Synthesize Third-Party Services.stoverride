@@ -97,7 +97,7 @@ tiles:
 
   - name: Service-Availability-Netflix
     argument: 'Netflix'
-    interval: 600
+    interval: 30
     title: 'Netflix'
     content: '检测中'
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Netflix.png
