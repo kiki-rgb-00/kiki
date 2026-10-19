@@ -1,5 +1,5 @@
 const name = "Gemini";
-const url = "https://gemini.google.com/";
+const url = "https://www.google.com/generate_204";
 const start = Date.now();
 
 $httpClient.get(
@@ -33,7 +33,7 @@ $httpClient.get(
 
     let content;
 
-    if (code >= 200 && code <= 399) {
+    if (code === 204) {
       content = "可访问·响应 " + elapsed + " s";
     } else if (code === 403 || code === 404) {
       content = "响应·HTTP " + code + "·" + elapsed + " s";
