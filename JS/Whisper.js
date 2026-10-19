@@ -739,8 +739,6 @@ function main(config) {
     "Claude",
     "Grok",
     "Microsoft",
-    "OneDrive",
-    "Outlook",
     "Google",
     "Apple",
     "iCloud",
