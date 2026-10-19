@@ -79,12 +79,6 @@ tiles:
     url: https://www.microsoft.com
     collapsed: true
 
-  - name: Meta
-    title: Meta
-    icon: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/Meta.png
-    url: https://www.meta.com
-    collapsed: true
-
   - name: Cloudflare
     title: Cloudflare
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Cloudflare.png
@@ -130,9 +124,6 @@ script-providers:
 
   Microsoft:
     url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/main/Stash/Customization/JS/Service-Availability/Microsoft.js
-
-  Meta:
-    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/main/Stash/Customization/JS/Service-Availability/Meta.js
 
   Cloudflare:
     url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/main/Stash/Customization/JS/Service-Availability/Cloudflare.js
