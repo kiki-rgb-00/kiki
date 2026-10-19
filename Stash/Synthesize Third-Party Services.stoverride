@@ -15,39 +15,39 @@ script-providers:
 
   Service-Availability-YouTube:
     interval: 86400
-    url: https://raw.githubusercontent.com/Sydney-Moses/Network-Profiles/refs/heads/main/Customization/JS/Service-Availability.js
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js/heads/main/Customization/JS/Service-Availability.js
 
   Service-Availability-Netflix:
     interval: 86400
-    url: https://raw.githubusercontent.com/Sydney-Moses/Network-Profiles/refs/heads/main/Customization/JS/Service-Availability.js
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js/main/Customization/JS/Service-Availability.js
 
   Service-Availability-Disney:
     interval: 86400
-    url: https://raw.githubusercontent.com/Sydney-Moses/Network-Profiles/refs/heads/main/Customization/JS/Service-Availability.js
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js/heads/main/Customization/JS/Service-Availability.js
 
   Service-Availability-Spotify:
     interval: 86400
-    url: https://raw.githubusercontent.com/Sydney-Moses/Network-Profiles/refs/heads/main/Customization/JS/Service-Availability.js
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js/main/Customization/JS/Service-Availability.js
 
   Service-Availability-TikTok:
     interval: 86400
-    url: https://raw.githubusercontent.com/Sydney-Moses/Network-Profiles/refs/heads/main/Customization/JS/Service-Availability.js
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js
 
   Service-Availability-Twitch:
     interval: 86400
-    url: https://raw.githubusercontent.com/Sydney-Moses/Network-Profiles/refs/heads/main/Customization/JS/Service-Availability.js
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js/main/Customization/JS/Service-Availability.js
 
   Service-Availability-ChatGPT:
     interval: 86400
-    url: https://raw.githubusercontent.com/Sydney-Moses/Network-Profiles/refs/heads/main/Customization/JS/Service-Availability.js
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js/main/Customization/JS/Service-Availability.js
 
   Service-Availability-Gemini:
     interval: 86400
-    url: https://raw.githubusercontent.com/Sydney-Moses/Network-Profiles/refs/heads/main/Customization/JS/Service-Availability.js
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.jsheads/main/Customization/JS/Service-Availability.js
 
   Service-Availability-Claude:
     interval: 86400
-    url: https://raw.githubusercontent.com/Sydney-Moses/Network-Profiles/refs/heads/main/Customization/JS/Service-Availability.js
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js/main/Customization/JS/Service-Availability.js
 
   Service-Availability-Copilot:
     interval: 86400
