@@ -2,7 +2,7 @@ const name = "Gemini";
 const url = "https://accounts.google.com/";
 const start = Date.now();
 
-$httpClient.get(
+$httpClient.head(
   {
     url: url,
     timeout: 15,
