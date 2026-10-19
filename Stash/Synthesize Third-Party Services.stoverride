@@ -17,7 +17,7 @@ tiles:
 
   - name: Claude
     title: Claude
-    icon: https://www.google.com/s2/favicons?domain=claude.ai&sz=64
+    icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/anthropic.png
     url: https://claude.ai
     collapsed: true
 
@@ -29,43 +29,43 @@ tiles:
 
   - name: Grok
     title: Grok
-    icon: https://www.google.com/s2/favicons?domain=grok.com&sz=64
+    icon: https://raw.githubusercontent.com/luestr/IconResource/main/App_icon/120px/Grok.png
     url: https://grok.com
     collapsed: true
 
   - name: Netflix
     title: Netflix
-    icon: https://www.google.com/s2/favicons?domain=netflix.com&sz=64
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Netflix.png
     url: https://www.netflix.com
     collapsed: true
 
   - name: DisneyPlus
     title: Disney+
-    icon: https://www.google.com/s2/favicons?domain=disneyplus.com&sz=64
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Disney+.png
     url: https://www.disneyplus.com
     collapsed: true
 
   - name: Google
     title: Google
-    icon: https://www.google.com/s2/favicons?domain=google.com&sz=64
+    icon: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/Google.PNG
     url: https://www.google.com
     collapsed: true
 
   - name: TikTok
     title: TikTok
-    icon: https://www.google.com/s2/favicons?domain=tiktok.com&sz=64
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/TikTok.png
     url: https://www.tiktok.com
     collapsed: true
 
   - name: Spotify
     title: Spotify
-    icon: https://www.google.com/s2/favicons?domain=spotify.com&sz=64
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Spotify.png
     url: https://open.spotify.com
     collapsed: true
 
   - name: GitHub
     title: GitHub
-    icon: https://www.google.com/s2/favicons?domain=github.com&sz=64
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/GitHub.png
     url: https://github.com
     collapsed: true
 
@@ -77,13 +77,13 @@ tiles:
 
   - name: Microsoft
     title: Microsoft
-    icon: https://www.google.com/s2/favicons?domain=microsoft.com&sz=64
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png
     url: https://www.microsoft.com
     collapsed: true
 
   - name: Meta
     title: Meta
-    icon: https://www.google.com/s2/favicons?domain=meta.com&sz=64
+    icon: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/Meta.png
     url: https://www.meta.com
     collapsed: true
 
