@@ -1,232 +1,140 @@
+#SUBSCRIBED https://raw.githubusercontent.com/kiki-rgb-00/kiki/main/Stash/Customization/Service-Availability.stoverride
 
-name: Synthesize Third-Party Services
-
-icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/SSID.png
-
-category: Private
-
-desc: |-
-  Synthesize Third-Party Services
-  18 Service Availability Tests
-  Detection Interval: 1 Hour
-  Request Timeout: 10 Seconds
-
-script-providers:
-
-  Service-Availability-YouTube:
-    interval: 600
-    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js
-
-  Service-Availability-Netflix:
-    interval: 600
-    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js
-
-  Service-Availability-Disney:
-    interval: 600
-    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js
-
-  Service-Availability-Spotify:
-    interval: 600
-    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js
-
-  Service-Availability-TikTok:
-    interval: 600
-    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js
-
-  Service-Availability-Twitch:
-    interval: 600
-    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js
-
-  Service-Availability-ChatGPT:
-    interval: 600
-    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js
-
-  Service-Availability-Gemini:
-    interval: 600
-    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js
-
-  Service-Availability-Claude:
-    interval: 600
-    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js
-
-  Service-Availability-Copilot:
-    interval: 600
-    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js
-
-  Service-Availability-Grok:
-    interval: 600
-    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js
-
-  Service-Availability-Google:
-    interval: 600
-    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js
-
-  Service-Availability-X:
-    interval: 600
-    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js
-
-  Service-Availability-Facebook:
-    interval: 600
-    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js
-
-  Service-Availability-Instagram:
-    interval: 600
-    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js
-
-  Service-Availability-WhatsApp:
-    interval: 600
-    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js
-
-  Service-Availability-Telegram:
-    interval: 600
-    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js
-
-  Service-Availability-Github:
-    interval: 600
-    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js
-
+name: Service Availability
 
 tiles:
-  - name: Service-Availability-YouTube
-    argument: 'YouTube'
-    interval: 600
-    title: 'YouTube'
-    content: '检测中'
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/YouTube.png
+  - name: ChatGPT
+    title: ChatGPT
+    icon: https://www.google.com/s2/favicons?domain=chatgpt.com&sz=64
+    url: https://chatgpt.com
     collapsed: true
 
-  - name: Service-Availability-Netflix
-    argument: 'Netflix'
-    interval: 30
-    title: 'Netflix'
-    content: '检测中'
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Netflix.png
+  - name: Gemini
+    title: Gemini
+    icon: https://www.google.com/s2/favicons?domain=gemini.google.com&sz=64
+    url: https://gemini.google.com
     collapsed: true
 
-  - name: Service-Availability-Disney
-    argument: 'Disney+'
-    interval: 600
-    title: 'Disney+'
-    content: '检测中'
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Disney+.png
+  - name: Claude
+    title: Claude
+    icon: https://www.google.com/s2/favicons?domain=claude.ai&sz=64
+    url: https://claude.ai
     collapsed: true
 
-  - name: Service-Availability-Spotify
-    argument: 'Spotify'
-    interval: 600
-    title: 'Spotify'
-    content: '检测中'
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Spotify.png
+  - name: Copilot
+    title: Copilot
+    icon: https://www.google.com/s2/favicons?domain=copilot.microsoft.com&sz=64
+    url: https://copilot.microsoft.com
     collapsed: true
 
-  - name: Service-Availability-TikTok
-    argument: 'TikTok'
-    interval: 600
-    title: 'TikTok'
-    content: '检测中'
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/TikTok.png
+  - name: Grok
+    title: Grok
+    icon: https://www.google.com/s2/favicons?domain=grok.com&sz=64
+    url: https://grok.com
     collapsed: true
 
-  - name: Service-Availability-Twitch
-    argument: 'Twitch'
-    interval: 600
-    title: 'Twitch'
-    content: '检测中'
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Twitch.png
+  - name: Netflix
+    title: Netflix
+    icon: https://www.google.com/s2/favicons?domain=netflix.com&sz=64
+    url: https://www.netflix.com
     collapsed: true
 
-  - name: Service-Availability-ChatGPT
-    argument: 'ChatGPT'
-    interval: 600
-    title: 'ChatGPT'
-    content: '检测中'
-    icon: https://fastly.jsdelivr.net/gh/shindgewongxj/WHATSINStash/icon/openai.png
+  - name: DisneyPlus
+    title: Disney+
+    icon: https://www.google.com/s2/favicons?domain=disneyplus.com&sz=64
+    url: https://www.disneyplus.com
     collapsed: true
 
-  - name: Service-Availability-Gemini
-    argument: 'Gemini'
-    interval: 600
-    title: 'Gemini'
-    content: '检测中'
-    icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/google-gemini.png
+  - name: Google
+    title: Google
+    icon: https://www.google.com/s2/favicons?domain=google.com&sz=64
+    url: https://www.google.com
     collapsed: true
 
-  - name: Service-Availability-Claude
-    argument: 'Claude'
-    interval: 600
-    title: 'Claude'
-    content: '检测中'
-    icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/anthropic.png
+  - name: TikTok
+    title: TikTok
+    icon: https://www.google.com/s2/favicons?domain=tiktok.com&sz=64
+    url: https://www.tiktok.com
     collapsed: true
 
-  - name: Service-Availability-Copilot
-    argument: 'Copilot'
-    interval: 600
-    title: 'Copilot'
-    content: '检测中'
-    icon: https://cdn.jsdelivr.net/gh/Hawaiine/Oasisic-Icons@main/icons/Microsoft/Copilot-1.png
+  - name: Spotify
+    title: Spotify
+    icon: https://www.google.com/s2/favicons?domain=spotify.com&sz=64
+    url: https://open.spotify.com
     collapsed: true
 
-  - name: Service-Availability-Grok
-    argument: 'Grok'
-    interval: 600
-    title: 'Grok'
-    content: '检测中'
-    icon: https://raw.githubusercontent.com/luestr/IconResource/main/App_icon/120px/Grok.png
+  - name: GitHub
+    title: GitHub
+    icon: https://www.google.com/s2/favicons?domain=github.com&sz=64
+    url: https://github.com
     collapsed: true
 
-  - name: Service-Availability-Google
-    argument: 'Google'
-    interval: 600
-    title: 'Google'
-    content: '检测中'
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Google.png
+  - name: YouTube
+    title: YouTube
+    icon: https://www.google.com/s2/favicons?domain=youtube.com&sz=64
+    url: https://www.youtube.com
     collapsed: true
 
-  - name: Service-Availability-X
-    argument: 'X'
-    interval: 600
-    title: 'X'
-    content: '检测中'
-    icon: https://fastly.jsdelivr.net/gh/shindgewongxj/WHATSINStash/icon/x.png
+  - name: Microsoft
+    title: Microsoft
+    icon: https://www.google.com/s2/favicons?domain=microsoft.com&sz=64
+    url: https://www.microsoft.com
     collapsed: true
 
-  - name: Service-Availability-Facebook
-    argument: 'Facebook'
-    interval: 600
-    title: 'Facebook'
-    content: '检测中'
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Facebook.png
+  - name: Meta
+    title: Meta
+    icon: https://www.google.com/s2/favicons?domain=meta.com&sz=64
+    url: https://www.meta.com
     collapsed: true
 
-  - name: Service-Availability-Instagram
-    argument: 'Instagram'
-    interval: 600
-    title: 'Instagram'
-    content: '检测中'
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Instagram.png
+  - name: Cloudflare
+    title: Cloudflare
+    icon: https://www.google.com/s2/favicons?domain=cloudflare.com&sz=64
+    url: https://www.cloudflare.com
     collapsed: true
 
-  - name: Service-Availability-WhatsApp
-    argument: 'WhatsApp'
-    interval: 600
-    title: 'WhatsApp'
-    content: '检测中'
-    icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/whatsapp.png
-    collapsed: true
+script-providers:
+  ChatGPT:
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/main/Stash/Customization/JS/Service-Availability/ChatGPT.js
 
-  - name: Service-Availability-Telegram
-    argument: 'Telegram'
-    interval: 600
-    title: 'Telegram'
-    content: '检测中'
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Telegram.png
-    collapsed: true
+  Gemini:
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/main/Stash/Customization/JS/Service-Availability/Gemini.js
 
-  - name: Service-Availability-Github
-    argument: 'Github'
-    interval: 600
-    title: 'Github'
-    content: '检测中'
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/GitHub.png
-    collapsed: true
+  Claude:
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/main/Stash/Customization/JS/Service-Availability/Claude.js
+
+  Copilot:
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/main/Stash/Customization/JS/Service-Availability/Copilot.js
+
+  Grok:
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/main/Stash/Customization/JS/Service-Availability/Grok.js
+
+  Netflix:
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/main/Stash/Customization/JS/Service-Availability/Netflix.js
+
+  DisneyPlus:
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/main/Stash/Customization/JS/Service-Availability/DisneyPlus.js
+
+  Google:
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/main/Stash/Customization/JS/Service-Availability/Google.js
+
+  TikTok:
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/main/Stash/Customization/JS/Service-Availability/TikTok.js
+
+  Spotify:
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/main/Stash/Customization/JS/Service-Availability/Spotify.js
+
+  GitHub:
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/main/Stash/Customization/JS/Service-Availability/GitHub.js
+
+  YouTube:
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/main/Stash/Customization/JS/Service-Availability/YouTube.js
+
+  Microsoft:
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/main/Stash/Customization/JS/Service-Availability/Microsoft.js
+
+  Meta:
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/main/Stash/Customization/JS/Service-Availability/Meta.js
+
+  Cloudflare:
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/main/Stash/Customization/JS/Service-Availability/Cloudflare.js
