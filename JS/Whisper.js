@@ -352,28 +352,6 @@ function main(config) {
   });
 
   fixed["proxy-groups"].push({
-    "name": "OneDrive",
-    "type": "select",
-    "icon": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/OneDrive.png",
-    "proxies": [
-      "🖥️ All-Nodes",
-      "PROXY-Gate",
-      "DIRECT"
-    ]
-  });
-
-  fixed["proxy-groups"].push({
-    "name": "Outlook",
-    "type": "select",
-    "icon": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/Outlook.png",
-    "proxies": [
-      "🖥️ All-Nodes",
-      "PROXY-Gate",
-      "DIRECT"
-    ]
-  });
-
-  fixed["proxy-groups"].push({
     "name": "Google",
     "type": "select",
     "icon": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/Google.PNG",
@@ -942,38 +920,6 @@ function main(config) {
     "DOMAIN-SUFFIX,anthropic.com,Claude",
     "DOMAIN-SUFFIX,claudeusercontent.com,Claude",
     "DOMAIN-SUFFIX,claudeusercontent.com.cdn.cloudflare.net,Claude",
-
-    // OneDrive
-    "DOMAIN-SUFFIX,1drv.com,OneDrive",
-    "DOMAIN-SUFFIX,1drv.ms,OneDrive",
-    "DOMAIN-SUFFIX,livefilestore.com,OneDrive",
-    "DOMAIN-SUFFIX,microsoftpersonalcontent.com,OneDrive",
-    "DOMAIN-SUFFIX,oneclient.sfx.ms,OneDrive",
-    "DOMAIN-SUFFIX,onedrive.com,OneDrive",
-    "DOMAIN-SUFFIX,onedrive.co,OneDrive",
-    "DOMAIN-SUFFIX,onedrive.co.uk,OneDrive",
-    "DOMAIN-SUFFIX,onedrive.eu,OneDrive",
-    "DOMAIN-SUFFIX,onedrive.live.com,OneDrive",
-    "DOMAIN-SUFFIX,onedrive.net,OneDrive",
-    "DOMAIN-SUFFIX,onedrive.org,OneDrive",
-    "DOMAIN-SUFFIX,photos.live.com,OneDrive",
-    "DOMAIN-SUFFIX,skydrive.wns.windows.com,OneDrive",
-    "DOMAIN-SUFFIX,storage.live.com,OneDrive",
-    "DOMAIN-SUFFIX,storage.msn.com,OneDrive",
-
-    // Outlook
-    "DOMAIN-SUFFIX,acompli.com,Outlook",
-    "DOMAIN-SUFFIX,acompli.net,Outlook",
-    "DOMAIN-SUFFIX,hotmail.com,Outlook",
-    "DOMAIN-SUFFIX,hotmail.co,Outlook",
-    "DOMAIN-SUFFIX,hotmail.eu,Outlook",
-    "DOMAIN-SUFFIX,hotmail.net,Outlook",
-    "DOMAIN-SUFFIX,hotmail.org,Outlook",
-    "DOMAIN-SUFFIX,outlook.cn,Outlook",
-    "DOMAIN-SUFFIX,outlook.com,Outlook",
-    "DOMAIN-SUFFIX,outlookgroups.ms,Outlook",
-    "DOMAIN-SUFFIX,outlookmobile.com,Outlook",
-    "DOMAIN-SUFFIX,microsoftemail.com,Outlook",
 
     // Microsoft / Copilot
     "RULE-SET,Copilot_Domain,Microsoft",
