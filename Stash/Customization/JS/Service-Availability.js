@@ -1,4 +1,3 @@
-
 const services = {
   YouTube: {
     url: 'https://www.youtube.com/generate_204',
@@ -61,37 +60,49 @@ const services = {
     successMax: 399,
     icon: 'https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/anthropic.png'
   },
-
 const serviceName = String($argument || '').trim()
 const service = services[serviceName]
 
+
 if (!service) {
-  console.log('[Third-Party] Unknown service:', serviceName)
+
+  console.log(
+    '[Third-Party] Unknown service:',
+    serviceName
+  )
 
   $done({
     title: serviceName || 'Third-Party',
     content: '配置错误'
   })
-} else {
-  const startTime = Date.now()
-  console.log('[Tile Test] ' + serviceName + ' executed at ' + new Date().toISOString())
 
-  $httpClient.get(
+} else {
+
+  const startTime = Date.now()
+
+  $httpClient.head(
     {
       url: service.url,
+
       timeout: 10,
+
       headers: {
         'User-Agent':
           'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 Version/18.0 Mobile/15E148 Safari/604.1',
+
         'X-Stash-Selected-Proxy':
           encodeURIComponent(serviceName)
       }
     },
+
     (error, response, data) => {
+
       const elapsed = Date.now() - startTime
       const elapsedSeconds = (elapsed / 1000).toFixed(2)
 
+
       if (error) {
+
         console.log(
           '[' + serviceName + '] Request Error:',
           error
@@ -103,26 +114,32 @@ if (!service) {
           errorText.includes('timeout') ||
           errorText.includes('timed out')
         ) {
+
           $done({
             title: serviceName,
             content: '超时·10.00 s',
             icon: service.icon
           })
+
         } else {
+
           $done({
             title: serviceName,
             content: '连接失败',
             icon: service.icon
           })
+
         }
 
         return
       }
 
+
       if (
         !response ||
         typeof response.status !== 'number'
       ) {
+
         console.log(
           '[' + serviceName + '] Invalid Response:',
           response
@@ -130,65 +147,42 @@ if (!service) {
 
         $done({
           title: serviceName,
-          content: '无有效响应',
+          content: '连接失败',
           icon: service.icon
         })
 
         return
       }
 
+
       const status = response.status
 
       let success = false
 
+
       if (service.successCodes) {
+
         success = service.successCodes.includes(status)
+
       } else {
+
         success =
           status >= service.successMin &&
           status <= service.successMax
+
       }
 
+
       if (success) {
+
         $done({
           title: serviceName,
           content: '可访问·响应 ' + elapsedSeconds + ' s',
           icon: service.icon
         })
-      } else if (status === 403 || status === 404) {
-        $done({
-          title: serviceName,
-          content:
-            '服务器有响应·HTTP ' +
-            status +
-            '·' +
-            elapsedSeconds +
-            ' s',
-          icon: service.icon
-        })
+
       } else if (status >= 400 && status <= 499) {
-        $done({
-          title: serviceName,
-          content:
-            '请求受限·HTTP ' +
-            status +
-            '·' +
-            elapsedSeconds +
-            ' s',
-          icon: service.icon
-        })
-      } else if (status >= 500 && status <= 599) {
-        $done({
-          title: serviceName,
-          content:
-            '服务器错误·' +
-            status +
-            '·响应 ' +
-            elapsedSeconds +
-            ' s',
-          icon: service.icon
-        })
-      } else {
+
         $done({
           title: serviceName,
           content:
@@ -199,7 +193,36 @@ if (!service) {
             ' s',
           icon: service.icon
         })
+
+      } else if (status >= 500 && status <= 599) {
+
+        $done({
+          title: serviceName,
+          content:
+            '服务器错误·' +
+            status +
+            '·响应 ' +
+            elapsedSeconds +
+            ' s',
+          icon: service.icon
+        })
+
+      } else {
+
+        $done({
+          title: serviceName,
+          content:
+            'HTTP ' +
+            status +
+            '·响应 ' +
+            elapsedSeconds +
+            ' s',
+          icon: service.icon
+        })
+
       }
+
     }
   )
+
 }
