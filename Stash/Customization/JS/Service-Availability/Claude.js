@@ -5,10 +5,6 @@ const start = Date.now();
 $httpClient.head({
   url: url,
   timeout: 15,
-  headers: {
-    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1",
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
-  }
 }, (error, response) => {
   const elapsed = ((Date.now() - start) / 1000).toFixed(2);
 
