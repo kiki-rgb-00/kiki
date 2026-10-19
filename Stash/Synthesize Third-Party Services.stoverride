@@ -1,3 +1,4 @@
+
 name: Synthesize Third-Party Services
 
 icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/SSID.png
@@ -6,7 +7,7 @@ category: Private
 
 desc: |-
   Synthesize Third-Party Services
-  19 Service Availability Tests
+  18 Service Availability Tests
   Detection Interval: 1 Hour
   Request Timeout: 10 Seconds
 
@@ -84,13 +85,8 @@ script-providers:
     interval: 86400
     url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js
 
-  Service-Availability-Speedtest:
-    interval: 86400
-    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Stash/Customization/JS/Service-Availability.js
-
 
 tiles:
-
   - name: Service-Availability-YouTube
     argument: 'YouTube'
     interval: 3600
@@ -233,12 +229,4 @@ tiles:
     title: 'Github'
     content: '检测中'
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/GitHub.png
-    collapsed: true
-
-  - name: Service-Availability-Speedtest
-    argument: 'Speedtest'
-    interval: 3600
-    title: 'Speedtest'
-    content: '检测中'
-    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Speedtest.png
     collapsed: true
