@@ -2,7 +2,7 @@ const name = "Claude"; // Claude.js 改成 Claude
 const url = "https://claude.ai"; // Claude.js 改成 https://claude.ai
 const start = Date.now();
 
-$httpClient.get({
+$httpClient.head({
   url: url,
   timeout: 15,
   headers: {
