@@ -76,7 +76,7 @@ tiles:
   - name: Meta
     title: Meta
     icon: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/Meta.png
-    url: https://github.com
+    url: https://www.Meta.com
     collapsed: true
 
   - name: Cloudflare
