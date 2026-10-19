@@ -137,6 +137,7 @@ if (!service) {
   })
 } else {
   const startTime = Date.now()
+  console.log('[Tile Test] ' + serviceName + ' executed at ' + new Date().toISOString())
 
   $httpClient.get(
     {
