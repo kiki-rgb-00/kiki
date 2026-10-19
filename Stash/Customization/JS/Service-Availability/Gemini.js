@@ -4,8 +4,7 @@ const start = Date.now();
 
 $httpClient.head({
   url: url,
-  timeout: 15,
-  }
+  timeout: 15
 }, (error, response) => {
   const elapsed = ((Date.now() - start) / 1000).toFixed(2);
 
