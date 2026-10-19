@@ -1,0 +1,138 @@
+name: Service Availability
+
+tiles:
+  - name: ChatGPT
+    title: ChatGPT
+    icon: https://www.google.com/s2/favicons?domain=chatgpt.com&sz=64
+    url: https://chatgpt.com
+    collapsed: true
+
+  - name: Gemini
+    title: Gemini
+    icon: https://www.google.com/s2/favicons?domain=gemini.google.com&sz=64
+    url: https://gemini.google.com
+    collapsed: true
+
+  - name: Claude
+    title: Claude
+    icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/anthropic.png
+    url: https://claude.ai
+    collapsed: true
+
+  - name: Copilot
+    title: Copilot
+    icon: https://www.google.com/s2/favicons?domain=copilot.microsoft.com&sz=64
+    url: https://copilot.microsoft.com
+    collapsed: true
+
+  - name: Grok
+    title: Grok
+    icon: https://raw.githubusercontent.com/luestr/IconResource/main/App_icon/120px/Grok.png
+    url: https://grok.com
+    collapsed: true
+
+  - name: Netflix
+    title: Netflix
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Netflix.png
+    url: https://www.netflix.com
+    collapsed: true
+
+  - name: DisneyPlus
+    title: Disney+
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Disney+.png
+    url: https://www.disneyplus.com
+    collapsed: true
+
+  - name: Google
+    title: Google
+    icon: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/Google.PNG
+    url: https://www.google.com
+    collapsed: true
+
+  - name: TikTok
+    title: TikTok
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/TikTok.png
+    url: https://www.tiktok.com
+    collapsed: true
+
+  - name: Spotify
+    title: Spotify
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Spotify.png
+    url: https://open.spotify.com
+    collapsed: true
+
+  - name: GitHub
+    title: GitHub
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/GitHub.png
+    url: https://github.com
+    collapsed: true
+
+  - name: YouTube
+    title: YouTube
+    icon: https://www.google.com/s2/favicons?domain=youtube.com&sz=64
+    url: https://www.youtube.com
+    collapsed: true
+
+  - name: Microsoft
+    title: Microsoft
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png
+    url: https://www.microsoft.com
+    collapsed: true
+
+  - name: Meta
+    title: Meta
+    icon: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/Meta.png
+    url: https://www.meta.com
+    collapsed: true
+
+  - name: Cloudflare
+    title: Cloudflare
+    icon: https://www.google.com/s2/favicons?domain=cloudflare.com&sz=64
+    url: https://www.cloudflare.com
+    collapsed: true
+
+script-providers:
+  ChatGPT:
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/main/Stash/Customization/JS/Service-Availability/ChatGPT.js
+
+  Gemini:
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/main/Stash/Customization/JS/Service-Availability/Gemini.js
+
+  Claude:
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/main/Stash/Customization/JS/Service-Availability/Claude.js
+
+  Copilot:
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/main/Stash/Customization/JS/Service-Availability/Copilot.js
+
+  Grok:
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/main/Stash/Customization/JS/Service-Availability/Grok.js
+
+  Netflix:
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/main/Stash/Customization/JS/Service-Availability/Netflix.js
+
+  DisneyPlus:
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/main/Stash/Customization/JS/Service-Availability/DisneyPlus.js
+
+  Google:
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/main/Stash/Customization/JS/Service-Availability/Google.js
+
+  TikTok:
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/main/Stash/Customization/JS/Service-Availability/TikTok.js
+
+  Spotify:
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/main/Stash/Customization/JS/Service-Availability/Spotify.js
+
+  GitHub:
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/main/Stash/Customization/JS/Service-Availability/GitHub.js
+
+  YouTube:
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/main/Stash/Customization/JS/Service-Availability/YouTube.js
+
+  Microsoft:
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/main/Stash/Customization/JS/Service-Availability/Microsoft.js
+
+  Meta:
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/main/Stash/Customization/JS/Service-Availability/Meta.js
+
+  Cloudflare:
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/main/Stash/Customization/JS/Service-Availability/Cloudflare.js
