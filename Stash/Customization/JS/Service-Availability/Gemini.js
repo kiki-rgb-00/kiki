@@ -8,17 +8,21 @@ $httpClient.get(
     timeout: 15,
     headers: {
       "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 Version/18.0 Mobile/15E148 Safari/604.1",
+      "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
       "X-Stash-Selected-Proxy": encodeURIComponent(name)
-    }
+    },
+    "auto-redirect": true
   },
   function (error, response) {
     const elapsed = ((Date.now() - start) / 1000).toFixed(2);
 
     if (error || !response) {
       console.log("[Gemini] Request Error: " + String(error || "No response"));
+      console.log("[Gemini] Elapsed: " + elapsed + "s");
+
       $done({
         title: name,
-        content: "连接失败",
+        content: "连接失败·" + elapsed + " s",
         icon: "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/google-gemini.png"
       });
       return;
