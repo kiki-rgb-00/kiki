@@ -943,11 +943,6 @@ function main(config) {
     "DOMAIN-SUFFIX,claudeusercontent.com,Claude",
     "DOMAIN-SUFFIX,claudeusercontent.com.cdn.cloudflare.net,Claude",
 
-    // Microsoft / Copilot
-    "RULE-SET,Copilot_Domain,Microsoft",
-    "RULE-SET,Copilot_IP,Microsoft",
-    "RULE-SET,Microsoft,Microsoft",
-
     // OneDrive
     "DOMAIN-SUFFIX,1drv.com,OneDrive",
     "DOMAIN-SUFFIX,1drv.ms,OneDrive",
@@ -979,6 +974,12 @@ function main(config) {
     "DOMAIN-SUFFIX,outlookgroups.ms,Outlook",
     "DOMAIN-SUFFIX,outlookmobile.com,Outlook",
     "DOMAIN-SUFFIX,microsoftemail.com,Outlook",
+
+    // Microsoft / Copilot
+    "RULE-SET,Copilot_Domain,Microsoft",
+    "RULE-SET,Copilot_IP,Microsoft",
+    "RULE-SET,Microsoft,Microsoft",
+
 
     // Grok
     "DOMAIN-SUFFIX,grok.com,Grok",
