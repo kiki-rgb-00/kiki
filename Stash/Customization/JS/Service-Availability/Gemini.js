@@ -1,5 +1,5 @@
 const name = "Gemini";
-const url = "https://www.google.com/generate_204";
+const url = "https://gemini.google.com/";
 const start = Date.now();
 
 $httpClient.get(
@@ -9,7 +9,6 @@ $httpClient.get(
     headers: {
       "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 Version/18.0 Mobile/15E148 Safari/604.1",
       "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-      "X-Stash-Selected-Proxy": encodeURIComponent(name)
     },
     "auto-redirect": true
   },
@@ -33,7 +32,7 @@ $httpClient.get(
 
     let content;
 
-    if (code === 204) {
+    if (code >= 200 && code <= 399) {
       content = "可访问·响应 " + elapsed + " s";
     } else if (code === 403 || code === 404) {
       content = "响应·HTTP " + code + "·" + elapsed + " s";
