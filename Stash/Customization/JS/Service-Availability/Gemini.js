@@ -1,5 +1,5 @@
 const name = "Gemini";
-const url = "https://accounts.google.com/";
+const url = "https://www.gemini.google.com";
 const start = Date.now();
 
 $httpClient.head({ url, timeout: 15 }, (error, response) => {
