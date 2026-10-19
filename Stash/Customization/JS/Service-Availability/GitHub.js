@@ -2,7 +2,7 @@ const name = "GitHub";
 const url = "https://github.com";
 const start = Date.now();
 
-$httpClient.get({ url, timeout: 15 }, (error, response) => {
+$httpClient.head({ url, timeout: 15 }, (error, response) => {
   const elapsed = ((Date.now() - start) / 1000).toFixed(2);
   if (error || !response) {
     console.log(`[${name}] 请求失败: ${JSON.stringify(error || "无响应对象")}`);
