@@ -1,5 +1,5 @@
 const name = "Gemini";
-const url = "https://gemini.google.com/app";
+const url = 'https://gemini.google.com/'
 const start = Date.now();
 
 $httpClient.head({
