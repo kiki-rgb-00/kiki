@@ -1,8 +1,8 @@
 const name = "ChatGPT";
-const url = "https://chatgpt.com/";
+const url = "https://api.openai.com/compliance/cookie_requirements";
 const start = Date.now();
 
-$httpClient.head({
+$httpClient.get({
   url: url,
   timeout: 15,
   headers: {
