@@ -1,5 +1,5 @@
 const name = "ChatGPT";
-const url = "https://www.chatgpt.com";
+const url = "https://chatgpt.com/";
 const start = Date.now();
 
 $httpClient.head({
