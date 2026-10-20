@@ -1,54 +1,37 @@
-async function request(method, params) {
-  return new Promise((resolve, reject) => {
-    const httpMethod = $httpClient[method.toLowerCase()];
-    httpMethod(params, (error, response, data) => {
-      resolve({ error, response, data });
-    });
-  });
-}
+const name = "Claude";
+const url = "https://Claude.com/";
+const start = Date.now();
 
-async function main() {
-  const { error, response, data } = await request("GET", "https://claude.ai");
+$httpClient.get({
+  url: url,
+  timeout: 15,
+  headers: {
+    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1",
+    "X-Stash-Selected-Proxy": encodeURIComponent(name)
+  }
+}, (error, response) => {
+  const elapsed = ((Date.now() - start) / 1000).toFixed(2);
 
-  if (error) {
-    $done({
-      content: "Network Error",
-      backgroundColor: "",
-    });
-    return;
+  if (error || !response) {
+    console.log(`[${name}] 请求失败: ${String(error || "无响应对象")}`);
+    return $done({ title: name, content: "连接失败" });
   }
 
-  const body = (data || "").toLowerCase();
-  if (
-    body.includes("not available in your country") ||
-    body.includes("unsupported country") ||
-    body.includes("unavailable in your region")
-  ) {
-    $done({
-      content: "Not Available",
-      backgroundColor: "",
-    });
-    return;
+  const code = response.status;
+  let content;
+
+  if (code >= 200 && code <= 399) {
+    content = `可访问·响应 ${elapsed} s`;
+  } else if (code === 403 || code === 404) {
+    content = `响应·HTTP ${code}·${elapsed} s`;
+  } else if (code >= 400 && code <= 499) {
+    content = `异常·HTTP ${code}·${elapsed} s`;
+  } else if (code >= 500 && code <= 599) {
+    content = `错误·HTTP ${code}·${elapsed} s`;
+  } else {
+    content = `异常·HTTP ${code}·${elapsed} s`;
   }
 
-  if (body.includes("claude")) {
-    $done({
-      content: "Available",
-      backgroundColor: "#D4A373",
-    });
-    return;
-  }
-
-  $done({
-    content: "Unknown",
-    backgroundColor: "",
-  });
-}
-
-(async () => {
-  main()
-    .then((_) => {})
-    .catch((error) => {
-      $done({});
-    });
-})();
+  console.log(`[${name}] HTTP ${code}, ${elapsed}s`);
+  $done({ title: name, content });
+});
