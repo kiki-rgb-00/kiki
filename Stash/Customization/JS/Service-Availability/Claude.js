@@ -2,7 +2,7 @@ const name = "Claude";
 const url = "https://Claude.com/";
 const start = Date.now();
 
-$httpClient.get({
+$httpClient.head({
   url: url,
   timeout: 15,
   headers: {
