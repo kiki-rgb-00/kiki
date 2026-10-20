@@ -1,5 +1,5 @@
 const name = "Claude";
-const url = "https://claude.ai";
+const url = "https://claude.ai/";
 const start = Date.now();
 
 $httpClient.head({
