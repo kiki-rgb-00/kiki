@@ -2,7 +2,7 @@ const name = "ChatGPT";
 const url = "https://chatgpt.com/";
 const start = Date.now();
 
-$httpClient.head({
+$httpClient.get({
   url: url,
   timeout: 15,
   headers: {
