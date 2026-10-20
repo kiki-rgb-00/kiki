@@ -2,7 +2,7 @@ const name = "Claude";
 const url = "https://claude.ai/";
 const start = Date.now();
 
-$httpClient.head({
+$httpClient.get({
   url: url,
   timeout: 15
 }, (error, response) => {
