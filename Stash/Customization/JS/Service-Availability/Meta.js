@@ -2,7 +2,7 @@ const name = "Meta";
 const url = "https://www.meta.com";
 const start = Date.now();
 
-$httpClient.head({
+$httpClient.get({
   url: url,
   timeout: 15
 }, (error, response) => {
