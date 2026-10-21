@@ -915,6 +915,10 @@ function main(config) {
     "DOMAIN,oaistatsig.com,GPT",
     "DOMAIN,rum.browser-intake-datadoghq.com,GPT",
     "DOMAIN,challenges.cloudflare.com,GPT",
+    "DOMAIN-KEYWORD,openai,
+    "IP-CIDR,24.199.123.28/32,
+    "IP-CIDR,64.23.132.171/32,
+    "IP-ASN,20473,
 
     // Gemini
     "DOMAIN-SUFFIX,gemini.google.com,Gemini",
