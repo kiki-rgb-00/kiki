@@ -949,7 +949,6 @@ function main(config) {
     "RULE-SET,Copilot_IP,Microsoft",
     "RULE-SET,Microsoft,Microsoft",
 
-
     // Grok
     "DOMAIN-SUFFIX,grok.com,Grok",
     "DOMAIN-SUFFIX,x.ai,Grok",
