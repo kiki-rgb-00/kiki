@@ -974,7 +974,22 @@ function main(config) {
 
     // Google
     "RULE-SET,Google_Domain,Google",
-
+    "DOMAIN-KEYWORD,appspot,Google",
+    "DOMAIN-KEYWORD,blogspot,Google",
+    "DOMAIN-KEYWORD,gmail,Google",
+    "DOMAIN-KEYWORD,google,Google",
+    "DOMAIN-KEYWORD,recaptcha,Google",
+    "IP-CIDR,172.110.32.0/21,Google",
+    "IP-CIDR,173.194.0.0/16,Google",
+    "IP-CIDR,216.73.80.0/20,Google",
+    "IP-CIDR,74.125.0.0/16,Google",
+    "IP-CIDR6,2620:120:e000::/40,Google",
+    "PROCESS-NAME,GoogleDriveFS.exe,Google",
+    "PROCESS-NAME,com.android.vending,Google",
+    "PROCESS-NAME,com.google.android.gms,Google",
+    "PROCESS-NAME,com.google.android.gsf,Google",
+    "PROCESS-NAME,com.google.android.play.games,Google",
+    "PROCESS-NAME,BackupandSync,Google",
     // WhatsApp
     "DOMAIN-SUFFIX,whatsapp.com,WhatsApp",
     "DOMAIN-SUFFIX,whatsapp.net,WhatsApp",
