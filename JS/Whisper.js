@@ -870,7 +870,10 @@ function main(config) {
 
     // YouTube
     "RULE-SET,YouTube_Domain,YouTube",
-
+    "DOMAIN-KEYWORD,youtube"
+    "IP-CIDR,172.110.32.0/21"
+    "IP-CIDR,216.73.80.0/20"
+    "IP-CIDR6,2620:120:e000::/40"
     // Netflix
     "RULE-SET,Netflix_Domain,Netflix",
     "RULE-SET,Netflix_IP,Netflix",
