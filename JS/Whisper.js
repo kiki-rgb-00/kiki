@@ -870,14 +870,18 @@ function main(config) {
 
     // YouTube
     "RULE-SET,YouTube_Domain,YouTube",
-    "DOMAIN-KEYWORD,youtube"
-    "IP-CIDR,172.110.32.0/21"
-    "IP-CIDR,216.73.80.0/20"
-    "IP-CIDR6,2620:120:e000::/40"
+    "DOMAIN-KEYWORD,youtube,YouTube",
+    "IP-CIDR,172.110.32.0/21,YouTube",
+    "IP-CIDR,216.73.80.0/20,YouTube",
+    "IP-CIDR6,2620:120:e000::/40,YouTube",
     // Netflix
     "RULE-SET,Netflix_Domain,Netflix",
     "RULE-SET,Netflix_IP,Netflix",
-
+    "DOMAIN-KEYWORD,apiproxy-device-prod-nlb-,Netflix",
+    "DOMAIN-KEYWORD,dualstack.apiproxy-,Netflix",
+    "DOMAIN-KEYWORD,dualstack.ichnaea-web-,Netflix",
+    "DOMAIN-KEYWORD,netflixdnstest,Netflix",
+    "PROCESS-NAME,com.netflix.mediaclient,Netflix",
     // Disney+
     "DOMAIN-SUFFIX,disneyplus.com,Disney+",
     "DOMAIN-SUFFIX,disney-plus.net,Disney+",
@@ -918,10 +922,10 @@ function main(config) {
     "DOMAIN,oaistatsig.com,GPT",
     "DOMAIN,rum.browser-intake-datadoghq.com,GPT",
     "DOMAIN,challenges.cloudflare.com,GPT",
-    "DOMAIN-KEYWORD,openai,
-    "IP-CIDR,24.199.123.28/32,
-    "IP-CIDR,64.23.132.171/32,
-    "IP-ASN,20473,
+    "DOMAIN-KEYWORD,openai,GPT",
+    "IP-CIDR,24.199.123.28/32,CPT",
+    "IP-CIDR,64.23.132.171/32,GPT",
+    "IP-ASN,20473,GPT",
 
     // Gemini
     "DOMAIN-SUFFIX,gemini.google.com,Gemini",
