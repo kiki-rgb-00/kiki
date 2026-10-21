@@ -904,6 +904,17 @@ function main(config) {
 
     // GPT
     "RULE-SET,OpenAI_Domain,GPT",
+    "DOMAIN,cdn.openaimerge.com,GPT",
+    "DOMAIN,setup.auth.openai.com,GPT",
+    "DOMAIN,cdn.workos.com,GPT",
+    "DOMAIN,forwarder.workos.com,GPT",
+    "DOMAIN,images.workoscdn.com,GPT",
+    "DOMAIN,workos.imgix.net,GPT",
+    "DOMAIN,setup.workos.com,GPT",
+    "DOMAIN,ct.sendgrid.net,GPT",
+    "DOMAIN,oaistatsig.com,GPT",
+    "DOMAIN,rum.browser-intake-datadoghq.com,GPT",
+    "DOMAIN,challenges.cloudflare.com,GPT",
 
     // Gemini
     "DOMAIN-SUFFIX,gemini.google.com,Gemini",
