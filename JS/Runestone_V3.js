@@ -653,7 +653,15 @@ function main(config) {
     "DOMAIN-SUFFIX,ledger.com,PROXY-Gate",
 
     // YouTube
-    "RULE-SET,YouTube_Domain,YouTube",
+    //"RULE-SET,YouTube_Domain,YouTube",
+    "DOMAIN-SUFFIX,youtube.com,YouTube",
+    "DOMAIN-SUFFIX,youtu.be,YouTube",
+    "DOMAIN-SUFFIX,youtube-nocookie.com,YouTube",
+    "DOMAIN-SUFFIX,youtubei.googleapis.com,YouTube",
+    "DOMAIN-SUFFIX,youtube.googleapis.com,YouTube",
+    "DOMAIN-SUFFIX,ytimg.com,YouTube",
+    "DOMAIN-SUFFIX,googlevideo.com,YouTube",
+    "DOMAIN-SUFFIX,ggpht.com,YouTube",
 
     // Netflix
     "RULE-SET,Netflix_Domain,Netflix",
