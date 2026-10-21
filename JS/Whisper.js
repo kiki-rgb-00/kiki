@@ -923,7 +923,6 @@ function main(config) {
     "DOMAIN,rum.browser-intake-datadoghq.com,GPT",
     "DOMAIN,challenges.cloudflare.com,GPT",
     "DOMAIN-KEYWORD,openai,GPT",
-    "IP-CIDR,24.199.123.28/32,CPT",
     "IP-CIDR,64.23.132.171/32,GPT",
     "IP-ASN,20473,GPT",
 
