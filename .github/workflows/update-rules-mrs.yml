@@ -77,15 +77,6 @@ jobs:
 
       # =========================
       # Netflix Domain
-      #
-      # Download upstream Netflix.yaml.
-      # Keep only:
-      # DOMAIN
-      # DOMAIN-SUFFIX
-      # DOMAIN-KEYWORD
-      #
-      # IP and other rules are
-      # maintained separately.
       # =========================
 
       - name: Download Netflix Domain Rules
@@ -95,61 +86,19 @@ jobs:
 
       - name: Prepare Netflix Domain Rules
         run: |
-          python - <<'PY'
-          from pathlib import Path
-          import yaml
-
-          source = Path(".tmp/rules/Netflix.yaml")
-          output = Path(".tmp/rules/Netflix_Domain.yaml")
-
-          data = yaml.safe_load(source.read_text(encoding="utf-8"))
-
-          if not isinstance(data, dict) or not isinstance(data.get("payload"), list):
-              raise ValueError("Invalid Netflix YAML: missing payload list")
-
-          allowed_types = {
-              "DOMAIN",
-              "DOMAIN-SUFFIX",
-              "DOMAIN-KEYWORD",
-          }
-
-          rules = data["payload"]
-          filtered = [
-              rule for rule in rules
-              if isinstance(rule, str)
-              and rule.split(",", 1)[0].strip().upper() in allowed_types
-          ]
-
-          if not filtered:
-              raise ValueError("No Netflix domain rules found")
-
-          output.write_text(
-              yaml.safe_dump(
-                  {"payload": filtered},
-                  allow_unicode=True,
-                  sort_keys=False,
-              ),
-              encoding="utf-8",
-          )
-
-          print(f"Original rules: {len(rules)}")
-          print(f"Domain rules: {len(filtered)}")
-          print(f"Excluded IP/other rules: {len(rules) - len(filtered)}")
-          PY
+          python scripts/filter_netflix.py \
+            .tmp/rules/Netflix.yaml \
+            .tmp/rules/Netflix_Domain.txt
 
       - name: Convert Netflix Domain Rules
         run: |
           ./mihomo convert-ruleset \
-            domain yaml \
-            .tmp/rules/Netflix_Domain.yaml \
+            domain text \
+            .tmp/rules/Netflix_Domain.txt \
             MRS/Netflix_Domain.mrs
 
       # =========================
       # Netflix IP
-      #
-      # Download upstream Netflix_IP.yaml.
-      # Convert IP-CIDR / IP-CIDR6 rules
-      # into a separate IP MRS file.
       # =========================
 
       - name: Download Netflix IP Rules
@@ -157,25 +106,21 @@ jobs:
           wget -O .tmp/rules/Netflix_IP.yaml \
             https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Netflix/Netflix_IP.yaml
 
+      - name: Prepare Netflix IP Rules
+        run: |
+          python scripts/filter_netflix_ip.py \
+            .tmp/rules/Netflix_IP.yaml \
+            .tmp/rules/Netflix_IP_Filtered.yaml
+
       - name: Convert Netflix IP Rules
         run: |
           ./mihomo convert-ruleset \
             ipcidr yaml \
-            .tmp/rules/Netflix_IP.yaml \
+            .tmp/rules/Netflix_IP_Filtered.yaml \
             MRS/Netflix_IP.mrs
 
-
       # =========================
-      # TikTok
-      #
-      # Download upstream TikTok.yaml.
-      # Keep only:
-      # DOMAIN
-      # DOMAIN-SUFFIX
-      # DOMAIN-KEYWORD
-      #
-      # IP and other rules are
-      # maintained separately.
+      # TikTok Domain
       # =========================
 
       - name: Download TikTok Rules
@@ -185,67 +130,19 @@ jobs:
 
       - name: Prepare TikTok Domain Rules
         run: |
-          python - <<'PY'
-          from pathlib import Path
-          import yaml
-
-          source = Path(".tmp/rules/TikTok.yaml")
-          output = Path(".tmp/rules/TikTok_Domain.yaml")
-
-          data = yaml.safe_load(source.read_text(encoding="utf-8"))
-
-          if not isinstance(data, dict) or not isinstance(data.get("payload"), list):
-              raise ValueError("Invalid TikTok YAML: missing payload list")
-
-          allowed_types = {
-              "DOMAIN",
-              "DOMAIN-SUFFIX",
-              "DOMAIN-KEYWORD",
-          }
-
-          rules = data["payload"]
-          filtered = [
-              rule for rule in rules
-              if isinstance(rule, str)
-              and rule.split(",", 1)[0].strip().upper() in allowed_types
-          ]
-
-          if not filtered:
-              raise ValueError("No TikTok domain rules found")
-
-          output.write_text(
-              yaml.safe_dump(
-                  {"payload": filtered},
-                  allow_unicode=True,
-                  sort_keys=False,
-              ),
-              encoding="utf-8",
-          )
-
-          print(f"Original rules: {len(rules)}")
-          print(f"Domain rules: {len(filtered)}")
-          print(f"Excluded IP/other rules: {len(rules) - len(filtered)}")
-          PY
+          python scripts/filter_tiktok.py \
+            .tmp/rules/TikTok.yaml \
+            .tmp/rules/TikTok_Domain.txt
 
       - name: Convert TikTok Domain Rules
         run: |
           ./mihomo convert-ruleset \
-            domain yaml \
-            .tmp/rules/TikTok_Domain.yaml \
+            domain text \
+            .tmp/rules/TikTok_Domain.txt \
             MRS/TikTok_Domain.mrs
 
-
       # =========================
-      # YouTube
-      #
-      # Download upstream YouTube.yaml.
-      # Keep only:
-      # DOMAIN
-      # DOMAIN-SUFFIX
-      # DOMAIN-KEYWORD
-      #
-      # IP and other rules are
-      # maintained separately.
+      # YouTube Domain
       # =========================
 
       - name: Download YouTube Rules
@@ -255,67 +152,19 @@ jobs:
 
       - name: Prepare YouTube Domain Rules
         run: |
-          python - <<'PY'
-          from pathlib import Path
-          import yaml
-
-          source = Path(".tmp/rules/YouTube.yaml")
-          output = Path(".tmp/rules/YouTube_Domain.yaml")
-
-          data = yaml.safe_load(source.read_text(encoding="utf-8"))
-
-          if not isinstance(data, dict) or not isinstance(data.get("payload"), list):
-              raise ValueError("Invalid YouTube YAML: missing payload list")
-
-          allowed_types = {
-              "DOMAIN",
-              "DOMAIN-SUFFIX",
-              "DOMAIN-KEYWORD",
-          }
-
-          rules = data["payload"]
-          filtered = [
-              rule for rule in rules
-              if isinstance(rule, str)
-              and rule.split(",", 1)[0].strip().upper() in allowed_types
-          ]
-
-          if not filtered:
-              raise ValueError("No YouTube domain rules found")
-
-          output.write_text(
-              yaml.safe_dump(
-                  {"payload": filtered},
-                  allow_unicode=True,
-                  sort_keys=False,
-              ),
-              encoding="utf-8",
-          )
-
-          print(f"Original rules: {len(rules)}")
-          print(f"Domain rules: {len(filtered)}")
-          print(f"Excluded IP/other rules: {len(rules) - len(filtered)}")
-          PY
+          python scripts/filter_youtube.py \
+            .tmp/rules/YouTube.yaml \
+            .tmp/rules/YouTube_Domain.txt
 
       - name: Convert YouTube Domain Rules
         run: |
           ./mihomo convert-ruleset \
-            domain yaml \
-            .tmp/rules/YouTube_Domain.yaml \
+            domain text \
+            .tmp/rules/YouTube_Domain.txt \
             MRS/YouTube_Domain.mrs
 
-
       # =========================
-      # Spotify
-      #
-      # Download upstream Spotify.yaml.
-      # Keep only:
-      # DOMAIN
-      # DOMAIN-SUFFIX
-      # DOMAIN-KEYWORD
-      #
-      # IP and other rules are
-      # maintained separately.
+      # Spotify Domain
       # =========================
 
       - name: Download Spotify Rules
@@ -325,66 +174,19 @@ jobs:
 
       - name: Prepare Spotify Domain Rules
         run: |
-          python - <<'PY'
-          from pathlib import Path
-          import yaml
-
-          source = Path(".tmp/rules/Spotify.yaml")
-          output = Path(".tmp/rules/Spotify_Domain.yaml")
-
-          data = yaml.safe_load(source.read_text(encoding="utf-8"))
-
-          if not isinstance(data, dict) or not isinstance(data.get("payload"), list):
-              raise ValueError("Invalid Spotify YAML: missing payload list")
-
-          allowed_types = {
-              "DOMAIN",
-              "DOMAIN-SUFFIX",
-              "DOMAIN-KEYWORD",
-          }
-
-          rules = data["payload"]
-          filtered = [
-              rule for rule in rules
-              if isinstance(rule, str)
-              and rule.split(",", 1)[0].strip().upper() in allowed_types
-          ]
-
-          if not filtered:
-              raise ValueError("No Spotify domain rules found")
-
-          output.write_text(
-              yaml.safe_dump(
-                  {"payload": filtered},
-                  allow_unicode=True,
-                  sort_keys=False,
-              ),
-              encoding="utf-8",
-          )
-
-          print(f"Original rules: {len(rules)}")
-          print(f"Domain rules: {len(filtered)}")
-          print(f"Excluded IP/other rules: {len(rules) - len(filtered)}")
-          PY
+          python scripts/filter_spotify.py \
+            .tmp/rules/Spotify.yaml \
+            .tmp/rules/Spotify_Domain.txt
 
       - name: Convert Spotify Domain Rules
         run: |
           ./mihomo convert-ruleset \
-            domain yaml \
-            .tmp/rules/Spotify_Domain.yaml \
+            domain text \
+            .tmp/rules/Spotify_Domain.txt \
             MRS/Spotify_Domain.mrs
 
       # =========================
-      # Amazon
-      #
-      # Download upstream Amazon.yaml.
-      # Keep only:
-      # DOMAIN
-      # DOMAIN-SUFFIX
-      # DOMAIN-KEYWORD
-      #
-      # IP and other rules are
-      # maintained separately.
+      # Amazon Domain
       # =========================
 
       - name: Download Amazon Rules
@@ -394,67 +196,19 @@ jobs:
 
       - name: Prepare Amazon Domain Rules
         run: |
-          python - <<'PY'
-          from pathlib import Path
-          import yaml
-
-          source = Path(".tmp/rules/Amazon.yaml")
-          output = Path(".tmp/rules/Amazon_Domain.yaml")
-
-          data = yaml.safe_load(source.read_text(encoding="utf-8"))
-
-          if not isinstance(data, dict) or not isinstance(data.get("payload"), list):
-              raise ValueError("Invalid Amazon YAML: missing payload list")
-
-          allowed_types = {
-              "DOMAIN",
-              "DOMAIN-SUFFIX",
-              "DOMAIN-KEYWORD",
-          }
-
-          rules = data["payload"]
-          filtered = [
-              rule for rule in rules
-              if isinstance(rule, str)
-              and rule.split(",", 1)[0].strip().upper() in allowed_types
-          ]
-
-          if not filtered:
-              raise ValueError("No Amazon domain rules found")
-
-          output.write_text(
-              yaml.safe_dump(
-                  {"payload": filtered},
-                  allow_unicode=True,
-                  sort_keys=False,
-              ),
-              encoding="utf-8",
-          )
-
-          print(f"Original rules: {len(rules)}")
-          print(f"Domain rules: {len(filtered)}")
-          print(f"Excluded IP/other rules: {len(rules) - len(filtered)}")
-          PY
+          python scripts/filter_amazon.py \
+            .tmp/rules/Amazon.yaml \
+            .tmp/rules/Amazon_Domain.txt
 
       - name: Convert Amazon Domain Rules
         run: |
           ./mihomo convert-ruleset \
-            domain yaml \
-            .tmp/rules/Amazon_Domain.yaml \
+            domain text \
+            .tmp/rules/Amazon_Domain.txt \
             MRS/Amazon_Domain.mrs
 
-
       # =========================
-      # Google
-      #
-      # Download upstream Google.yaml.
-      # Keep only:
-      # DOMAIN
-      # DOMAIN-SUFFIX
-      # DOMAIN-KEYWORD
-      #
-      # IP and other rules are
-      # maintained separately.
+      # Google Domain
       # =========================
 
       - name: Download Google Rules
@@ -464,66 +218,19 @@ jobs:
 
       - name: Prepare Google Domain Rules
         run: |
-          python - <<'PY'
-          from pathlib import Path
-          import yaml
-
-          source = Path(".tmp/rules/Google.yaml")
-          output = Path(".tmp/rules/Google_Domain.yaml")
-
-          data = yaml.safe_load(source.read_text(encoding="utf-8"))
-
-          if not isinstance(data, dict) or not isinstance(data.get("payload"), list):
-              raise ValueError("Invalid Google YAML: missing payload list")
-
-          allowed_types = {
-              "DOMAIN",
-              "DOMAIN-SUFFIX",
-              "DOMAIN-KEYWORD",
-          }
-
-          rules = data["payload"]
-          filtered = [
-              rule for rule in rules
-              if isinstance(rule, str)
-              and rule.split(",", 1)[0].strip().upper() in allowed_types
-          ]
-
-          if not filtered:
-              raise ValueError("No Google domain rules found")
-
-          output.write_text(
-              yaml.safe_dump(
-                  {"payload": filtered},
-                  allow_unicode=True,
-                  sort_keys=False,
-              ),
-              encoding="utf-8",
-          )
-
-          print(f"Original rules: {len(rules)}")
-          print(f"Domain rules: {len(filtered)}")
-          print(f"Excluded IP/other rules: {len(rules) - len(filtered)}")
-          PY
+          python scripts/filter_google.py \
+            .tmp/rules/Google.yaml \
+            .tmp/rules/Google_Domain.txt
 
       - name: Convert Google Domain Rules
         run: |
           ./mihomo convert-ruleset \
-            domain yaml \
-            .tmp/rules/Google_Domain.yaml \
+            domain text \
+            .tmp/rules/Google_Domain.txt \
             MRS/Google_Domain.mrs
 
       # =========================
-      # OpenAI
-      #
-      # Download upstream OpenAI.yaml.
-      # Keep only:
-      # DOMAIN
-      # DOMAIN-SUFFIX
-      # DOMAIN-KEYWORD
-      #
-      # IP-CIDR and IP-ASN are
-      # maintained manually.
+      # OpenAI Domain
       # =========================
 
       - name: Download OpenAI Rules
@@ -533,53 +240,15 @@ jobs:
 
       - name: Prepare OpenAI Domain Rules
         run: |
-          python - <<'PY'
-          from pathlib import Path
-          import yaml
-
-          source = Path(".tmp/rules/OpenAI.yaml")
-          output = Path(".tmp/rules/OpenAI_Domain.yaml")
-
-          data = yaml.safe_load(source.read_text(encoding="utf-8"))
-
-          if not isinstance(data, dict) or not isinstance(data.get("payload"), list):
-              raise ValueError("Invalid OpenAI YAML: missing payload list")
-
-          allowed_types = {
-              "DOMAIN",
-              "DOMAIN-SUFFIX",
-              "DOMAIN-KEYWORD",
-          }
-
-          rules = data["payload"]
-          filtered = [
-              rule for rule in rules
-              if isinstance(rule, str)
-              and rule.split(",", 1)[0].strip().upper() in allowed_types
-          ]
-
-          if not filtered:
-              raise ValueError("No OpenAI domain rules found")
-
-          output.write_text(
-              yaml.safe_dump(
-                  {"payload": filtered},
-                  allow_unicode=True,
-                  sort_keys=False,
-              ),
-              encoding="utf-8",
-          )
-
-          print(f"Original rules: {len(rules)}")
-          print(f"Domain rules: {len(filtered)}")
-          print(f"Excluded IP/other rules: {len(rules) - len(filtered)}")
-          PY
+          python scripts/filter_openai.py \
+            .tmp/rules/OpenAI.yaml \
+            .tmp/rules/OpenAI_Domain.txt
 
       - name: Convert OpenAI Domain Rules
         run: |
           ./mihomo convert-ruleset \
-            domain yaml \
-            .tmp/rules/OpenAI_Domain.yaml \
+            domain text \
+            .tmp/rules/OpenAI_Domain.txt \
             MRS/OpenAI_Domain.mrs
 
       # =========================
