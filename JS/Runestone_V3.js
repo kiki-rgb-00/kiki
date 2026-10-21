@@ -708,6 +708,9 @@ function main(config) {
     "DOMAIN,oaistatsig.com,GPT",
     "DOMAIN,rum.browser-intake-datadoghq.com,GPT",
     "DOMAIN,challenges.cloudflare.com,GPT",
+    "DOMAIN-KEYWORD,openai,GPT",
+    "IP-CIDR,64.23.132.171/32,GPT",
+    "IP-ASN,20473,GPT",
 
     // Gemini
     "DOMAIN-SUFFIX,gemini.google.com,Gemini",
@@ -958,21 +961,12 @@ function main(config) {
       "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/ChinaMax_IP.mrs"
     },
 
-
     "OpenAI_Domain": {
       "type": "http",
       "behavior": "domain",
       "format": "mrs",
       "interval": 86400,
       "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/OpenAI_Domain.mrs"
-    },
-
-    "Google_Domain": {
-      "type": "http",
-      "behavior": "domain",
-      "format": "mrs",
-      "interval": 86400,
-      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Google_Domain.mrs"
     },
 
     "Netflix_Domain": {
@@ -1005,14 +999,6 @@ function main(config) {
       "format": "mrs",
       "interval": 86400,
       "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/TikTok_Domain.mrs"
-    },
-
-    "YouTube_Domain": {
-      "type": "http",
-      "behavior": "domain",
-      "format": "mrs",
-      "interval": 86400,
-      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/YouTube_Domain.mrs"
     },
 
     "Microsoft": {
