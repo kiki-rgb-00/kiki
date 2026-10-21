@@ -338,32 +338,28 @@ jobs:
             .tmp/rules/Emby_Domain.txt \
             MRS/Emby.mrs
 
+
       # =========================
       # ChinaMax
       # ChinaMax.yaml is kept as
       # repository rule source.
       #
-      # Domain/IP files are temporary
-      # build files.
+      # Download upstream TXT files
+      # directly for MRS conversion.
       # =========================
 
       - name: Download ChinaMax Domain
         run: |
-          wget -O .tmp/rules/ChinaMax_Domain.yaml \
-            https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMax/ChinaMax_Domain.yaml
+          wget -O .tmp/rules/ChinaMax_Domain.txt \
+            https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMax/ChinaMax_Domain.txt
 
       # =========================
       # Remove BrowserLeaks
       #
-      # BrowserLeaks is intentionally
-      # excluded from ChinaMax because
-      # direct matching would make its
-      # IP test show the direct Chinese
-      # exit IP instead of the proxy IP.
-      #
-      # Do NOT modify Rules/ChinaMax.yaml.
-      # Only the temporary build file is
-      # filtered before MRS conversion.
+      # Keep BrowserLeaks excluded
+      # from ChinaMax Domain rules.
+      # The source TXT contains one
+      # domain per line.
       # =========================
 
       - name: Remove BrowserLeaks from ChinaMax Domain
@@ -371,7 +367,7 @@ jobs:
           python - <<'PY'
           from pathlib import Path
 
-          path = Path(".tmp/rules/ChinaMax_Domain.yaml")
+          path = Path(".tmp/rules/ChinaMax_Domain.txt")
           targets = {"browserleaks.com"}
 
           lines = path.read_text(encoding="utf-8").splitlines()
@@ -381,28 +377,11 @@ jobs:
           for line in lines:
               stripped = line.strip()
 
-              if not stripped.startswith("-"):
+              if not stripped or stripped.startswith("#"):
                   output.append(line)
                   continue
 
-              rule = stripped[1:].strip().strip("'\"")
-              parts = [part.strip() for part in rule.split(",")]
-
-              # Traditional Clash rules
-              if len(parts) >= 2:
-                  rule_type = parts[0].upper()
-                  domain = parts[1].lower().rstrip(".")
-
-                  if rule_type in {"DOMAIN", "DOMAIN-SUFFIX"}:
-                      if any(
-                          domain == target or domain.endswith("." + target)
-                          for target in targets
-                      ):
-                          removed.append(rule)
-                          continue
-
-              # Pure domain-list entries, e.g. +.example.com
-              domain = rule.lower().rstrip(".")
+              domain = stripped.lower().rstrip(".")
 
               if domain.startswith("+."):
                   domain = domain[2:]
@@ -411,7 +390,7 @@ jobs:
                   domain == target or domain.endswith("." + target)
                   for target in targets
               ):
-                  removed.append(rule)
+                  removed.append(stripped)
                   continue
 
               output.append(line)
@@ -428,27 +407,69 @@ jobs:
           print(f"Removed: {len(removed)}")
           PY
 
-      - name: Download ChinaMax IP
-        run: |
-          wget -O .tmp/rules/ChinaMax_IP.yaml \
-            https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMax/ChinaMax_IP.yaml
-
-      - name: Remove ChinaMax IP ASN
-        run: |
-          sed -i "/^[[:space:]]*-[[:space:]]*['\"]\?132203['\"]\?[[:space:]]*$/d" .tmp/rules/ChinaMax_IP.yaml
-
       - name: Convert ChinaMax Domain
         run: |
           ./mihomo convert-ruleset \
-            domain yaml \
-            .tmp/rules/ChinaMax_Domain.yaml \
+            domain text \
+            .tmp/rules/ChinaMax_Domain.txt \
             MRS/ChinaMax_Domain.mrs
+
+      # =========================
+      # ChinaMax IP
+      # Download upstream TXT directly.
+      #
+      # Remove standalone ASN 132203
+      # if present in the source file.
+      # =========================
+
+      - name: Download ChinaMax IP
+        run: |
+          wget -O .tmp/rules/ChinaMax_IP.txt \
+            https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMax/ChinaMax_IP.txt
+
+      - name: Remove ChinaMax IP ASN
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path(".tmp/rules/ChinaMax_IP.txt")
+          lines = path.read_text(encoding="utf-8").splitlines()
+
+          output = []
+          removed = []
+
+          for line in lines:
+              stripped = line.strip()
+
+              # Preserve blank lines and comments.
+              if not stripped or stripped.startswith("#"):
+                  output.append(line)
+                  continue
+
+              # Remove only a standalone ASN entry.
+              if stripped.strip("'\"") == "132203":
+                  removed.append(stripped)
+                  continue
+
+              output.append(line)
+
+          path.write_text(
+              "\n".join(output) + "\n",
+              encoding="utf-8"
+          )
+
+          print("Removed ChinaMax IP ASN entries:")
+          for rule in removed:
+              print(f"  REMOVE {rule}")
+
+          print(f"Removed: {len(removed)}")
+          PY
 
       - name: Convert ChinaMax IP
         run: |
           ./mihomo convert-ruleset \
-            ipcidr yaml \
-            .tmp/rules/ChinaMax_IP.yaml \
+            ipcidr text \
+            .tmp/rules/ChinaMax_IP.txt \
             MRS/ChinaMax_IP.mrs
 
       # =========================
