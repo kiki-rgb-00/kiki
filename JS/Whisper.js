@@ -869,11 +869,15 @@ function main(config) {
     "DOMAIN-SUFFIX,ledger.com,PROXY-Gate",
 
     // YouTube
-    "RULE-SET,YouTube_Domain,YouTube",
-    "DOMAIN-KEYWORD,youtube,YouTube",
-    "IP-CIDR,172.110.32.0/21,YouTube",
-    "IP-CIDR,216.73.80.0/20,YouTube",
-    "IP-CIDR6,2620:120:e000::/40,YouTube",
+    //"RULE-SET,YouTube_Domain,YouTube",
+    "DOMAIN-SUFFIX,youtube.com,YouTube",
+    "DOMAIN-SUFFIX,youtu.be,YouTube",
+    "DOMAIN-SUFFIX,youtube-nocookie.com,YouTube",
+    "DOMAIN-SUFFIX,youtubei.googleapis.com,YouTube",
+    "DOMAIN-SUFFIX,youtube.googleapis.com,YouTube",
+    "DOMAIN-SUFFIX,ytimg.com,YouTube",
+    "DOMAIN-SUFFIX,googlevideo.com,YouTube",
+    "DOMAIN-SUFFIX,ggpht.com,YouTube",
     // Netflix
     "RULE-SET,Netflix_Domain,Netflix",
     "RULE-SET,Netflix_IP,Netflix",
@@ -1196,14 +1200,6 @@ function main(config) {
       "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/OpenAI_Domain.mrs"
     },
 
-    "Google_Domain": {
-      "type": "http",
-      "behavior": "domain",
-      "format": "mrs",
-      "interval": 86400,
-      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Google_Domain.mrs"
-    },
-
     "Amazon_Domain": {
       "type": "http",
       "behavior": "domain",
@@ -1242,14 +1238,6 @@ function main(config) {
       "format": "mrs",
       "interval": 86400,
       "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/TikTok_Domain.mrs"
-    },
-
-    "YouTube_Domain": {
-      "type": "http",
-      "behavior": "domain",
-      "format": "mrs",
-      "interval": 86400,
-      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/YouTube_Domain.mrs"
     },
 
     "Microsoft": {
