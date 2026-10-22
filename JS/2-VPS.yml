@@ -1,3 +1,14 @@
+proxy-providers:
+  Primary:
+    type: http
+    url: #一号链接！删除此处文字和#号！并粘贴你的订阅链接！
+    interval: 86400
+  Backup:
+    type: http
+    url: #二号链接！删除此处文字和#号！并粘贴你的订阅链接！
+    interval: 86400
+
+
 mixed-port: 7890
 allow-lan: false
 bind-address: '*'
@@ -93,16 +104,12 @@ proxy-groups:
   proxies:
   - 🖥️ All-Nodes-1
   - 🖥️ All-Nodes-2
-  - 🇺🇸 US-Auto-1️⃣
-  - 🇺🇸 US-Auto-2️⃣
-  - 🇸🇬 SG-Auto-1️⃣
-  - 🇸🇬 SG-Auto-2️⃣
-  - 🇭🇰 HK-Auto-1️⃣
-  - 🇭🇰 HK-Auto-2️⃣
-  - 🇯🇵 JP-Auto-1️⃣
-  - 🇯🇵 JP-Auto-2️⃣
-  - 🇹🇼 TW-Auto-1️⃣
-  - 🇹🇼 TW-Auto-2️⃣
+  - 🗺️ EUR-Manual
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
   - DIRECT
 - name: Apple Push
   type: fallback
@@ -122,23 +129,26 @@ proxy-groups:
   use:
   - Backup-VPS
   icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Server.png
-
+- name: 🗺️ EUR-Manual
+  type: select
+  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Europe_Map.png
+  proxies:
+  - 🇬🇧 UK-Fallback
+  - 🇩🇪 DE-Fallback
+  - 🇫🇷 FR-Fallback
+  - 🇷🇺 RU-Fallback
 - name: YouTube
   type: select
   icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/YouTube.png
   proxies:
   - 🖥️ All-Nodes-1
   - 🖥️ All-Nodes-2
-  - 🇺🇸 US-Auto-1️⃣
-  - 🇺🇸 US-Auto-2️⃣
-  - 🇸🇬 SG-Auto-1️⃣
-  - 🇸🇬 SG-Auto-2️⃣
-  - 🇭🇰 HK-Auto-1️⃣
-  - 🇭🇰 HK-Auto-2️⃣
-  - 🇯🇵 JP-Auto-1️⃣
-  - 🇯🇵 JP-Auto-2️⃣
-  - 🇹🇼 TW-Auto-1️⃣
-  - 🇹🇼 TW-Auto-2️⃣
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🗺️ EUR-Manual
   - PROXY-Gate
   - DIRECT
 - name: Netflix
@@ -147,16 +157,12 @@ proxy-groups:
   proxies:
   - 🖥️ All-Nodes-1
   - 🖥️ All-Nodes-2
-  - 🇺🇸 US-Auto-1️⃣
-  - 🇺🇸 US-Auto-2️⃣
-  - 🇸🇬 SG-Auto-1️⃣
-  - 🇸🇬 SG-Auto-2️⃣
-  - 🇭🇰 HK-Auto-1️⃣
-  - 🇭🇰 HK-Auto-2️⃣
-  - 🇯🇵 JP-Auto-1️⃣
-  - 🇯🇵 JP-Auto-2️⃣
-  - 🇹🇼 TW-Auto-1️⃣
-  - 🇹🇼 TW-Auto-2️⃣
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🗺️ EUR-Manual
   - PROXY-Gate
   - DIRECT
 - name: Disney+
@@ -165,16 +171,12 @@ proxy-groups:
   proxies:
   - 🖥️ All-Nodes-1
   - 🖥️ All-Nodes-2
-  - 🇺🇸 US-Auto-1️⃣
-  - 🇺🇸 US-Auto-2️⃣
-  - 🇸🇬 SG-Auto-1️⃣
-  - 🇸🇬 SG-Auto-2️⃣
-  - 🇭🇰 HK-Auto-1️⃣
-  - 🇭🇰 HK-Auto-2️⃣
-  - 🇯🇵 JP-Auto-1️⃣
-  - 🇯🇵 JP-Auto-2️⃣
-  - 🇹🇼 TW-Auto-1️⃣
-  - 🇹🇼 TW-Auto-2️⃣
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🗺️ EUR-Manual
   - PROXY-Gate
   - DIRECT
 - name: Spotify
@@ -183,16 +185,12 @@ proxy-groups:
   proxies:
   - 🖥️ All-Nodes-1
   - 🖥️ All-Nodes-2
-  - 🇺🇸 US-Auto-1️⃣
-  - 🇺🇸 US-Auto-2️⃣
-  - 🇸🇬 SG-Auto-1️⃣
-  - 🇸🇬 SG-Auto-2️⃣
-  - 🇭🇰 HK-Auto-1️⃣
-  - 🇭🇰 HK-Auto-2️⃣
-  - 🇯🇵 JP-Auto-1️⃣
-  - 🇯🇵 JP-Auto-2️⃣
-  - 🇹🇼 TW-Auto-1️⃣
-  - 🇹🇼 TW-Auto-2️⃣
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🗺️ EUR-Manual
   - PROXY-Gate
   - DIRECT
 - name: TikTok
@@ -201,16 +199,12 @@ proxy-groups:
   proxies:
   - 🖥️ All-Nodes-1
   - 🖥️ All-Nodes-2
-  - 🇺🇸 US-Auto-1️⃣
-  - 🇺🇸 US-Auto-2️⃣
-  - 🇸🇬 SG-Auto-1️⃣
-  - 🇸🇬 SG-Auto-2️⃣
-  - 🇭🇰 HK-Auto-1️⃣
-  - 🇭🇰 HK-Auto-2️⃣
-  - 🇯🇵 JP-Auto-1️⃣
-  - 🇯🇵 JP-Auto-2️⃣
-  - 🇹🇼 TW-Auto-1️⃣
-  - 🇹🇼 TW-Auto-2️⃣
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🗺️ EUR-Manual
   - PROXY-Gate
   - DIRECT
 - name: Twitch
@@ -219,16 +213,12 @@ proxy-groups:
   proxies:
   - 🖥️ All-Nodes-1
   - 🖥️ All-Nodes-2
-  - 🇺🇸 US-Auto-1️⃣
-  - 🇺🇸 US-Auto-2️⃣
-  - 🇸🇬 SG-Auto-1️⃣
-  - 🇸🇬 SG-Auto-2️⃣
-  - 🇭🇰 HK-Auto-1️⃣
-  - 🇭🇰 HK-Auto-2️⃣
-  - 🇯🇵 JP-Auto-1️⃣
-  - 🇯🇵 JP-Auto-2️⃣
-  - 🇹🇼 TW-Auto-1️⃣
-  - 🇹🇼 TW-Auto-2️⃣
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🗺️ EUR-Manual
   - PROXY-Gate
   - DIRECT
 - name: GPT
@@ -237,16 +227,12 @@ proxy-groups:
   proxies:
   - 🖥️ All-Nodes-1
   - 🖥️ All-Nodes-2
-  - 🇺🇸 US-Auto-1️⃣
-  - 🇺🇸 US-Auto-2️⃣
-  - 🇸🇬 SG-Auto-1️⃣
-  - 🇸🇬 SG-Auto-2️⃣
-  - 🇭🇰 HK-Auto-1️⃣
-  - 🇭🇰 HK-Auto-2️⃣
-  - 🇯🇵 JP-Auto-1️⃣
-  - 🇯🇵 JP-Auto-2️⃣
-  - 🇹🇼 TW-Auto-1️⃣
-  - 🇹🇼 TW-Auto-2️⃣
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🗺️ EUR-Manual
   - PROXY-Gate
   - DIRECT
 - name: Gemini
@@ -255,16 +241,12 @@ proxy-groups:
   proxies:
   - 🖥️ All-Nodes-1
   - 🖥️ All-Nodes-2
-  - 🇺🇸 US-Auto-1️⃣
-  - 🇺🇸 US-Auto-2️⃣
-  - 🇸🇬 SG-Auto-1️⃣
-  - 🇸🇬 SG-Auto-2️⃣
-  - 🇭🇰 HK-Auto-1️⃣
-  - 🇭🇰 HK-Auto-2️⃣
-  - 🇯🇵 JP-Auto-1️⃣
-  - 🇯🇵 JP-Auto-2️⃣
-  - 🇹🇼 TW-Auto-1️⃣
-  - 🇹🇼 TW-Auto-2️⃣
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🗺️ EUR-Manual
   - PROXY-Gate
   - DIRECT
 - name: Claude
@@ -273,16 +255,12 @@ proxy-groups:
   proxies:
   - 🖥️ All-Nodes-1
   - 🖥️ All-Nodes-2
-  - 🇺🇸 US-Auto-1️⃣
-  - 🇺🇸 US-Auto-2️⃣
-  - 🇸🇬 SG-Auto-1️⃣
-  - 🇸🇬 SG-Auto-2️⃣
-  - 🇭🇰 HK-Auto-1️⃣
-  - 🇭🇰 HK-Auto-2️⃣
-  - 🇯🇵 JP-Auto-1️⃣
-  - 🇯🇵 JP-Auto-2️⃣
-  - 🇹🇼 TW-Auto-1️⃣
-  - 🇹🇼 TW-Auto-2️⃣
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🗺️ EUR-Manual
   - PROXY-Gate
   - DIRECT
 - name: Copilot
@@ -291,16 +269,12 @@ proxy-groups:
   proxies:
   - 🖥️ All-Nodes-1
   - 🖥️ All-Nodes-2
-  - 🇺🇸 US-Auto-1️⃣
-  - 🇺🇸 US-Auto-2️⃣
-  - 🇸🇬 SG-Auto-1️⃣
-  - 🇸🇬 SG-Auto-2️⃣
-  - 🇭🇰 HK-Auto-1️⃣
-  - 🇭🇰 HK-Auto-2️⃣
-  - 🇯🇵 JP-Auto-1️⃣
-  - 🇯🇵 JP-Auto-2️⃣
-  - 🇹🇼 TW-Auto-1️⃣
-  - 🇹🇼 TW-Auto-2️⃣
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🗺️ EUR-Manual
   - PROXY-Gate
   - DIRECT
 - name: Grok
@@ -309,16 +283,12 @@ proxy-groups:
   proxies:
   - 🖥️ All-Nodes-1
   - 🖥️ All-Nodes-2
-  - 🇺🇸 US-Auto-1️⃣
-  - 🇺🇸 US-Auto-2️⃣
-  - 🇸🇬 SG-Auto-1️⃣
-  - 🇸🇬 SG-Auto-2️⃣
-  - 🇭🇰 HK-Auto-1️⃣
-  - 🇭🇰 HK-Auto-2️⃣
-  - 🇯🇵 JP-Auto-1️⃣
-  - 🇯🇵 JP-Auto-2️⃣
-  - 🇹🇼 TW-Auto-1️⃣
-  - 🇹🇼 TW-Auto-2️⃣
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🗺️ EUR-Manual
   - PROXY-Gate
   - DIRECT
 - name: Google
@@ -327,16 +297,12 @@ proxy-groups:
   proxies:
   - 🖥️ All-Nodes-1
   - 🖥️ All-Nodes-2
-  - 🇺🇸 US-Auto-1️⃣
-  - 🇺🇸 US-Auto-2️⃣
-  - 🇸🇬 SG-Auto-1️⃣
-  - 🇸🇬 SG-Auto-2️⃣
-  - 🇭🇰 HK-Auto-1️⃣
-  - 🇭🇰 HK-Auto-2️⃣
-  - 🇯🇵 JP-Auto-1️⃣
-  - 🇯🇵 JP-Auto-2️⃣
-  - 🇹🇼 TW-Auto-1️⃣
-  - 🇹🇼 TW-Auto-2️⃣
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🗺️ EUR-Manual
   - PROXY-Gate
   - DIRECT
 - name: X
@@ -345,16 +311,12 @@ proxy-groups:
   proxies:
   - 🖥️ All-Nodes-1
   - 🖥️ All-Nodes-2
-  - 🇺🇸 US-Auto-1️⃣
-  - 🇺🇸 US-Auto-2️⃣
-  - 🇸🇬 SG-Auto-1️⃣
-  - 🇸🇬 SG-Auto-2️⃣
-  - 🇭🇰 HK-Auto-1️⃣
-  - 🇭🇰 HK-Auto-2️⃣
-  - 🇯🇵 JP-Auto-1️⃣
-  - 🇯🇵 JP-Auto-2️⃣
-  - 🇹🇼 TW-Auto-1️⃣
-  - 🇹🇼 TW-Auto-2️⃣
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🗺️ EUR-Manual
   - PROXY-Gate
   - DIRECT
 - name: Facebook
@@ -363,16 +325,12 @@ proxy-groups:
   proxies:
   - 🖥️ All-Nodes-1
   - 🖥️ All-Nodes-2
-  - 🇺🇸 US-Auto-1️⃣
-  - 🇺🇸 US-Auto-2️⃣
-  - 🇸🇬 SG-Auto-1️⃣
-  - 🇸🇬 SG-Auto-2️⃣
-  - 🇭🇰 HK-Auto-1️⃣
-  - 🇭🇰 HK-Auto-2️⃣
-  - 🇯🇵 JP-Auto-1️⃣
-  - 🇯🇵 JP-Auto-2️⃣
-  - 🇹🇼 TW-Auto-1️⃣
-  - 🇹🇼 TW-Auto-2️⃣
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🗺️ EUR-Manual
   - PROXY-Gate
   - DIRECT
 - name: Instagram
@@ -381,16 +339,12 @@ proxy-groups:
   proxies:
   - 🖥️ All-Nodes-1
   - 🖥️ All-Nodes-2
-  - 🇺🇸 US-Auto-1️⃣
-  - 🇺🇸 US-Auto-2️⃣
-  - 🇸🇬 SG-Auto-1️⃣
-  - 🇸🇬 SG-Auto-2️⃣
-  - 🇭🇰 HK-Auto-1️⃣
-  - 🇭🇰 HK-Auto-2️⃣
-  - 🇯🇵 JP-Auto-1️⃣
-  - 🇯🇵 JP-Auto-2️⃣
-  - 🇹🇼 TW-Auto-1️⃣
-  - 🇹🇼 TW-Auto-2️⃣
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🗺️ EUR-Manual
   - PROXY-Gate
   - DIRECT
 - name: WhatsApp
@@ -399,16 +353,12 @@ proxy-groups:
   proxies:
   - 🖥️ All-Nodes-1
   - 🖥️ All-Nodes-2
-  - 🇺🇸 US-Auto-1️⃣
-  - 🇺🇸 US-Auto-2️⃣
-  - 🇸🇬 SG-Auto-1️⃣
-  - 🇸🇬 SG-Auto-2️⃣
-  - 🇭🇰 HK-Auto-1️⃣
-  - 🇭🇰 HK-Auto-2️⃣
-  - 🇯🇵 JP-Auto-1️⃣
-  - 🇯🇵 JP-Auto-2️⃣
-  - 🇹🇼 TW-Auto-1️⃣
-  - 🇹🇼 TW-Auto-2️⃣
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🗺️ EUR-Manual
   - PROXY-Gate
   - DIRECT
 - name: Telegram
@@ -417,16 +367,12 @@ proxy-groups:
   proxies:
   - 🖥️ All-Nodes-1
   - 🖥️ All-Nodes-2
-  - 🇺🇸 US-Auto-1️⃣
-  - 🇺🇸 US-Auto-2️⃣
-  - 🇸🇬 SG-Auto-1️⃣
-  - 🇸🇬 SG-Auto-2️⃣
-  - 🇭🇰 HK-Auto-1️⃣
-  - 🇭🇰 HK-Auto-2️⃣
-  - 🇯🇵 JP-Auto-1️⃣
-  - 🇯🇵 JP-Auto-2️⃣
-  - 🇹🇼 TW-Auto-1️⃣
-  - 🇹🇼 TW-Auto-2️⃣
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🗺️ EUR-Manual
   - PROXY-Gate
   - DIRECT
 - name: Github
@@ -435,16 +381,12 @@ proxy-groups:
   proxies:
   - 🖥️ All-Nodes-1
   - 🖥️ All-Nodes-2
-  - 🇺🇸 US-Auto-1️⃣
-  - 🇺🇸 US-Auto-2️⃣
-  - 🇸🇬 SG-Auto-1️⃣
-  - 🇸🇬 SG-Auto-2️⃣
-  - 🇭🇰 HK-Auto-1️⃣
-  - 🇭🇰 HK-Auto-2️⃣
-  - 🇯🇵 JP-Auto-1️⃣
-  - 🇯🇵 JP-Auto-2️⃣
-  - 🇹🇼 TW-Auto-1️⃣
-  - 🇹🇼 TW-Auto-2️⃣
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🗺️ EUR-Manual
   - PROXY-Gate
   - DIRECT
 - name: Speedtest
@@ -453,19 +395,95 @@ proxy-groups:
   proxies:
   - 🖥️ All-Nodes-1
   - 🖥️ All-Nodes-2
-  - 🇺🇸 US-Auto-1️⃣
-  - 🇺🇸 US-Auto-2️⃣
-  - 🇸🇬 SG-Auto-1️⃣
-  - 🇸🇬 SG-Auto-2️⃣
-  - 🇭🇰 HK-Auto-1️⃣
-  - 🇭🇰 HK-Auto-2️⃣
-  - 🇯🇵 JP-Auto-1️⃣
-  - 🇯🇵 JP-Auto-2️⃣
-  - 🇹🇼 TW-Auto-1️⃣
-  - 🇹🇼 TW-Auto-2️⃣
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🗺️ EUR-Manual
   - PROXY-Gate
   - DIRECT
-
+- name: 🇺🇸 US-Fallback
+  type: fallback
+  proxies:
+  - 🇺🇸 US-Auto-1
+  - 🇺🇸 US-Auto-2
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/United_States.png
+- name: 🇸🇬 SG-Fallback
+  type: fallback
+  proxies:
+  - 🇸🇬 SG-Auto-1
+  - 🇸🇬 SG-Auto-2
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Singapore.png
+- name: 🇭🇰 HK-Fallback
+  type: fallback
+  proxies:
+  - 🇭🇰 HK-Auto-1
+  - 🇭🇰 HK-Auto-2
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Hong_Kong.png
+- name: 🇯🇵 JP-Fallback
+  type: fallback
+  proxies:
+  - 🇯🇵 JP-Auto-1
+  - 🇯🇵 JP-Auto-2
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Japan.png
+- name: 🇹🇼 TW-Fallback
+  type: fallback
+  proxies:
+  - 🇹🇼 TW-Auto-1
+  - 🇹🇼 TW-Auto-2
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Taiwan.png
+- name: 🇬🇧 UK-Fallback
+  type: fallback
+  proxies:
+  - 🇬🇧 UK-Auto-1
+  - 🇬🇧 UK-Auto-2
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/United_Kingdom.png
+- name: 🇩🇪 DE-Fallback
+  type: fallback
+  proxies:
+  - 🇩🇪 DE-Auto-1
+  - 🇩🇪 DE-Auto-2
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Germany.png
+- name: 🇫🇷 FR-Fallback
+  type: fallback
+  proxies:
+  - 🇫🇷 FR-Auto-1
+  - 🇫🇷 FR-Auto-2
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/France.png
+- name: 🇷🇺 RU-Fallback
+  type: fallback
+  proxies:
+  - 🇷🇺 RU-Auto-1
+  - 🇷🇺 RU-Auto-2
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Russia.png
 
 - name: APNs-Fallback
   type: fallback
@@ -474,97 +492,170 @@ proxy-groups:
   icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Apple.png
   url: http://captive.apple.com/hotspot-detect.html
   interval: 300
-- name: 🇺🇸 US-Auto-1️⃣
-  type: url-test
-  use:
-  - Primary-VPS
-  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/United_States.png
-  filter: (?i)(🇺🇸|美国|美國|United[ _-]?States|USA|\bUS\b)
-  url: http://www.gstatic.com/generate_204
-  interval: 600
-  tolerance: 50
-- name: 🇺🇸 US-Auto-2️⃣
-  type: url-test
-  use:
-  - Backup-VPS
-  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/United_States.png
-  filter: (?i)(🇺🇸|美国|美國|United[ _-]?States|USA|\bUS\b)
-  url: http://www.gstatic.com/generate_204
-  interval: 600
-  tolerance: 50
-- name: 🇸🇬 SG-Auto-1️⃣
-  type: url-test
-  use:
-  - Primary-VPS
-  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Singapore.png
-  filter: (?i)(🇸🇬|新加坡|Singapore|\bSG\b)
-  url: http://www.gstatic.com/generate_204
-  interval: 600
-  tolerance: 50
-- name: 🇸🇬 SG-Auto-2️⃣
-  type: url-test
-  use:
-  - Backup-VPS
-  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Singapore.png
-  filter: (?i)(🇸🇬|新加坡|Singapore|\bSG\b)
-  url: http://www.gstatic.com/generate_204
-  interval: 600
-  tolerance: 50
-- name: 🇭🇰 HK-Auto-1️⃣
-  type: url-test
-  use:
-  - Primary-VPS
-  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Hong_Kong.png
-  filter: (?i)(🇭🇰|香港|Hong[ _-]?Kong|\bHK\b)
-  url: http://www.gstatic.com/generate_204
-  interval: 600
-  tolerance: 50
-- name: 🇭🇰 HK-Auto-2️⃣
-  type: url-test
-  use:
-  - Backup-VPS
-  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Hong_Kong.png
-  filter: (?i)(🇭🇰|香港|Hong[ _-]?Kong|\bHK\b)
-  url: http://www.gstatic.com/generate_204
-  interval: 600
-  tolerance: 50
-- name: 🇯🇵 JP-Auto-1️⃣
-  type: url-test
-  use:
-  - Primary-VPS
-  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Japan.png
-  filter: (?i)(🇯🇵|日本|Japan|\bJP\b)
-  url: http://www.gstatic.com/generate_204
-  interval: 600
-  tolerance: 50
-- name: 🇯🇵 JP-Auto-2️⃣
-  type: url-test
-  use:
-  - Backup-VPS
-  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Japan.png
-  filter: (?i)(🇯🇵|日本|Japan|\bJP\b)
-  url: http://www.gstatic.com/generate_204
-  interval: 600
-  tolerance: 50
-- name: 🇹🇼 TW-Auto-1️⃣
-  type: url-test
-  use:
-  - Primary-VPS
-  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Taiwan.png
-  filter: (?i)(🇹🇼|台湾|臺灣|Taiwan|\bTW\b)
-  url: http://www.gstatic.com/generate_204
-  interval: 600
-  tolerance: 50
-- name: 🇹🇼 TW-Auto-2️⃣
-  type: url-test
-  use:
-  - Backup-VPS
-  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Taiwan.png
-  filter: (?i)(🇹🇼|台湾|臺灣|Taiwan|\bTW\b)
-  url: http://www.gstatic.com/generate_204
-  interval: 600
-  tolerance: 50
 
+
+- name: 🇺🇸 US-Auto-1
+  type: url-test
+  use:
+  - Primary-VPS
+  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/United_States.png
+  filter: (?i)(\[US\]|^US$|USA|United[ _-]?States|\bUS\b|美国|美國|🇺🇸)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+- name: 🇺🇸 US-Auto-2
+  type: url-test
+  use:
+  - Backup-VPS
+  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/United_States.png
+  filter: (?i)(\[US\]|^US$|USA|United[ _-]?States|\bUS\b|美国|美國|🇺🇸)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+- name: 🇸🇬 SG-Auto-1
+  type: url-test
+  use:
+  - Primary-VPS
+  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Singapore.png
+  filter: (?i)(\[SG\]|^SG$|Singapore|\bSG\b|新加坡|狮城|🇸🇬)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+- name: 🇸🇬 SG-Auto-2
+  type: url-test
+  use:
+  - Backup-VPS
+  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Singapore.png
+  filter: (?i)(\[SG\]|^SG$|Singapore|\bSG\b|新加坡|狮城|🇸🇬)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+- name: 🇭🇰 HK-Auto-1
+  type: url-test
+  use:
+  - Primary-VPS
+  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Hong_Kong.png
+  filter: (?i)(\[HK\]|^HK$|Hong[ _-]?Kong|\bHK\b|香港|🇭🇰)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+- name: 🇭🇰 HK-Auto-2
+  type: url-test
+  use:
+  - Backup-VPS
+  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Hong_Kong.png
+  filter: (?i)(\[HK\]|^HK$|Hong[ _-]?Kong|\bHK\b|香港|🇭🇰)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+- name: 🇯🇵 JP-Auto-1
+  type: url-test
+  use:
+  - Primary-VPS
+  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Japan.png
+  filter: (?i)(\[JP\]|^JP$|Japan|\bJP\b|日本|东京|大阪|🇯🇵)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+- name: 🇯🇵 JP-Auto-2
+  type: url-test
+  use:
+  - Backup-VPS
+  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Japan.png
+  filter: (?i)(\[JP\]|^JP$|Japan|\bJP\b|日本|东京|大阪|🇯🇵)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+- name: 🇹🇼 TW-Auto-1
+  type: url-test
+  use:
+  - Primary-VPS
+  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Taiwan.png
+  filter: (?i)(\[TW\]|^TW$|Taiwan|Taibei|Taipei|\bTW\b|台湾|臺灣|台北|高雄|🇹🇼)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+- name: 🇹🇼 TW-Auto-2
+  type: url-test
+  use:
+  - Backup-VPS
+  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Taiwan.png
+  filter: (?i)(\[TW\]|^TW$|Taiwan|Taibei|Taipei|\bTW\b|台湾|臺灣|台北|高雄|🇹🇼)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+- name: 🇬🇧 UK-Auto-1
+  type: url-test
+  use:
+  - Primary-VPS
+  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/United_Kingdom.png
+  filter: (?i)(\[UK\]|^UK$|United[ _-]?Kingdom|Britain|England|\bUK\b|英国|英國|伦敦|🇬🇧)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+- name: 🇬🇧 UK-Auto-2
+  type: url-test
+  use:
+  - Backup-VPS
+  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/United_Kingdom.png
+  filter: (?i)(\[UK\]|^UK$|United[ _-]?Kingdom|Britain|England|\bUK\b|英国|英國|伦敦|🇬🇧)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+- name: 🇩🇪 DE-Auto-1
+  type: url-test
+  use:
+  - Primary-VPS
+  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Germany.png
+  filter: (?i)(\[DE\]|^DE$|Germany|Deutschland|\bDE\b|德国|德國|法兰克福|🇩🇪)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+- name: 🇩🇪 DE-Auto-2
+  type: url-test
+  use:
+  - Backup-VPS
+  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Germany.png
+  filter: (?i)(\[DE\]|^DE$|Germany|Deutschland|\bDE\b|德国|德國|法兰克福|🇩🇪)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+- name: 🇫🇷 FR-Auto-1
+  type: url-test
+  use:
+  - Primary-VPS
+  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/France.png
+  filter: (?i)(\[FR\]|^FR$|France|\bFR\b|法国|法國|巴黎|🇫🇷)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+- name: 🇫🇷 FR-Auto-2
+  type: url-test
+  use:
+  - Backup-VPS
+  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/France.png
+  filter: (?i)(\[FR\]|^FR$|France|\bFR\b|法国|法國|巴黎|🇫🇷)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+- name: 🇷🇺 RU-Auto-1
+  type: url-test
+  use:
+  - Primary-VPS
+  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Russia.png
+  filter: (?i)(\[RU\]|^RU$|Russia|Russian[ _-]?Federation|\bRU\b|俄罗斯|俄羅斯|莫斯科|伯力|🇷🇺)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+- name: 🇷🇺 RU-Auto-2
+  type: url-test
+  use:
+  - Backup-VPS
+  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Russia.png
+  filter: (?i)(\[RU\]|^RU$|Russia|Russian[ _-]?Federation|\bRU\b|俄罗斯|俄羅斯|莫斯科|伯力|🇷🇺)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
 rules:
 - IP-CIDR,192.168.0.0/16,DIRECT,no-resolve
 - IP-CIDR,10.0.0.0/8,DIRECT,no-resolve
@@ -583,6 +674,7 @@ rules:
 - IP-CIDR6,2403:300:a42::/48,Apple Push,no-resolve
 - IP-CIDR6,2403:300:a51::/48,Apple Push,no-resolve
 - IP-CIDR6,2a01:b740:a42::/48,Apple Push,no-resolve
+
 - RULE-SET,Apple,DIRECT
 - RULE-SET,Apple_Domain,DIRECT
 - RULE-SET,AdvertisingLite,REJECT
@@ -591,6 +683,7 @@ rules:
 - RULE-SET,Privacy_Domain,REJECT
 - RULE-SET,ACL4SSR_BanAD,REJECT
 - RULE-SET,ACL4SSR_BanProgramAD,REJECT
+
 - DOMAIN-SUFFIX,youtube.com,YouTube
 - DOMAIN-SUFFIX,youtu.be,YouTube
 - DOMAIN-SUFFIX,youtube-nocookie.com,YouTube
@@ -795,6 +888,7 @@ rule-providers:
     format: mrs
     interval: 86400
     url: https://raw.githubusercontent.com/Sydney-Moses/Network-Profiles/refs/heads/main/MRS/Privacy_Domain.mrs
+
   ACL4SSR_BanAD:
     type: http
     behavior: domain
