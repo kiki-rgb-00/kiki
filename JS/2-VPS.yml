@@ -1159,7 +1159,7 @@ proxy-groups:
 #=====全自动组=====#
 - name: 🌍 Global-Fallback
   type: fallback
-  proxies: *id001
+  proxies: &id001
   url: http://www.gstatic.com/generate_204
   interval: 600
   icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png
