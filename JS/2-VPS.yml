@@ -1,7 +1,8 @@
+
 proxy-providers:
   Primary-VPS:
     type: http
-    url: "在这里粘贴一号机场订阅链接"
+    url: "粘贴一号机场订阅链接"
     path: ./providers/primary.yaml
     interval: 86400
     health-check:
@@ -11,7 +12,7 @@ proxy-providers:
 
   Backup-VPS:
     type: http
-    url: "在这里粘贴二号机场订阅链接"
+    url: "粘贴二号机场订阅链接"
     path: ./providers/backup.yaml
     interval: 86400
     health-check:
@@ -19,16 +20,2058 @@ proxy-providers:
       url: https://www.gstatic.com/generate_204
       interval: 300
 
-proxy-groups:
-  - name: Primary-VPS
-    type: select
-    use:
-      - Primary-VPS
 
-  - name: Backup-VPS
-    type: select
-    use:
-      - Backup-VPS
+mixed-port: 7890
+allow-lan: false
+bind-address: '*'
+mode: rule
+log-level: info
+external-controller: 127.0.0.1:9090
+unified-delay: true
+tcp-concurrent: true
+ipv6: true
+
+tun:
+  enable: true
+  stack: gvisor
+  auto-route: true
+  auto-detect-interface: true
+  strict-route: true
+  dns-hijack:
+  - any:53
+
+dns:
+  enable: true
+  respect-rules: true
+  ipv6: true
+  prefer-h3: false
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  default-nameserver:
+  - 223.5.5.5
+  - 119.29.29.29
+  - 2400:3200::1
+
+  nameserver:
+  - https://dns.cloudflare.com/dns-query
+  - https://dns.google/dns-query
+
+#下方配置项可为节点指定DNS解析#
+  proxy-server-nameserver-policy: null
+
+
+  proxy-server-nameserver:
+  - https://dns.alidns.com/dns-query
+  - https://doh.pub/dns-query
+
+  direct-nameserver:
+  - https://dns.alidns.com/dns-query
+  - https://doh.pub/dns-query
+
+  nameserver-policy:
+    dns.cloudflare.com:
+    - 1.1.1.1
+    - 1.0.0.1
+    dns.google:
+    - 8.8.8.8
+    - 8.8.4.4
+    dns.alidns.com:
+    - 223.5.5.5
+    - 223.6.6.6
+    doh.pub:
+    - 1.12.12.12
+    - 120.53.53.53
+    geosite:cn:
+    - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
+
+  fallback:
+  - https://anycast.uncensoreddns.org/dns-query
+
+  fallback-filter:
+    geoip: true
+    geoip-code: CN
+    ipcidr:
+    - 240.0.0.0/4
+    - 127.0.0.0/8
+    - 0.0.0.0/32
+  fake-ip-filter:
+  - geosite:cn
+  - '*.lan'
+  - '*.local'
+  - localhost
+  - '*.msftconnecttest.com'
+  - '*.msftncsi.com'
+  - '*.msidentity.com'
+  - captive.apple.com
+  - '*.push.apple.com'
+  - stun.*
+  - +.stun.*.*
+  - +.stun.*.*.*
+  - +.stun.*.*.*.*
+  - +.stun.*.*.*.*.*
+  - speedtest.net
+profile:
+  store-selected: true
+  store-fake-ip: true
+
+proxy-groups: 
+
+- name: PROXY-Gate
+  type: select
+  proxies:
+  - 🖥️ All-Nodes 1️⃣
+  - 🖥️ All-Nodes 2️⃣
+  - 🌍 Global-Fallback
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇲🇴 MO-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🇬🇧 UK-Fallback
+  - 🇩🇪 DE-Fallback
+  - 🇫🇷 FR-Fallback
+  - 🇷🇺 RU-Fallback
+  - 🇨🇦 CA-Fallback
+  - 🇦🇺 AU-Fallback
+  - 🇰🇷 KR-Fallback
+  - 🇮🇹 IT-Fallback
+  - 🇪🇸 ES-Fallback
+  - 🇳🇱 NL-Fallback
+  - 🇫🇮 FI-Fallback
+  - 🇳🇴 NO-Fallback
+  - 🇸🇪 SE-Fallback
+  - 🇨🇭 CH-Fallback
+  - 🇵🇱 PL-Fallback
+  - 🇮🇳 IN-Fallback
+  - 🇵🇭 PH-Fallback
+  - 🇻🇳 VN-Fallback
+  - 🇲🇾 MY-Fallback
+  - DIRECT
+  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Final.png
+
+
+- name: 🖥️ All-Nodes 1️⃣
+  type: select
+  use:
+    - Primary-VPS
+  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Server.png
+- name: 🖥️ All-Nodes 2️⃣
+  type: select
+  use:
+    - Backup-VPS
+  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Server.png
+
+- name: Apple Push
+  type: fallback
+  proxies:
+  - APNs-Fallback
+  - DIRECT
+  url: http://captive.apple.com/hotspot-detect.html
+  interval: 300
+  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Apple.png
+
+- name: YouTube
+  type: select
+  proxies:
+  - 🖥️ All-Nodes 1️⃣
+  - 🖥️ All-Nodes 2️⃣
+  - 🌍 Global-Fallback
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇲🇴 MO-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🇬🇧 UK-Fallback
+  - 🇩🇪 DE-Fallback
+  - 🇫🇷 FR-Fallback
+  - 🇷🇺 RU-Fallback
+  - 🇨🇦 CA-Fallback
+  - 🇦🇺 AU-Fallback
+  - 🇰🇷 KR-Fallback
+  - 🇮🇹 IT-Fallback
+  - 🇪🇸 ES-Fallback
+  - 🇳🇱 NL-Fallback
+  - 🇫🇮 FI-Fallback
+  - 🇳🇴 NO-Fallback
+  - 🇸🇪 SE-Fallback
+  - 🇨🇭 CH-Fallback
+  - 🇵🇱 PL-Fallback
+  - 🇮🇳 IN-Fallback
+  - 🇵🇭 PH-Fallback
+  - 🇻🇳 VN-Fallback
+  - 🇲🇾 MY-Fallback
+  - PROXY-Gate
+  - DIRECT
+  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/YouTube.png
+- name: Netflix
+  type: select
+  proxies:
+  - 🖥️ All-Nodes 1️⃣
+  - 🖥️ All-Nodes 2️⃣
+  - 🌍 Global-Fallback
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇲🇴 MO-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🇬🇧 UK-Fallback
+  - 🇩🇪 DE-Fallback
+  - 🇫🇷 FR-Fallback
+  - 🇷🇺 RU-Fallback
+  - 🇨🇦 CA-Fallback
+  - 🇦🇺 AU-Fallback
+  - 🇰🇷 KR-Fallback
+  - 🇮🇹 IT-Fallback
+  - 🇪🇸 ES-Fallback
+  - 🇳🇱 NL-Fallback
+  - 🇫🇮 FI-Fallback
+  - 🇳🇴 NO-Fallback
+  - 🇸🇪 SE-Fallback
+  - 🇨🇭 CH-Fallback
+  - 🇵🇱 PL-Fallback
+  - 🇮🇳 IN-Fallback
+  - 🇵🇭 PH-Fallback
+  - 🇻🇳 VN-Fallback
+  - 🇲🇾 MY-Fallback
+  - PROXY-Gate
+  - DIRECT
+  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Netflix.png
+- name: Disney+
+  type: select
+  proxies:
+  - 🖥️ All-Nodes 1️⃣
+  - 🖥️ All-Nodes 2️⃣
+  - 🌍 Global-Fallback
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇲🇴 MO-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🇬🇧 UK-Fallback
+  - 🇩🇪 DE-Fallback
+  - 🇫🇷 FR-Fallback
+  - 🇷🇺 RU-Fallback
+  - 🇨🇦 CA-Fallback
+  - 🇦🇺 AU-Fallback
+  - 🇰🇷 KR-Fallback
+  - 🇮🇹 IT-Fallback
+  - 🇪🇸 ES-Fallback
+  - 🇳🇱 NL-Fallback
+  - 🇫🇮 FI-Fallback
+  - 🇳🇴 NO-Fallback
+  - 🇸🇪 SE-Fallback
+  - 🇨🇭 CH-Fallback
+  - 🇵🇱 PL-Fallback
+  - 🇮🇳 IN-Fallback
+  - 🇵🇭 PH-Fallback
+  - 🇻🇳 VN-Fallback
+  - 🇲🇾 MY-Fallback
+  - PROXY-Gate
+  - DIRECT
+  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Disney+.png
+- name: Emby
+  type: select
+  proxies:
+  - 🖥️ All-Nodes 1️⃣
+  - 🖥️ All-Nodes 2️⃣
+  - 🌍 Global-Fallback
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇲🇴 MO-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🇬🇧 UK-Fallback
+  - 🇩🇪 DE-Fallback
+  - 🇫🇷 FR-Fallback
+  - 🇷🇺 RU-Fallback
+  - 🇨🇦 CA-Fallback
+  - 🇦🇺 AU-Fallback
+  - 🇰🇷 KR-Fallback
+  - 🇮🇹 IT-Fallback
+  - 🇪🇸 ES-Fallback
+  - 🇳🇱 NL-Fallback
+  - 🇫🇮 FI-Fallback
+  - 🇳🇴 NO-Fallback
+  - 🇸🇪 SE-Fallback
+  - 🇨🇭 CH-Fallback
+  - 🇵🇱 PL-Fallback
+  - 🇮🇳 IN-Fallback
+  - 🇵🇭 PH-Fallback
+  - 🇻🇳 VN-Fallback
+  - 🇲🇾 MY-Fallback
+  - PROXY-Gate
+  - DIRECT
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png
+- name: Spotify
+  type: select
+  proxies:
+  - 🖥️ All-Nodes 1️⃣
+  - 🖥️ All-Nodes 2️⃣
+  - 🌍 Global-Fallback
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇲🇴 MO-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🇬🇧 UK-Fallback
+  - 🇩🇪 DE-Fallback
+  - 🇫🇷 FR-Fallback
+  - 🇷🇺 RU-Fallback
+  - 🇨🇦 CA-Fallback
+  - 🇦🇺 AU-Fallback
+  - 🇰🇷 KR-Fallback
+  - 🇮🇹 IT-Fallback
+  - 🇪🇸 ES-Fallback
+  - 🇳🇱 NL-Fallback
+  - 🇫🇮 FI-Fallback
+  - 🇳🇴 NO-Fallback
+  - 🇸🇪 SE-Fallback
+  - 🇨🇭 CH-Fallback
+  - 🇵🇱 PL-Fallback
+  - 🇮🇳 IN-Fallback
+  - 🇵🇭 PH-Fallback
+  - 🇻🇳 VN-Fallback
+  - 🇲🇾 MY-Fallback
+  - PROXY-Gate
+  - DIRECT
+  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Spotify.png
+- name: TikTok
+  type: select
+  proxies:
+  - 🖥️ All-Nodes 1️⃣
+  - 🖥️ All-Nodes 2️⃣
+  - 🌍 Global-Fallback
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇲🇴 MO-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🇬🇧 UK-Fallback
+  - 🇩🇪 DE-Fallback
+  - 🇫🇷 FR-Fallback
+  - 🇷🇺 RU-Fallback
+  - 🇨🇦 CA-Fallback
+  - 🇦🇺 AU-Fallback
+  - 🇰🇷 KR-Fallback
+  - 🇮🇹 IT-Fallback
+  - 🇪🇸 ES-Fallback
+  - 🇳🇱 NL-Fallback
+  - 🇫🇮 FI-Fallback
+  - 🇳🇴 NO-Fallback
+  - 🇸🇪 SE-Fallback
+  - 🇨🇭 CH-Fallback
+  - 🇵🇱 PL-Fallback
+  - 🇮🇳 IN-Fallback
+  - 🇵🇭 PH-Fallback
+  - 🇻🇳 VN-Fallback
+  - 🇲🇾 MY-Fallback
+  - PROXY-Gate
+  - DIRECT
+  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/TikTok.png
+- name: Twitch
+  type: select
+  proxies:
+  - 🖥️ All-Nodes 1️⃣
+  - 🖥️ All-Nodes 2️⃣
+  - 🌍 Global-Fallback
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇲🇴 MO-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🇬🇧 UK-Fallback
+  - 🇩🇪 DE-Fallback
+  - 🇫🇷 FR-Fallback
+  - 🇷🇺 RU-Fallback
+  - 🇨🇦 CA-Fallback
+  - 🇦🇺 AU-Fallback
+  - 🇰🇷 KR-Fallback
+  - 🇮🇹 IT-Fallback
+  - 🇪🇸 ES-Fallback
+  - 🇳🇱 NL-Fallback
+  - 🇫🇮 FI-Fallback
+  - 🇳🇴 NO-Fallback
+  - 🇸🇪 SE-Fallback
+  - 🇨🇭 CH-Fallback
+  - 🇵🇱 PL-Fallback
+  - 🇮🇳 IN-Fallback
+  - 🇵🇭 PH-Fallback
+  - 🇻🇳 VN-Fallback
+  - 🇲🇾 MY-Fallback
+  - PROXY-Gate
+  - DIRECT
+  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Twitch.png
+- name: GPT
+  type: select
+  proxies:
+  - 🖥️ All-Nodes 1️⃣
+  - 🖥️ All-Nodes 2️⃣
+  - 🌍 Global-Fallback
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇲🇴 MO-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🇬🇧 UK-Fallback
+  - 🇩🇪 DE-Fallback
+  - 🇫🇷 FR-Fallback
+  - 🇷🇺 RU-Fallback
+  - 🇨🇦 CA-Fallback
+  - 🇦🇺 AU-Fallback
+  - 🇰🇷 KR-Fallback
+  - 🇮🇹 IT-Fallback
+  - 🇪🇸 ES-Fallback
+  - 🇳🇱 NL-Fallback
+  - 🇫🇮 FI-Fallback
+  - 🇳🇴 NO-Fallback
+  - 🇸🇪 SE-Fallback
+  - 🇨🇭 CH-Fallback
+  - 🇵🇱 PL-Fallback
+  - 🇮🇳 IN-Fallback
+  - 🇵🇭 PH-Fallback
+  - 🇻🇳 VN-Fallback
+  - 🇲🇾 MY-Fallback
+  - PROXY-Gate
+  - DIRECT
+  icon: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/ChatGPT.png
+- name: Gemini
+  type: select
+  proxies:
+  - 🖥️ All-Nodes 1️⃣
+  - 🖥️ All-Nodes 2️⃣
+  - 🌍 Global-Fallback
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇲🇴 MO-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🇬🇧 UK-Fallback
+  - 🇩🇪 DE-Fallback
+  - 🇫🇷 FR-Fallback
+  - 🇷🇺 RU-Fallback
+  - 🇨🇦 CA-Fallback
+  - 🇦🇺 AU-Fallback
+  - 🇰🇷 KR-Fallback
+  - 🇮🇹 IT-Fallback
+  - 🇪🇸 ES-Fallback
+  - 🇳🇱 NL-Fallback
+  - 🇫🇮 FI-Fallback
+  - 🇳🇴 NO-Fallback
+  - 🇸🇪 SE-Fallback
+  - 🇨🇭 CH-Fallback
+  - 🇵🇱 PL-Fallback
+  - 🇮🇳 IN-Fallback
+  - 🇵🇭 PH-Fallback
+  - 🇻🇳 VN-Fallback
+  - 🇲🇾 MY-Fallback
+  - PROXY-Gate
+  - DIRECT
+  icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/google-gemini.png
+- name: Claude
+  type: select
+  proxies:
+  - 🖥️ All-Nodes 1️⃣
+  - 🖥️ All-Nodes 2️⃣
+  - 🌍 Global-Fallback
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇲🇴 MO-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🇬🇧 UK-Fallback
+  - 🇩🇪 DE-Fallback
+  - 🇫🇷 FR-Fallback
+  - 🇷🇺 RU-Fallback
+  - 🇨🇦 CA-Fallback
+  - 🇦🇺 AU-Fallback
+  - 🇰🇷 KR-Fallback
+  - 🇮🇹 IT-Fallback
+  - 🇪🇸 ES-Fallback
+  - 🇳🇱 NL-Fallback
+  - 🇫🇮 FI-Fallback
+  - 🇳🇴 NO-Fallback
+  - 🇸🇪 SE-Fallback
+  - 🇨🇭 CH-Fallback
+  - 🇵🇱 PL-Fallback
+  - 🇮🇳 IN-Fallback
+  - 🇵🇭 PH-Fallback
+  - 🇻🇳 VN-Fallback
+  - 🇲🇾 MY-Fallback
+  - PROXY-Gate
+  - DIRECT
+  icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/anthropic.png
+- name: Grok
+  type: select
+  proxies:
+  - 🖥️ All-Nodes 1️⃣
+  - 🖥️ All-Nodes 2️⃣
+  - 🌍 Global-Fallback
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇲🇴 MO-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🇬🇧 UK-Fallback
+  - 🇩🇪 DE-Fallback
+  - 🇫🇷 FR-Fallback
+  - 🇷🇺 RU-Fallback
+  - 🇨🇦 CA-Fallback
+  - 🇦🇺 AU-Fallback
+  - 🇰🇷 KR-Fallback
+  - 🇮🇹 IT-Fallback
+  - 🇪🇸 ES-Fallback
+  - 🇳🇱 NL-Fallback
+  - 🇫🇮 FI-Fallback
+  - 🇳🇴 NO-Fallback
+  - 🇸🇪 SE-Fallback
+  - 🇨🇭 CH-Fallback
+  - 🇵🇱 PL-Fallback
+  - 🇮🇳 IN-Fallback
+  - 🇵🇭 PH-Fallback
+  - 🇻🇳 VN-Fallback
+  - 🇲🇾 MY-Fallback
+  - PROXY-Gate
+  - DIRECT
+  icon: https://raw.githubusercontent.com/luestr/IconResource/main/App_icon/120px/Grok.png
+- name: Microsoft
+  type: select
+  proxies:
+  - 🖥️ All-Nodes 1️⃣
+  - 🖥️ All-Nodes 2️⃣
+  - 🌍 Global-Fallback
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇲🇴 MO-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🇬🇧 UK-Fallback
+  - 🇩🇪 DE-Fallback
+  - 🇫🇷 FR-Fallback
+  - 🇷🇺 RU-Fallback
+  - 🇨🇦 CA-Fallback
+  - 🇦🇺 AU-Fallback
+  - 🇰🇷 KR-Fallback
+  - 🇮🇹 IT-Fallback
+  - 🇪🇸 ES-Fallback
+  - 🇳🇱 NL-Fallback
+  - 🇫🇮 FI-Fallback
+  - 🇳🇴 NO-Fallback
+  - 🇸🇪 SE-Fallback
+  - 🇨🇭 CH-Fallback
+  - 🇵🇱 PL-Fallback
+  - 🇮🇳 IN-Fallback
+  - 🇵🇭 PH-Fallback
+  - 🇻🇳 VN-Fallback
+  - 🇲🇾 MY-Fallback
+  - PROXY-Gate
+  - DIRECT
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png
+- name: Google
+  type: select
+  proxies:
+  - 🖥️ All-Nodes 1️⃣
+  - 🖥️ All-Nodes 2️⃣
+  - 🌍 Global-Fallback
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇲🇴 MO-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🇬🇧 UK-Fallback
+  - 🇩🇪 DE-Fallback
+  - 🇫🇷 FR-Fallback
+  - 🇷🇺 RU-Fallback
+  - 🇨🇦 CA-Fallback
+  - 🇦🇺 AU-Fallback
+  - 🇰🇷 KR-Fallback
+  - 🇮🇹 IT-Fallback
+  - 🇪🇸 ES-Fallback
+  - 🇳🇱 NL-Fallback
+  - 🇫🇮 FI-Fallback
+  - 🇳🇴 NO-Fallback
+  - 🇸🇪 SE-Fallback
+  - 🇨🇭 CH-Fallback
+  - 🇵🇱 PL-Fallback
+  - 🇮🇳 IN-Fallback
+  - 🇵🇭 PH-Fallback
+  - 🇻🇳 VN-Fallback
+  - 🇲🇾 MY-Fallback
+  - PROXY-Gate
+  - DIRECT
+  icon: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/Google.PNG
+- name: Apple
+  type: select
+  proxies:
+  - 🖥️ All-Nodes 1️⃣
+  - 🖥️ All-Nodes 2️⃣
+  - 🌍 Global-Fallback
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇲🇴 MO-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🇬🇧 UK-Fallback
+  - 🇩🇪 DE-Fallback
+  - 🇫🇷 FR-Fallback
+  - 🇷🇺 RU-Fallback
+  - 🇨🇦 CA-Fallback
+  - 🇦🇺 AU-Fallback
+  - 🇰🇷 KR-Fallback
+  - 🇮🇹 IT-Fallback
+  - 🇪🇸 ES-Fallback
+  - 🇳🇱 NL-Fallback
+  - 🇫🇮 FI-Fallback
+  - 🇳🇴 NO-Fallback
+  - 🇸🇪 SE-Fallback
+  - 🇨🇭 CH-Fallback
+  - 🇵🇱 PL-Fallback
+  - 🇮🇳 IN-Fallback
+  - 🇵🇭 PH-Fallback
+  - 🇻🇳 VN-Fallback
+  - 🇲🇾 MY-Fallback
+  - PROXY-Gate
+  - DIRECT
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_2.png
+- name: iCloud
+  type: select
+  proxies:
+  - 🖥️ All-Nodes 1️⃣
+  - 🖥️ All-Nodes 2️⃣
+  - 🌍 Global-Fallback
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇲🇴 MO-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🇬🇧 UK-Fallback
+  - 🇩🇪 DE-Fallback
+  - 🇫🇷 FR-Fallback
+  - 🇷🇺 RU-Fallback
+  - 🇨🇦 CA-Fallback
+  - 🇦🇺 AU-Fallback
+  - 🇰🇷 KR-Fallback
+  - 🇮🇹 IT-Fallback
+  - 🇪🇸 ES-Fallback
+  - 🇳🇱 NL-Fallback
+  - 🇫🇮 FI-Fallback
+  - 🇳🇴 NO-Fallback
+  - 🇸🇪 SE-Fallback
+  - 🇨🇭 CH-Fallback
+  - 🇵🇱 PL-Fallback
+  - 🇮🇳 IN-Fallback
+  - 🇵🇭 PH-Fallback
+  - 🇻🇳 VN-Fallback
+  - 🇲🇾 MY-Fallback
+  - PROXY-Gate
+  - DIRECT
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/iCloud.png
+- name: Amazon
+  type: select
+  proxies:
+  - 🖥️ All-Nodes 1️⃣
+  - 🖥️ All-Nodes 2️⃣
+  - 🌍 Global-Fallback
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇲🇴 MO-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🇬🇧 UK-Fallback
+  - 🇩🇪 DE-Fallback
+  - 🇫🇷 FR-Fallback
+  - 🇷🇺 RU-Fallback
+  - 🇨🇦 CA-Fallback
+  - 🇦🇺 AU-Fallback
+  - 🇰🇷 KR-Fallback
+  - 🇮🇹 IT-Fallback
+  - 🇪🇸 ES-Fallback
+  - 🇳🇱 NL-Fallback
+  - 🇫🇮 FI-Fallback
+  - 🇳🇴 NO-Fallback
+  - 🇸🇪 SE-Fallback
+  - 🇨🇭 CH-Fallback
+  - 🇵🇱 PL-Fallback
+  - 🇮🇳 IN-Fallback
+  - 🇵🇭 PH-Fallback
+  - 🇻🇳 VN-Fallback
+  - 🇲🇾 MY-Fallback
+  - PROXY-Gate
+  - DIRECT
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Amazon.png
+- name: Meta
+  type: select
+  proxies:
+  - 🖥️ All-Nodes 1️⃣
+  - 🖥️ All-Nodes 2️⃣
+  - 🌍 Global-Fallback
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇲🇴 MO-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🇬🇧 UK-Fallback
+  - 🇩🇪 DE-Fallback
+  - 🇫🇷 FR-Fallback
+  - 🇷🇺 RU-Fallback
+  - 🇨🇦 CA-Fallback
+  - 🇦🇺 AU-Fallback
+  - 🇰🇷 KR-Fallback
+  - 🇮🇹 IT-Fallback
+  - 🇪🇸 ES-Fallback
+  - 🇳🇱 NL-Fallback
+  - 🇫🇮 FI-Fallback
+  - 🇳🇴 NO-Fallback
+  - 🇸🇪 SE-Fallback
+  - 🇨🇭 CH-Fallback
+  - 🇵🇱 PL-Fallback
+  - 🇮🇳 IN-Fallback
+  - 🇵🇭 PH-Fallback
+  - 🇻🇳 VN-Fallback
+  - 🇲🇾 MY-Fallback
+  - PROXY-Gate
+  - DIRECT
+  icon: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/Meta.png
+- name: X
+  type: select
+  proxies:
+  - 🖥️ All-Nodes 1️⃣
+  - 🖥️ All-Nodes 2️⃣
+  - 🌍 Global-Fallback
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇲🇴 MO-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🇬🇧 UK-Fallback
+  - 🇩🇪 DE-Fallback
+  - 🇫🇷 FR-Fallback
+  - 🇷🇺 RU-Fallback
+  - 🇨🇦 CA-Fallback
+  - 🇦🇺 AU-Fallback
+  - 🇰🇷 KR-Fallback
+  - 🇮🇹 IT-Fallback
+  - 🇪🇸 ES-Fallback
+  - 🇳🇱 NL-Fallback
+  - 🇫🇮 FI-Fallback
+  - 🇳🇴 NO-Fallback
+  - 🇸🇪 SE-Fallback
+  - 🇨🇭 CH-Fallback
+  - 🇵🇱 PL-Fallback
+  - 🇮🇳 IN-Fallback
+  - 🇵🇭 PH-Fallback
+  - 🇻🇳 VN-Fallback
+  - 🇲🇾 MY-Fallback
+  - PROXY-Gate
+  - DIRECT
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/X.png
+- name: WhatsApp
+  type: select
+  proxies:
+  - 🖥️ All-Nodes 1️⃣
+  - 🖥️ All-Nodes 2️⃣
+  - 🌍 Global-Fallback
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇲🇴 MO-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🇬🇧 UK-Fallback
+  - 🇩🇪 DE-Fallback
+  - 🇫🇷 FR-Fallback
+  - 🇷🇺 RU-Fallback
+  - 🇨🇦 CA-Fallback
+  - 🇦🇺 AU-Fallback
+  - 🇰🇷 KR-Fallback
+  - 🇮🇹 IT-Fallback
+  - 🇪🇸 ES-Fallback
+  - 🇳🇱 NL-Fallback
+  - 🇫🇮 FI-Fallback
+  - 🇳🇴 NO-Fallback
+  - 🇸🇪 SE-Fallback
+  - 🇨🇭 CH-Fallback
+  - 🇵🇱 PL-Fallback
+  - 🇮🇳 IN-Fallback
+  - 🇵🇭 PH-Fallback
+  - 🇻🇳 VN-Fallback
+  - 🇲🇾 MY-Fallback
+  - PROXY-Gate
+  - DIRECT
+  icon: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/WhatsApp.svg
+- name: Telegram
+  type: select
+  proxies:
+  - 🖥️ All-Nodes 1️⃣
+  - 🖥️ All-Nodes 2️⃣
+  - 🌍 Global-Fallback
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇲🇴 MO-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🇬🇧 UK-Fallback
+  - 🇩🇪 DE-Fallback
+  - 🇫🇷 FR-Fallback
+  - 🇷🇺 RU-Fallback
+  - 🇨🇦 CA-Fallback
+  - 🇦🇺 AU-Fallback
+  - 🇰🇷 KR-Fallback
+  - 🇮🇹 IT-Fallback
+  - 🇪🇸 ES-Fallback
+  - 🇳🇱 NL-Fallback
+  - 🇫🇮 FI-Fallback
+  - 🇳🇴 NO-Fallback
+  - 🇸🇪 SE-Fallback
+  - 🇨🇭 CH-Fallback
+  - 🇵🇱 PL-Fallback
+  - 🇮🇳 IN-Fallback
+  - 🇵🇭 PH-Fallback
+  - 🇻🇳 VN-Fallback
+  - 🇲🇾 MY-Fallback
+  - PROXY-Gate
+  - DIRECT
+  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Telegram.png
+- name: Github
+  type: select
+  proxies:
+  - 🖥️ All-Nodes 1️⃣
+  - 🖥️ All-Nodes 2️⃣
+  - 🌍 Global-Fallback
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇲🇴 MO-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🇬🇧 UK-Fallback
+  - 🇩🇪 DE-Fallback
+  - 🇫🇷 FR-Fallback
+  - 🇷🇺 RU-Fallback
+  - 🇨🇦 CA-Fallback
+  - 🇦🇺 AU-Fallback
+  - 🇰🇷 KR-Fallback
+  - 🇮🇹 IT-Fallback
+  - 🇪🇸 ES-Fallback
+  - 🇳🇱 NL-Fallback
+  - 🇫🇮 FI-Fallback
+  - 🇳🇴 NO-Fallback
+  - 🇸🇪 SE-Fallback
+  - 🇨🇭 CH-Fallback
+  - 🇵🇱 PL-Fallback
+  - 🇮🇳 IN-Fallback
+  - 🇵🇭 PH-Fallback
+  - 🇻🇳 VN-Fallback
+  - 🇲🇾 MY-Fallback
+  - PROXY-Gate
+  - DIRECT
+  icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/GitHub.png
+- name: Speedtest
+  type: select
+  proxies:
+  - 🖥️ All-Nodes 1️⃣
+  - 🖥️ All-Nodes 2️⃣
+  - 🌍 Global-Fallback
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇲🇴 MO-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🇬🇧 UK-Fallback
+  - 🇩🇪 DE-Fallback
+  - 🇫🇷 FR-Fallback
+  - 🇷🇺 RU-Fallback
+  - 🇨🇦 CA-Fallback
+  - 🇦🇺 AU-Fallback
+  - 🇰🇷 KR-Fallback
+  - 🇮🇹 IT-Fallback
+  - 🇪🇸 ES-Fallback
+  - 🇳🇱 NL-Fallback
+  - 🇫🇮 FI-Fallback
+  - 🇳🇴 NO-Fallback
+  - 🇸🇪 SE-Fallback
+  - 🇨🇭 CH-Fallback
+  - 🇵🇱 PL-Fallback
+  - 🇮🇳 IN-Fallback
+  - 🇵🇭 PH-Fallback
+  - 🇻🇳 VN-Fallback
+  - 🇲🇾 MY-Fallback
+  - PROXY-Gate
+  - DIRECT
+  icon: https://cdn.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Speedtest.png
+
+#======地区fallback组======#
+- name: 🇺🇸 US-Fallback
+  type: fallback
+  proxies:
+  - 🇺🇸 US-Auto 1️⃣
+  - 🇺🇸 US-Auto 2️⃣
+  url: http://www.gstatic.com/generate_204
+  interval: 600
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png
+- name: 🇸🇬 SG-Fallback
+  type: fallback
+  proxies:
+  - 🇸🇬 SG-Auto 1️⃣
+  - 🇸🇬 SG-Auto 2️⃣
+  url: http://www.gstatic.com/generate_204
+  interval: 600
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png
+- name: 🇭🇰 HK-Fallback
+  type: fallback
+  proxies:
+  - 🇭🇰 HK-Auto 1️⃣
+  - 🇭🇰 HK-Auto 2️⃣
+  url: http://www.gstatic.com/generate_204
+  interval: 600
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png
+- name: 🇲🇴 MO-Fallback
+  type: fallback
+  proxies:
+  - 🇲🇴 MO-Auto 1️⃣
+  - 🇲🇴 MO-Auto 2️⃣
+  url: http://www.gstatic.com/generate_204
+  interval: 600
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png
+- name: 🇯🇵 JP-Fallback
+  type: fallback
+  proxies:
+  - 🇯🇵 JP-Auto 1️⃣
+  - 🇯🇵 JP-Auto 2️⃣
+  url: http://www.gstatic.com/generate_204
+  interval: 600
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png
+- name: 🇹🇼 TW-Fallback
+  type: fallback
+  proxies:
+  - 🇹🇼 TW-Auto 1️⃣
+  - 🇹🇼 TW-Auto 2️⃣
+  url: http://www.gstatic.com/generate_204
+  interval: 600
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png
+- name: 🇬🇧 UK-Fallback
+  type: fallback
+  proxies:
+  - 🇬🇧 UK-Auto 1️⃣
+  - 🇬🇧 UK-Auto 2️⃣
+  url: http://www.gstatic.com/generate_204
+  interval: 600
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png
+- name: 🇩🇪 DE-Fallback
+  type: fallback
+  proxies:
+  - 🇩🇪 DE-Auto 1️⃣
+  - 🇩🇪 DE-Auto 2️⃣
+  url: http://www.gstatic.com/generate_204
+  interval: 600
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png
+- name: 🇫🇷 FR-Fallback
+  type: fallback
+  proxies:
+  - 🇫🇷 FR-Auto 1️⃣
+  - 🇫🇷 FR-Auto 2️⃣
+  url: http://www.gstatic.com/generate_204
+  interval: 600
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png
+- name: 🇷🇺 RU-Fallback
+  type: fallback
+  proxies:
+  - 🇷🇺 RU-Auto 1️⃣
+  - 🇷🇺 RU-Auto 2️⃣
+  url: http://www.gstatic.com/generate_204
+  interval: 600
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png
+- name: 🇨🇦 CA-Fallback
+  type: fallback
+  proxies:
+  - 🇨🇦 CA-Auto 1️⃣
+  - 🇨🇦 CA-Auto 2️⃣
+  url: http://www.gstatic.com/generate_204
+  interval: 600
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png
+- name: 🇦🇺 AU-Fallback
+  type: fallback
+  proxies:
+  - 🇦🇺 AU-Auto 1️⃣
+  - 🇦🇺 AU-Auto 2️⃣
+  url: http://www.gstatic.com/generate_204
+  interval: 600
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png
+- name: 🇰🇷 KR-Fallback
+  type: fallback
+  proxies:
+  - 🇰🇷 KR-Auto 1️⃣
+  - 🇰🇷 KR-Auto 2️⃣
+  url: http://www.gstatic.com/generate_204
+  interval: 600
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png
+- name: 🇮🇹 IT-Fallback
+  type: fallback
+  proxies:
+  - 🇮🇹 IT-Auto 1️⃣
+  - 🇮🇹 IT-Auto 2️⃣
+  url: http://www.gstatic.com/generate_204
+  interval: 600
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png
+- name: 🇪🇸 ES-Fallback
+  type: fallback
+  proxies:
+  - 🇪🇸 ES-Auto 1️⃣
+  - 🇪🇸 ES-Auto 2️⃣
+  url: http://www.gstatic.com/generate_204
+  interval: 600
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png
+- name: 🇳🇱 NL-Fallback
+  type: fallback
+  proxies:
+  - 🇳🇱 NL-Auto 1️⃣
+  - 🇳🇱 NL-Auto 2️⃣
+  url: http://www.gstatic.com/generate_204
+  interval: 600
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png
+- name: 🇫🇮 FI-Fallback
+  type: fallback
+  proxies:
+  - 🇫🇮 FI-Auto 1️⃣
+  - 🇫🇮 FI-Auto 2️⃣
+  url: http://www.gstatic.com/generate_204
+  interval: 600
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png
+- name: 🇳🇴 NO-Fallback
+  type: fallback
+  proxies:
+  - 🇳🇴 NO-Auto 1️⃣
+  - 🇳🇴 NO-Auto 2️⃣
+  url: http://www.gstatic.com/generate_204
+  interval: 600
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png
+- name: 🇸🇪 SE-Fallback
+  type: fallback
+  proxies:
+  - 🇸🇪 SE-Auto 1️⃣
+  - 🇸🇪 SE-Auto 2️⃣
+  url: http://www.gstatic.com/generate_204
+  interval: 600
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png
+- name: 🇨🇭 CH-Fallback
+  type: fallback
+  proxies:
+  - 🇨🇭 CH-Auto 1️⃣
+  - 🇨🇭 CH-Auto 2️⃣
+  url: http://www.gstatic.com/generate_204
+  interval: 600
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png
+- name: 🇵🇱 PL-Fallback
+  type: fallback
+  proxies:
+  - 🇵🇱 PL-Auto 1️⃣
+  - 🇵🇱 PL-Auto 2️⃣
+  url: http://www.gstatic.com/generate_204
+  interval: 600
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png
+- name: 🇮🇳 IN-Fallback
+  type: fallback
+  proxies:
+  - 🇮🇳 IN-Auto 1️⃣
+  - 🇮🇳 IN-Auto 2️⃣
+  url: http://www.gstatic.com/generate_204
+  interval: 600
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png
+- name: 🇵🇭 PH-Fallback
+  type: fallback
+  proxies:
+  - 🇵🇭 PH-Auto 1️⃣
+  - 🇵🇭 PH-Auto 2️⃣
+  url: http://www.gstatic.com/generate_204
+  interval: 600
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png
+- name: 🇻🇳 VN-Fallback
+  type: fallback
+  proxies:
+  - 🇻🇳 VN-Auto 1️⃣
+  - 🇻🇳 VN-Auto 2️⃣
+  url: http://www.gstatic.com/generate_204
+  interval: 600
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png
+- name: 🇲🇾 MY-Fallback
+  type: fallback
+  proxies:
+  - 🇲🇾 MY-Auto 1️⃣
+  - 🇲🇾 MY-Auto 2️⃣
+  url: http://www.gstatic.com/generate_204
+  interval: 600
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png
+
+#======Apple推送组======#
+- name: APNs-Fallback
+  type: fallback
+  proxies: &id001
+  - 🇺🇸 US-Fallback
+  - 🇸🇬 SG-Fallback
+  - 🇭🇰 HK-Fallback
+  - 🇲🇴 MO-Fallback
+  - 🇯🇵 JP-Fallback
+  - 🇹🇼 TW-Fallback
+  - 🇬🇧 UK-Fallback
+  - 🇩🇪 DE-Fallback
+  - 🇫🇷 FR-Fallback
+  - 🇷🇺 RU-Fallback
+  - 🇨🇦 CA-Fallback
+  - 🇦🇺 AU-Fallback
+  - 🇰🇷 KR-Fallback
+  - 🇮🇹 IT-Fallback
+  - 🇪🇸 ES-Fallback
+  - 🇳🇱 NL-Fallback
+  - 🇫🇮 FI-Fallback
+  - 🇳🇴 NO-Fallback
+  - 🇸🇪 SE-Fallback
+  - 🇨🇭 CH-Fallback
+  - 🇵🇱 PL-Fallback
+  - 🇮🇳 IN-Fallback
+  - 🇵🇭 PH-Fallback
+  - 🇻🇳 VN-Fallback
+  - 🇲🇾 MY-Fallback
+  url: http://captive.apple.com/hotspot-detect.html
+  interval: 300
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png
+
+#=====全自动组=====#
+- name: 🌍 Global-Fallback
+  type: fallback
+  proxies: *id001
+  url: http://www.gstatic.com/generate_204
+  interval: 600
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png
+
+#=======AUTO组=======#
+- name: 🇺🇸 US-Auto 1️⃣
+  type: url-test
+  use:
+  - Primary-VPS
+  filter: (?i)([\[]US[\]]|^US$|USA|United[ _-]?States|\bUS\b|美国|美國|🇺🇸)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇺🇸 US-Auto 2️⃣
+  type: url-test
+  use:
+  - Backup-VPS
+  filter: (?i)([\[]US[\]]|^US$|USA|United[ _-]?States|\bUS\b|美国|美國|🇺🇸)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇸🇬 SG-Auto 1️⃣
+  type: url-test
+  use:
+  - Primary-VPS
+  filter: (?i)([\[]SG[\]]|^SG$|Singapore|\bSG\b|新加坡|狮城|🇸🇬)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇸🇬 SG-Auto 2️⃣
+  type: url-test
+  use:
+  - Backup-VPS
+  filter: (?i)([\[]SG[\]]|^SG$|Singapore|\bSG\b|新加坡|狮城|🇸🇬)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇭🇰 HK-Auto 1️⃣
+  type: url-test
+  use:
+  - Primary-VPS
+  filter: (?i)([\[]HK[\]]|^HK$|Hong[ _-]?Kong|\bHK\b|香港|🇭🇰)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇭🇰 HK-Auto 2️⃣
+  type: url-test
+  use:
+  - Backup-VPS
+  filter: (?i)([\[]HK[\]]|^HK$|Hong[ _-]?Kong|\bHK\b|香港|🇭🇰)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇲🇴 MO-Auto 1️⃣
+  type: url-test
+  use:
+  - Primary-VPS
+  filter: (?i)([\[]MO[\]]|^MO$|Macau|Macao|\bMO\b|澳门|澳門|🇲🇴)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇲🇴 MO-Auto 2️⃣
+  type: url-test
+  use:
+  - Backup-VPS
+  filter: (?i)([\[]MO[\]]|^MO$|Macau|Macao|\bMO\b|澳门|澳門|🇲🇴)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇯🇵 JP-Auto 1️⃣
+  type: url-test
+  use:
+  - Primary-VPS
+  filter: (?i)([\[]JP[\]]|^JP$|Japan|\bJP\b|日本|东京|大阪|🇯🇵)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇯🇵 JP-Auto 2️⃣
+  type: url-test
+  use:
+  - Backup-VPS
+  filter: (?i)([\[]JP[\]]|^JP$|Japan|\bJP\b|日本|东京|大阪|🇯🇵)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇹🇼 TW-Auto 1️⃣
+  type: url-test
+  use:
+  - Primary-VPS
+  filter: (?i)([\[]TW[\]]|^TW$|Taiwan|Taibei|Taipei|\bTW\b|台湾|臺灣|台北|高雄|🇹🇼)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇹🇼 TW-Auto 2️⃣
+  type: url-test
+  use:
+  - Backup-VPS
+  filter: (?i)([\[]TW[\]]|^TW$|Taiwan|Taibei|Taipei|\bTW\b|台湾|臺灣|台北|高雄|🇹🇼)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇬🇧 UK-Auto 1️⃣
+  type: url-test
+  use:
+  - Primary-VPS
+  filter: (?i)([\[]UK[\]]|^UK$|United[ _-]?Kingdom|Britain|England|\bUK\b|英国|英國|伦敦|🇬🇧)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇬🇧 UK-Auto 2️⃣
+  type: url-test
+  use:
+  - Backup-VPS
+  filter: (?i)([\[]UK[\]]|^UK$|United[ _-]?Kingdom|Britain|England|\bUK\b|英国|英國|伦敦|🇬🇧)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇩🇪 DE-Auto 1️⃣
+  type: url-test
+  use:
+  - Primary-VPS
+  filter: (?i)([\[]DE[\]]|^DE$|Germany|Deutschland|\bDE\b|德国|德國|法兰克福|🇩🇪)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇩🇪 DE-Auto 2️⃣
+  type: url-test
+  use:
+  - Backup-VPS
+  filter: (?i)([\[]DE[\]]|^DE$|Germany|Deutschland|\bDE\b|德国|德國|法兰克福|🇩🇪)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇫🇷 FR-Auto 1️⃣
+  type: url-test
+  use:
+  - Primary-VPS
+  filter: (?i)([\[]FR[\]]|^FR$|France|\bFR\b|法国|法國|巴黎|🇫🇷)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇫🇷 FR-Auto 2️⃣
+  type: url-test
+  use:
+  - Backup-VPS
+  filter: (?i)([\[]FR[\]]|^FR$|France|\bFR\b|法国|法國|巴黎|🇫🇷)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇷🇺 RU-Auto 1️⃣
+  type: url-test
+  use:
+  - Primary-VPS
+  filter: (?i)([\[]RU[\]]|^RU$|Russia|Russian[ _-]?Federation|\bRU\b|俄罗斯|俄羅斯|莫斯科|伯力|🇷🇺)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇷🇺 RU-Auto 2️⃣
+  type: url-test
+  use:
+  - Backup-VPS
+  filter: (?i)([\[]RU[\]]|^RU$|Russia|Russian[ _-]?Federation|\bRU\b|俄罗斯|俄羅斯|莫斯科|伯力|🇷🇺)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇨🇦 CA-Auto 1️⃣
+  type: url-test
+  use:
+  - Primary-VPS
+  filter: (?i)([\[]CA[\]]|^CA$|Canada|\bCA\b|加拿大|🇨🇦)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇨🇦 CA-Auto 2️⃣
+  type: url-test
+  use:
+  - Backup-VPS
+  filter: (?i)([\[]CA[\]]|^CA$|Canada|\bCA\b|加拿大|🇨🇦)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇦🇺 AU-Auto 1️⃣
+  type: url-test
+  use:
+  - Primary-VPS
+  filter: (?i)([\[]AU[\]]|^AU$|Australia|\bAU\b|澳大利亚|澳洲|澳大利亞|🇦🇺)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇦🇺 AU-Auto 2️⃣
+  type: url-test
+  use:
+  - Backup-VPS
+  filter: (?i)([\[]AU[\]]|^AU$|Australia|\bAU\b|澳大利亚|澳洲|澳大利亞|🇦🇺)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇰🇷 KR-Auto 1️⃣
+  type: url-test
+  use:
+  - Primary-VPS
+  filter: (?i)([\[]KR[\]]|^KR$|Korea|South[ _-]?Korea|\bKR\b|韩国|韓國|首尔|首爾|🇰🇷)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇰🇷 KR-Auto 2️⃣
+  type: url-test
+  use:
+  - Backup-VPS
+  filter: (?i)([\[]KR[\]]|^KR$|Korea|South[ _-]?Korea|\bKR\b|韩国|韓國|首尔|首爾|🇰🇷)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇮🇹 IT-Auto 1️⃣
+  type: url-test
+  use:
+  - Primary-VPS
+  filter: (?i)([\[]IT[\]]|^IT$|Italy|Italian|\bIT\b|意大利|義大利|米兰|米蘭|罗马|羅馬|🇮🇹)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇮🇹 IT-Auto 2️⃣
+  type: url-test
+  use:
+  - Backup-VPS
+  filter: (?i)([\[]IT[\]]|^IT$|Italy|Italian|\bIT\b|意大利|義大利|米兰|米蘭|罗马|羅馬|🇮🇹)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇪🇸 ES-Auto 1️⃣
+  type: url-test
+  use:
+  - Primary-VPS
+  filter: (?i)([\[]ES[\]]|^ES$|Spain|Spanish|\bES\b|西班牙|马德里|馬德里|🇪🇸)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇪🇸 ES-Auto 2️⃣
+  type: url-test
+  use:
+  - Backup-VPS
+  filter: (?i)([\[]ES[\]]|^ES$|Spain|Spanish|\bES\b|西班牙|马德里|馬德里|🇪🇸)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇳🇱 NL-Auto 1️⃣
+  type: url-test
+  use:
+  - Primary-VPS
+  filter: (?i)([\[]NL[\]]|^NL$|Netherlands|Dutch|\bNL\b|荷兰|荷蘭|阿姆斯特丹|🇳🇱)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇳🇱 NL-Auto 2️⃣
+  type: url-test
+  use:
+  - Backup-VPS
+  filter: (?i)([\[]NL[\]]|^NL$|Netherlands|Dutch|\bNL\b|荷兰|荷蘭|阿姆斯特丹|🇳🇱)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇫🇮 FI-Auto 1️⃣
+  type: url-test
+  use:
+  - Primary-VPS
+  filter: (?i)([\[]FI[\]]|^FI$|Finland|Finnish|\bFI\b|芬兰|芬蘭|赫尔辛基|赫爾辛基|🇫🇮)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇫🇮 FI-Auto 2️⃣
+  type: url-test
+  use:
+  - Backup-VPS
+  filter: (?i)([\[]FI[\]]|^FI$|Finland|Finnish|\bFI\b|芬兰|芬蘭|赫尔辛基|赫爾辛基|🇫🇮)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇳🇴 NO-Auto 1️⃣
+  type: url-test
+  use:
+  - Primary-VPS
+  filter: (?i)([\[]NO[\]]|^NO$|Norway|Norwegian|\bNO\b|挪威|奥斯陆|奧斯陸|🇳🇴)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇳🇴 NO-Auto 2️⃣
+  type: url-test
+  use:
+  - Backup-VPS
+  filter: (?i)([\[]NO[\]]|^NO$|Norway|Norwegian|\bNO\b|挪威|奥斯陆|奧斯陸|🇳🇴)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇸🇪 SE-Auto 1️⃣
+  type: url-test
+  use:
+  - Primary-VPS
+  filter: (?i)([\[]SE[\]]|^SE$|Sweden|Swedish|\bSE\b|瑞典|斯德哥尔摩|斯德哥爾摩|🇸🇪)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇸🇪 SE-Auto 2️⃣
+  type: url-test
+  use:
+  - Backup-VPS
+  filter: (?i)([\[]SE[\]]|^SE$|Sweden|Swedish|\bSE\b|瑞典|斯德哥尔摩|斯德哥爾摩|🇸🇪)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇨🇭 CH-Auto 1️⃣
+  type: url-test
+  use:
+  - Primary-VPS
+  filter: (?i)([\[]CH[\]]|^CH$|Switzerland|Swiss|\bCH\b|瑞士|苏黎世|蘇黎世|日内瓦|日內瓦|🇨🇭)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇨🇭 CH-Auto 2️⃣
+  type: url-test
+  use:
+  - Backup-VPS
+  filter: (?i)([\[]CH[\]]|^CH$|Switzerland|Swiss|\bCH\b|瑞士|苏黎世|蘇黎世|日内瓦|日內瓦|🇨🇭)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇵🇱 PL-Auto 1️⃣
+  type: url-test
+  use:
+  - Primary-VPS
+  filter: (?i)([\[]PL[\]]|^PL$|Poland|Polish|\bPL\b|波兰|波蘭|华沙|華沙|🇵🇱)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇵🇱 PL-Auto 2️⃣
+  type: url-test
+  use:
+  - Backup-VPS
+  filter: (?i)([\[]PL[\]]|^PL$|Poland|Polish|\bPL\b|波兰|波蘭|华沙|華沙|🇵🇱)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇮🇳 IN-Auto 1️⃣
+  type: url-test
+  use:
+  - Primary-VPS
+  filter: (?i)([\[]IN[\]]|^IN$|India|Indian|\bIN\b|印度|🇮🇳)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇮🇳 IN-Auto 2️⃣
+  type: url-test
+  use:
+  - Backup-VPS
+  filter: (?i)([\[]IN[\]]|^IN$|India|Indian|\bIN\b|印度|🇮🇳)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇵🇭 PH-Auto 1️⃣
+  type: url-test
+  use:
+  - Primary-VPS
+  filter: (?i)([\[]PH[\]]|^PH$|Philippines|Filipino|\bPH\b|菲律宾|菲律賓|马尼拉|馬尼拉|🇵🇭)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇵🇭 PH-Auto 2️⃣
+  type: url-test
+  use:
+  - Backup-VPS
+  filter: (?i)([\[]PH[\]]|^PH$|Philippines|Filipino|\bPH\b|菲律宾|菲律賓|马尼拉|馬尼拉|🇵🇭)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇻🇳 VN-Auto 1️⃣
+  type: url-test
+  use:
+  - Primary-VPS
+  filter: (?i)([\[]VN[\]]|^VN$|Vietnam|Vietnamese|\bVN\b|越南|河内|河內|胡志明|🇻🇳)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇻🇳 VN-Auto 2️⃣
+  type: url-test
+  use:
+  - Backup-VPS
+  filter: (?i)([\[]VN[\]]|^VN$|Vietnam|Vietnamese|\bVN\b|越南|河内|河內|胡志明|🇻🇳)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇲🇾 MY-Auto 1️⃣
+  type: url-test
+  use:
+  - Primary-VPS
+  filter: (?i)([\[]MY[\]]|^MY$|Malaysia|Malaysian|\bMY\b|马来西亚|馬來西亞|吉隆坡|🇲🇾)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+- name: 🇲🇾 MY-Auto 2️⃣
+  type: url-test
+  use:
+  - Backup-VPS
+  filter: (?i)([\[]MY[\]]|^MY$|Malaysia|Malaysian|\bMY\b|马来西亚|馬來西亞|吉隆坡|🇲🇾)
+  url: http://www.gstatic.com/generate_204
+  interval: 900
+  tolerance: 50
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  empty-fallback: REJECT
+
+#=======规则=======#
 
 rules:
-  - MATCH,DIRECT
+- IP-CIDR,192.168.0.0/16,DIRECT,no-resolve
+- IP-CIDR,10.0.0.0/8,DIRECT,no-resolve
+- IP-CIDR,172.16.0.0/12,DIRECT,no-resolve
+- IP-CIDR,127.0.0.0/8,DIRECT,no-resolve
+- GEOIP,LAN,DIRECT,no-resolve
+
+- DOMAIN-SUFFIX,push.apple.com,Apple Push
+- DOMAIN-SUFFIX,push-apple.com.akadns.net,Apple Push
+- DOMAIN-KEYWORD,apple.com.edgekey.net,Apple Push
+- IP-CIDR,17.249.0.0/16,Apple Push,no-resolve
+- IP-CIDR,17.252.0.0/16,Apple Push,no-resolve
+- IP-CIDR,17.57.144.0/22,Apple Push,no-resolve
+- IP-CIDR,17.188.128.0/18,Apple Push,no-resolve
+- IP-CIDR,17.188.20.0/23,Apple Push,no-resolve
+- IP-CIDR6,2620:149:a44::/48,Apple Push,no-resolve
+- IP-CIDR6,2403:300:a42::/48,Apple Push,no-resolve
+- IP-CIDR6,2403:300:a51::/48,Apple Push,no-resolve
+- IP-CIDR6,2a01:b740:a42::/48,Apple Push,no-resolve
+
+- RULE-SET,AdvertisingLite,REJECT
+- RULE-SET,AdvertisingLite_Domain,REJECT
+- RULE-SET,Privacy,REJECT
+- RULE-SET,Privacy_Domain,REJECT
+- RULE-SET,ACL4SSR_BanAD,REJECT
+- RULE-SET,ACL4SSR_BanProgramAD,REJECT
+- RULE-SET,ACL4SSR_BanProgramAD_iP,REJECT
+
+- DOMAIN-SUFFIX,aicoin.com,PROXY-Gate
+- DOMAIN-SUFFIX,coinbase.com,PROXY-Gate
+- DOMAIN-SUFFIX,binance.com,PROXY-Gate
+- DOMAIN-SUFFIX,kraken.com,PROXY-Gate
+- DOMAIN-SUFFIX,crypto.com,PROXY-Gate
+- DOMAIN-SUFFIX,okx.com,PROXY-Gate
+- DOMAIN-SUFFIX,bybit.com,PROXY-Gate
+- DOMAIN-SUFFIX,bitget.com,PROXY-Gate
+- DOMAIN-SUFFIX,metamask.io,PROXY-Gate
+- DOMAIN-SUFFIX,phantom.com,PROXY-Gate
+- DOMAIN-SUFFIX,trustwallet.com,PROXY-Gate
+- DOMAIN-SUFFIX,ledger.com,PROXY-Gate
+
+- DOMAIN-SUFFIX,youtube.com,YouTube
+- DOMAIN-SUFFIX,youtu.be,YouTube
+- DOMAIN-SUFFIX,youtube-nocookie.com,YouTube
+- DOMAIN-SUFFIX,youtubei.googleapis.com,YouTube
+- DOMAIN-SUFFIX,youtube.googleapis.com,YouTube
+- DOMAIN-SUFFIX,ytimg.com,YouTube
+- DOMAIN-SUFFIX,googlevideo.com,YouTube
+- DOMAIN-SUFFIX,ggpht.com,YouTube
+
+- RULE-SET,Netflix_Domain,Netflix
+- RULE-SET,Netflix_IP,Netflix
+- DOMAIN-KEYWORD,apiproxy-device-prod-nlb-,Netflix
+- DOMAIN-KEYWORD,dualstack.apiproxy-,Netflix
+- DOMAIN-KEYWORD,dualstack.ichnaea-web-,Netflix
+- DOMAIN-KEYWORD,netflixdnstest,Netflix
+- PROCESS-NAME,com.netflix.mediaclient,Netflix
+
+- DOMAIN-SUFFIX,disneyplus.com,Disney+
+- DOMAIN-SUFFIX,disney-plus.net,Disney+
+- DOMAIN-SUFFIX,dssott.com,Disney+
+- DOMAIN-SUFFIX,dssedge.com,Disney+
+- DOMAIN-SUFFIX,bamgrid.com,Disney+
+- DOMAIN-SUFFIX,media.dssott.com,Disney+
+- DOMAIN-SUFFIX,disney.playback.edge.bamgrid.com,Disney+
+- DOMAIN-SUFFIX,star.playback.edge.bamgrid.com,Disney+
+- DOMAIN-SUFFIX,search-api-disney.bamgrid.com,Disney+
+
+- RULE-SET,Emby,Emby
+
+- RULE-SET,Spotify_Domain,Spotify
+
+- RULE-SET,TikTok_Domain,TikTok
+
+- DOMAIN-SUFFIX,twitch.tv,Twitch
+- DOMAIN-SUFFIX,twitchcdn.net,Twitch
+- DOMAIN-SUFFIX,jtvnw.net,Twitch
+- DOMAIN-SUFFIX,ttvnw.net,Twitch
+- DOMAIN-SUFFIX,twitchsvc.net,Twitch
+
+- RULE-SET,OpenAI_Domain,GPT
+- DOMAIN,cdn.openaimerge.com,GPT
+- DOMAIN,setup.auth.openai.com,GPT
+- DOMAIN,cdn.workos.com,GPT
+- DOMAIN,forwarder.workos.com,GPT
+- DOMAIN,images.workoscdn.com,GPT
+- DOMAIN,workos.imgix.net,GPT
+- DOMAIN,setup.workos.com,GPT
+- DOMAIN,ct.sendgrid.net,GPT
+- DOMAIN,oaistatsig.com,GPT
+- DOMAIN,rum.browser-intake-datadoghq.com,GPT
+- DOMAIN,challenges.cloudflare.com,GPT
+- DOMAIN-KEYWORD,openai,GPT
+- IP-CIDR,64.23.132.171/32,GPT
+- IP-ASN,20473,GPT
+
+- DOMAIN-SUFFIX,gemini.google.com,Gemini
+- DOMAIN-SUFFIX,aistudio.google.com,Gemini
+- DOMAIN-SUFFIX,deepmind.com,Gemini
+- DOMAIN-SUFFIX,deepmind.google,Gemini
+- DOMAIN-SUFFIX,gemini.googleusercontent.com,Gemini
+- DOMAIN-SUFFIX,makersuite.google.com,Gemini
+
+- DOMAIN-SUFFIX,claude.ai,Claude
+- DOMAIN-SUFFIX,anthropic.com,Claude
+- DOMAIN-SUFFIX,claudeusercontent.com,Claude
+- DOMAIN-SUFFIX,claudeusercontent.com.cdn.cloudflare.net,Claude
+
+- RULE-SET,Copilot_Domain,Microsoft
+- RULE-SET,Copilot_IP,Microsoft
+- RULE-SET,Microsoft,Microsoft
+
+- DOMAIN-SUFFIX,grok.com,Grok
+- DOMAIN-SUFFIX,x.ai,Grok
+- DOMAIN-KEYWORD,grok,Grok
+
+- DOMAIN,mask.icloud.com,iCloud
+- DOMAIN,mask-h2.icloud.com,iCloud
+- DOMAIN,mask-api.icloud.com,iCloud
+- DOMAIN,probe.icloud.com,iCloud
+- DOMAIN,pong.icloud.com,iCloud
+- DOMAIN,metrics.icloud.com,iCloud
+- DOMAIN-SUFFIX,apple-dns.net,iCloud
+- DOMAIN-KEYWORD,icloud.com.akadns.net,iCloud
+- RULE-SET,iCloud,iCloud
+
+- RULE-SET,Apple,Apple
+- RULE-SET,Apple_Domain,Apple
+
+- RULE-SET,Amazon_Domain,Amazon
+
+- DOMAIN-KEYWORD,google,Google
+- DOMAIN-SUFFIX,gmail.com,Google
+- DOMAIN-SUFFIX,googleusercontent.com,Google
+- DOMAIN-SUFFIX,gstatic.com,Google
+- DOMAIN-SUFFIX,googleapis.com,Google
+
+- DOMAIN-SUFFIX,whatsapp.com,WhatsApp
+- DOMAIN-SUFFIX,whatsapp.net,WhatsApp
+- DOMAIN-SUFFIX,wa.me,WhatsApp
+- DOMAIN-SUFFIX,whatsapp.org,WhatsApp
+- DOMAIN-SUFFIX,whatsapp.biz,WhatsApp
+- DOMAIN-SUFFIX,whatsapp.info,WhatsApp
+- DOMAIN,graph.facebook.com,WhatsApp
+
+- DOMAIN-SUFFIX,facebook.com,Meta
+- DOMAIN-SUFFIX,facebook.net,Meta
+- DOMAIN-SUFFIX,fbcdn.net,Meta
+- DOMAIN-SUFFIX,fbsbx.com,Meta
+- DOMAIN-SUFFIX,fb.com,Meta
+- DOMAIN-SUFFIX,facebook-hardware.com,Meta
+- DOMAIN-SUFFIX,fb.me,Meta
+- DOMAIN-SUFFIX,fb.gg,Meta
+- DOMAIN-SUFFIX,graph.facebook.com,Meta
+- DOMAIN-SUFFIX,graph.instagram.com,Meta
+- DOMAIN-SUFFIX,fbcdn.com,Meta
+- DOMAIN-SUFFIX,messengerplatform.com,Meta
+- DOMAIN-SUFFIX,instagram.com,Meta
+- DOMAIN-SUFFIX,cdninstagram.com,Meta
+- DOMAIN-SUFFIX,instagram.net,Meta
+- DOMAIN-SUFFIX,ig.me,Meta
+- DOMAIN-SUFFIX,threads.com,Meta
+- DOMAIN-SUFFIX,threads.net,Meta
+- DOMAIN-SUFFIX,threadsusercontent.com,Meta
+- DOMAIN-SUFFIX,messenger.com,Meta
+- DOMAIN-SUFFIX,m.me,Meta
+- DOMAIN-SUFFIX,meta.ai,Meta
+- DOMAIN-SUFFIX,ai.meta.com,Meta
+- DOMAIN-SUFFIX,muse.ai,Meta
+- IP-CIDR,157.240.0.0/16,Meta,no-resolve
+- IP-CIDR,31.13.64.0/18,Meta,no-resolve
+- IP-CIDR,69.171.224.0/19,Meta,no-resolve
+- IP-CIDR,173.252.64.0/18,Meta,no-resolve
+
+- DOMAIN-SUFFIX,x.com,X
+- DOMAIN-SUFFIX,twitter.com,X
+- DOMAIN-SUFFIX,t.co,X
+- DOMAIN-SUFFIX,twimg.com,X
+- DOMAIN-SUFFIX,tweetdeck.com,X
+- DOMAIN-SUFFIX,pscp.tv,X
+- DOMAIN-SUFFIX,periscope.tv,X
+- DOMAIN-SUFFIX,twtrdns.net,X
+
+- DOMAIN-SUFFIX,telegram.org,Telegram
+- DOMAIN-SUFFIX,telegram.me,Telegram
+- DOMAIN-SUFFIX,t.me,Telegram
+- DOMAIN-SUFFIX,tdesktop.com,Telegram
+- DOMAIN-SUFFIX,telegra.ph,Telegram
+- DOMAIN-SUFFIX,telegram.dog,Telegram
+- IP-CIDR,91.108.4.0/22,Telegram,no-resolve
+- IP-CIDR,91.108.8.0/22,Telegram,no-resolve
+- IP-CIDR,91.108.12.0/22,Telegram,no-resolve
+- IP-CIDR,91.108.16.0/22,Telegram,no-resolve
+- IP-CIDR,91.108.20.0/22,Telegram,no-resolve
+- IP-CIDR,91.108.56.0/22,Telegram,no-resolve
+- IP-CIDR,149.154.160.0/20,Telegram,no-resolve
+- IP-CIDR6,2001:b28:f23d::/48,Telegram,no-resolve
+- IP-CIDR6,2001:b28:f23f::/48,Telegram,no-resolve
+- IP-CIDR6,2001:67c:4e8::/48,Telegram,no-resolve
+
+- DOMAIN-SUFFIX,github.com,Github
+- DOMAIN-SUFFIX,githubusercontent.com,Github
+- DOMAIN-SUFFIX,githubassets.com,Github
+- DOMAIN-SUFFIX,raw.githubusercontent.com,Github
+- DOMAIN-SUFFIX,github.io,Github
+- DOMAIN-SUFFIX,github.dev,Github
+- DOMAIN-SUFFIX,githubstatus.com,Github
+
+- DOMAIN-SUFFIX,speedtest.net,Speedtest
+- DOMAIN-SUFFIX,speedtest.com,Speedtest
+- DOMAIN-SUFFIX,ookla.com,Speedtest
+- DOMAIN-SUFFIX,ooklaserver.net,Speedtest
+- DOMAIN-SUFFIX,ookla.net,Speedtest
+- DOMAIN-SUFFIX,speedtestcustom.com,Speedtest
+
+
+- RULE-SET,ChinaMax,DIRECT
+- RULE-SET,ChinaMax_Domain,DIRECT
+- RULE-SET,ChinaMax_IP,DIRECT
+- GEOIP,CN,DIRECT,no-resolve
+- MATCH,PROXY-Gate
+
+
+rule-providers:
+  Apple:
+    type: http
+    behavior: classical
+    format: yaml
+    interval: 86400
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Rules/Apple.yaml
+    path: ./ruleset/Apple.yaml
+
+  Apple_Domain:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Apple_Domain.mrs
+    path: ./ruleset/Apple_Domain.mrs
+
+  iCloud:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/iCloud.mrs
+    path: ./ruleset/iCloud.mrs
+
+  AdvertisingLite:
+    type: http
+    behavior: classical
+    format: yaml
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/AdvertisingLite/AdvertisingLite.yaml
+    path: ./ruleset/AdvertisingLite.yaml
+
+  AdvertisingLite_Domain:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/AdvertisingLite_Domain.mrs
+    path: ./ruleset/AdvertisingLite_Domain.mrs
+
+  Privacy:
+    type: http
+    behavior: classical
+    format: yaml
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Privacy/Privacy.yaml
+    path: ./ruleset/Privacy.yaml
+
+  Privacy_Domain:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Privacy_Domain.mrs
+    path: ./ruleset/Privacy_Domain.mrs
+
+  ACL4SSR_BanAD:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/mrs/BanAD_domain.mrs
+    path: ./ruleset/ACL4SSR_BanAD.mrs
+
+  ACL4SSR_BanProgramAD:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/mrs/BanProgramAD_domain.mrs
+    path: ./ruleset/ACL4SSR_BanProgramAD.mrs
+
+  ACL4SSR_BanProgramAD_iP:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    interval: 86400
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/mrs/BanProgramAD_ip.mrs
+    path: ./ruleset/ACL4SSR_BanProgramAD_iP.mrs
+
+  ChinaMax:
+    type: http
+    behavior: classical
+    format: yaml
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/ChinaMax/ChinaMax.yaml
+    path: ./ruleset/ChinaMax.yaml
+
+  ChinaMax_Domain:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/ChinaMax_Domain.mrs
+    path: ./ruleset/ChinaMax_Domain.mrs
+
+  ChinaMax_IP:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    interval: 86400
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/ChinaMax_IP.mrs
+    path: ./ruleset/ChinaMax_IP.mrs
+
+  OpenAI_Domain:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/OpenAI_Domain.mrs
+    path: ./ruleset/OpenAI_Domain.mrs
+
+  Amazon_Domain:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Amazon_Domain.mrs
+    path: ./ruleset/Amazon_Domain.mrs
+
+  Netflix_Domain:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Netflix_Domain.mrs
+    path: ./ruleset/Netflix_Domain.mrs
+
+  Netflix_IP:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    interval: 86400
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Netflix_IP.mrs
+    path: ./ruleset/Netflix_IP.mrs
+
+  Spotify_Domain:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Spotify_Domain.mrs
+    path: ./ruleset/Spotify_Domain.mrs
+
+  TikTok_Domain:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/TikTok_Domain.mrs
+    path: ./ruleset/TikTok_Domain.mrs
+
+  Microsoft:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Microsoft.mrs
+    path: ./ruleset/Microsoft.mrs
+
+  Copilot_Domain:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Copilot_Domain.mrs
+    path: ./ruleset/Copilot_Domain.mrs
+
+  Copilot_IP:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    interval: 86400
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Copilot_IP.mrs
+    path: ./ruleset/Copilot_IP.mrs
+
+  Emby:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Emby.mrs
+    path: ./ruleset/Emby.mrs
