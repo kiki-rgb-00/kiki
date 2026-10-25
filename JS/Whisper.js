@@ -984,6 +984,7 @@ function main(config) {
     "DOMAIN,graph.facebook.com,WhatsApp",
 
     // Meta
+    "DOMAIN-SUFFIX,meta.com,Meta"
     "DOMAIN-SUFFIX,facebook.com,Meta",
     "DOMAIN-SUFFIX,facebook.net,Meta",
     "DOMAIN-SUFFIX,fbcdn.net,Meta",
@@ -1015,6 +1016,7 @@ function main(config) {
     "DOMAIN-SUFFIX,meta.ai,Meta",
     "DOMAIN-SUFFIX,ai.meta.com,Meta",
     "DOMAIN-SUFFIX,muse.ai,Meta",
+    "DOMAIN-SUFFIX,metaaivm.com,Meta",
     "IP-CIDR,157.240.0.0/16,Meta,no-resolve",
     "IP-CIDR,31.13.64.0/18,Meta,no-resolve",
     "IP-CIDR,69.171.224.0/19,Meta,no-resolve",
