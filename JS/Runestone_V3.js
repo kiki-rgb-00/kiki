@@ -61,7 +61,7 @@ function main(config) {
     {
       "name": "Apple Push",
       "type": "fallback",
-      "icon": "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Apple.png",
+      "icon": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/applepush.png",
       "proxies": [
         "APNs-Fallback",
         "DIRECT"
