@@ -232,10 +232,6 @@ function main(config) {
     ]
   });
 
-  // ============================================================
-
-  // ============================================================
-
   fixed["proxy-groups"].push({
     "name": "Emby",
     "type": "select",
@@ -325,6 +321,50 @@ function main(config) {
   });
 
   // ============================================================
+  // Meta
+  //
+  // Facebook / Instagram / Threads / Meta AI / Muse
+  // 统一使用 Meta 策略组。
+  //
+  // WhatsApp 保持独立策略组，不归入 Meta。
+  // ============================================================
+
+  fixed["proxy-groups"].push({
+    "name": "Meta",
+    "type": "select",
+    "icon": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/Meta.png",
+    "proxies": [
+      "🖥️ All-Nodes",
+      "PROXY-Gate",
+      "DIRECT"
+    ]
+  });
+
+
+  fixed["proxy-groups"].push({
+    "name": "WhatsApp",
+    "type": "select",
+    "icon": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/WhatsApp.svg",
+    "proxies": [
+      "🖥️ All-Nodes",
+      "PROXY-Gate",
+      "DIRECT"
+    ]
+  });
+
+  fixed["proxy-groups"].push({
+    "name": "Telegram",
+    "type": "select",
+    "icon": "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Telegram.png",
+    "proxies": [
+      "🖥️ All-Nodes",
+      "PROXY-Gate",
+      "DIRECT"
+    ]
+  });
+
+
+  // ============================================================
   // Microsoft
   //
   // Microsoft / Copilot 共用 Microsoft 策略组。
@@ -399,52 +439,11 @@ function main(config) {
     ]
   });
 
-  // ============================================================
-  // Meta
-  //
-  // Facebook / Instagram / Threads / Meta AI / Muse
-  // 统一使用 Meta 策略组。
-  //
-  // WhatsApp 保持独立策略组，不归入 Meta。
-  // ============================================================
-
-  fixed["proxy-groups"].push({
-    "name": "Meta",
-    "type": "select",
-    "icon": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/Meta.png",
-    "proxies": [
-      "🖥️ All-Nodes",
-      "PROXY-Gate",
-      "DIRECT"
-    ]
-  });
 
   fixed["proxy-groups"].push({
     "name": "X",
     "type": "select",
     "icon": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/X.png",
-    "proxies": [
-      "🖥️ All-Nodes",
-      "PROXY-Gate",
-      "DIRECT"
-    ]
-  });
-
-  fixed["proxy-groups"].push({
-    "name": "WhatsApp",
-    "type": "select",
-    "icon": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/WhatsApp.svg",
-    "proxies": [
-      "🖥️ All-Nodes",
-      "PROXY-Gate",
-      "DIRECT"
-    ]
-  });
-
-  fixed["proxy-groups"].push({
-    "name": "Telegram",
-    "type": "select",
-    "icon": "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Telegram.png",
     "proxies": [
       "🖥️ All-Nodes",
       "PROXY-Gate",
@@ -725,15 +724,15 @@ function main(config) {
     "Gemini",
     "Claude",
     "Grok",
+    "Meta",
+    "WhatsApp",
+    "Telegram",
     "Microsoft",
     "Google",
     "Apple",
     "iCloud",
     "Amazon",
-    "Meta",
     "X",
-    "WhatsApp",
-    "Telegram",
     "Github",
     "Speedtest"
   ];
@@ -931,43 +930,10 @@ function main(config) {
     "DOMAIN-SUFFIX,claudeusercontent.com,Claude",
     "DOMAIN-SUFFIX,claudeusercontent.com.cdn.cloudflare.net,Claude",
 
-    // Microsoft / Copilot
-    "RULE-SET,Copilot_Domain,Microsoft",
-    "RULE-SET,Copilot_IP,Microsoft",
-    "RULE-SET,Microsoft,Microsoft",
-
     // Grok
     "DOMAIN-SUFFIX,grok.com,Grok",
     "DOMAIN-SUFFIX,x.ai,Grok",
     "DOMAIN-KEYWORD,grok,Grok",
-
-    // iCloud
-    "DOMAIN,mask.icloud.com,iCloud",
-    "DOMAIN,mask-h2.icloud.com,iCloud",
-    "DOMAIN,mask-api.icloud.com,iCloud",
-    "DOMAIN,probe.icloud.com,iCloud",
-    "DOMAIN,pong.icloud.com,iCloud",
-    "DOMAIN,metrics.icloud.com,iCloud",
-    "DOMAIN-SUFFIX,apple-dns.net,iCloud",
-    "DOMAIN-KEYWORD,icloud.com.akadns.net,iCloud",
-    "RULE-SET,iCloud,iCloud",
-
-    // Apple
-    "RULE-SET,Apple,Apple",
-    "RULE-SET,Apple_Domain,Apple",
-
-    // ========================================================
-    // Amazon
-    // ========================================================
-    "RULE-SET,Amazon_Domain,Amazon",
-
-    // Google
-    //"RULE-SET,Google_Domain,Google",
-    "DOMAIN-KEYWORD,google,Google",
-    "DOMAIN-SUFFIX,gmail.com,Google",
-    "DOMAIN-SUFFIX,googleusercontent.com,Google",
-    "DOMAIN-SUFFIX,gstatic.com,Google",
-    "DOMAIN-SUFFIX,googleapis.com,Google",
 
     // WhatsApp
     "DOMAIN-SUFFIX,whatsapp.com,WhatsApp",
@@ -1017,6 +983,39 @@ function main(config) {
     "IP-CIDR,31.13.64.0/18,Meta,no-resolve",
     "IP-CIDR,69.171.224.0/19,Meta,no-resolve",
     "IP-CIDR,173.252.64.0/18,Meta,no-resolve",
+
+    // Microsoft / Copilot
+    "RULE-SET,Copilot_Domain,Microsoft",
+    "RULE-SET,Copilot_IP,Microsoft",
+    "RULE-SET,Microsoft,Microsoft",
+
+    // iCloud
+    "DOMAIN,mask.icloud.com,iCloud",
+    "DOMAIN,mask-h2.icloud.com,iCloud",
+    "DOMAIN,mask-api.icloud.com,iCloud",
+    "DOMAIN,probe.icloud.com,iCloud",
+    "DOMAIN,pong.icloud.com,iCloud",
+    "DOMAIN,metrics.icloud.com,iCloud",
+    "DOMAIN-SUFFIX,apple-dns.net,iCloud",
+    "DOMAIN-KEYWORD,icloud.com.akadns.net,iCloud",
+    "RULE-SET,iCloud,iCloud",
+
+    // Apple
+    "RULE-SET,Apple,Apple",
+    "RULE-SET,Apple_Domain,Apple",
+
+    // ========================================================
+    // Amazon
+    // ========================================================
+    "RULE-SET,Amazon_Domain,Amazon",
+
+    // Google
+    //"RULE-SET,Google_Domain,Google",
+    "DOMAIN-KEYWORD,google,Google",
+    "DOMAIN-SUFFIX,gmail.com,Google",
+    "DOMAIN-SUFFIX,googleusercontent.com,Google",
+    "DOMAIN-SUFFIX,gstatic.com,Google",
+    "DOMAIN-SUFFIX,googleapis.com,Google",
 
     // X
     "DOMAIN-SUFFIX,x.com,X",
