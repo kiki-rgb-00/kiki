@@ -976,6 +976,7 @@ function main(config) {
     "DOMAIN-SUFFIX,whatsapp.org,WhatsApp",
     "DOMAIN-SUFFIX,whatsapp.biz,WhatsApp",
     "DOMAIN-SUFFIX,whatsapp.info,WhatsApp",
+    "DOMAIN-KEYWORD,whatsapp,WhatsApp",
     "DOMAIN,graph.facebook.com,WhatsApp",
 
     // Meta
