@@ -984,7 +984,7 @@ function main(config) {
     "DOMAIN,graph.facebook.com,WhatsApp",
 
     // Meta
-    "DOMAIN-SUFFIX,meta.com,Meta"
+    "DOMAIN-SUFFIX,meta.com,Meta",
     "DOMAIN-SUFFIX,facebook.com,Meta",
     "DOMAIN-SUFFIX,facebook.net,Meta",
     "DOMAIN-SUFFIX,fbcdn.net,Meta",
