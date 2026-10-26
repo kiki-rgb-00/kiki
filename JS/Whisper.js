@@ -174,7 +174,7 @@ function main(config) {
     {
       "name": "Apple Push",
       "type": "fallback",
-      "icon": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/Push.PNG",
+      "icon": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/applepush.png",
       "proxies": [
         "APNs-Fallback",
         "DIRECT"
