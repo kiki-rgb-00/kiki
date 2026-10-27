@@ -363,6 +363,16 @@ function main(config) {
     ]
   });
 
+  fixed["proxy-groups"].push({
+    "name": "LINE",
+    "type": "select",
+    "icon": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/LINE.png",
+    "proxies": [
+      "🖥️ All-Nodes",
+      "PROXY-Gate",
+      "DIRECT"
+    ]
+  });
 
   // ============================================================
   // Microsoft
@@ -727,6 +737,7 @@ function main(config) {
     "Meta",
     "WhatsApp",
     "Telegram",
+    "LINE",
     "Microsoft",
     "Google",
     "Apple",
@@ -983,6 +994,18 @@ function main(config) {
     "IP-CIDR,31.13.64.0/18,Meta,no-resolve",
     "IP-CIDR,69.171.224.0/19,Meta,no-resolve",
     "IP-CIDR,173.252.64.0/18,Meta,no-resolve",
+
+    // LINE
+    "DOMAIN-SUFFIX,line.me,LINE",
+    "DOMAIN-SUFFIX,line-apps.com,LINE",
+    "DOMAIN-SUFFIX,line-scdn.net,LINE",
+    "DOMAIN-SUFFIX,line.naver.jp,LINE",
+    "DOMAIN-SUFFIX,lin.ee,LINE",
+    "DOMAIN-SUFFIX,line.biz,LINE",
+    "DOMAIN-SUFFIX,linecorp.com,LINE",
+    "DOMAIN-SUFFIX,line-website.com,LINE",
+    "DOMAIN-SUFFIX,lineblog.me,LINE",
+    "DOMAIN-SUFFIX,linetoday.com,LINE",
 
     // Microsoft / Copilot
     "RULE-SET,Copilot_Domain,Microsoft",
