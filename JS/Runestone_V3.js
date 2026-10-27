@@ -323,6 +323,17 @@ function main(config) {
   });
 
   fixed["proxy-groups"].push({
+    "name": "LINE",
+    "type": "select",
+    "icon": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/LINE.png",
+    "proxies": [
+      "🖥️ All-Nodes",
+      "PROXY-Gate",
+      "DIRECT"
+    ]
+  });
+
+  fixed["proxy-groups"].push({
     "name": "Github",
     "type": "select",
     "icon": "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/GitHub.png",
@@ -526,6 +537,7 @@ function main(config) {
     "Meta",
     "WhatsApp",
     "Telegram",
+    "LINE",
     "Github",
     "Speedtest"
   ];
@@ -824,6 +836,18 @@ function main(config) {
     "IP-CIDR6,2001:b28:f23d::/48,Telegram,no-resolve",
     "IP-CIDR6,2001:b28:f23f::/48,Telegram,no-resolve",
     "IP-CIDR6,2001:67c:4e8::/48,Telegram,no-resolve",
+
+    // LINE
+    "DOMAIN-SUFFIX,line.me,LINE",
+    "DOMAIN-SUFFIX,line-apps.com,LINE",
+    "DOMAIN-SUFFIX,line-scdn.net,LINE",
+    "DOMAIN-SUFFIX,line.naver.jp,LINE",
+    "DOMAIN-SUFFIX,lin.ee,LINE",
+    "DOMAIN-SUFFIX,line.biz,LINE",
+    "DOMAIN-SUFFIX,linecorp.com,LINE",
+    "DOMAIN-SUFFIX,line-website.com,LINE",
+    "DOMAIN-SUFFIX,lineblog.me,LINE",
+    "DOMAIN-SUFFIX,linetoday.com,LINE",
 
     // Github
     "DOMAIN-SUFFIX,github.com,Github",
