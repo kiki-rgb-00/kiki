@@ -325,7 +325,7 @@ function main(config) {
   fixed["proxy-groups"].push({
     "name": "LINE",
     "type": "select",
-    "icon": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/LINE.png",
+    "icon": "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Line.png",
     "proxies": [
       "🖥️ All-Nodes",
       "PROXY-Gate",
