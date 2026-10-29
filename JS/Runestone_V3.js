@@ -867,9 +867,7 @@ function main(config) {
     "DOMAIN-SUFFIX,speedtestcustom.com,Speedtest",
 
     // 中国大陆
-    "RULE-SET,ChinaMax,DIRECT",
-    "RULE-SET,ChinaMax_Domain,DIRECT",
-    "RULE-SET,ChinaMax_IP,DIRECT",
+    "GEOSITE,CN,DIRECT",
     "GEOIP,CN,DIRECT,no-resolve",
 
     // 最终兜底
@@ -959,30 +957,6 @@ function main(config) {
       "format": "mrs",
       "interval": 86400,
       "url": "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/mrs/BanProgramAD_ip.mrs"
-    },
-
-    "ChinaMax": {
-      "type": "http",
-      "behavior": "classical",
-      "format": "yaml",
-      "interval": 86400,
-      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/ChinaMax/ChinaMax.yaml"
-    },
-
-    "ChinaMax_Domain": {
-      "type": "http",
-      "behavior": "domain",
-      "format": "mrs",
-      "interval": 86400,
-      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/ChinaMax_Domain.mrs"
-    },
-
-    "ChinaMax_IP": {
-      "type": "http",
-      "behavior": "ipcidr",
-      "format": "mrs",
-      "interval": 86400,
-      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/ChinaMax_IP.mrs"
     },
 
     "OpenAI_Domain": {
