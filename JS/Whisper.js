@@ -1085,7 +1085,7 @@ function main(config) {
     "DOMAIN-SUFFIX,speedtestcustom.com,Speedtest",
 
     // 中国大陆
-    "GEOSITE,cn,DIRECT"
+    "GEOSITE,cn,DIRECT",
     "GEOIP,CN,DIRECT,no-resolve",
 
     // 最终兜底
