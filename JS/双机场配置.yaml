@@ -1855,9 +1855,8 @@ rules:
 - DOMAIN-SUFFIX,ooklaserver.net,Speedtest
 - DOMAIN-SUFFIX,ookla.net,Speedtest
 - DOMAIN-SUFFIX,speedtestcustom.com,Speedtest
-- RULE-SET,ChinaMax,DIRECT
-- RULE-SET,ChinaMax_Domain,DIRECT
-- RULE-SET,ChinaMax_IP,DIRECT
+
+
 - GEOIP,CN,DIRECT,no-resolve
 - MATCH,PROXY-Gate
 rule-providers:
@@ -1931,27 +1930,6 @@ rule-providers:
     interval: 86400
     url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/mrs/BanProgramAD_ip.mrs
     path: ./ruleset/ACL4SSR_BanProgramAD_iP.mrs
-  ChinaMax:
-    type: http
-    behavior: classical
-    format: yaml
-    interval: 86400
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/ChinaMax/ChinaMax.yaml
-    path: ./ruleset/ChinaMax.yaml
-  ChinaMax_Domain:
-    type: http
-    behavior: domain
-    format: mrs
-    interval: 86400
-    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/ChinaMax_Domain.mrs
-    path: ./ruleset/ChinaMax_Domain.mrs
-  ChinaMax_IP:
-    type: http
-    behavior: ipcidr
-    format: mrs
-    interval: 86400
-    url: https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/ChinaMax_IP.mrs
-    path: ./ruleset/ChinaMax_IP.mrs
   OpenAI_Domain:
     type: http
     behavior: domain
