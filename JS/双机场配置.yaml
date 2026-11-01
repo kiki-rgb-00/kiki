@@ -1666,6 +1666,7 @@ proxy-groups:
   tolerance: 50
   icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
   empty-fallback: REJECT-DROP
+
 rules:
 - IP-CIDR,192.168.0.0/16,DIRECT,no-resolve
 - IP-CIDR,10.0.0.0/8,DIRECT,no-resolve
@@ -1856,7 +1857,7 @@ rules:
 - DOMAIN-SUFFIX,ookla.net,Speedtest
 - DOMAIN-SUFFIX,speedtestcustom.com,Speedtest
 
-
+- GEOSITE,CN,DIRECT
 - GEOIP,CN,DIRECT,no-resolve
 - MATCH,PROXY-Gate
 rule-providers:
