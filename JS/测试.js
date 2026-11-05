@@ -1,0 +1,1262 @@
+/*
+ * 服务分类配置｜Hako版
+ *
+ * Hako 会将当前选中的多个节点来源合并到 config.proxies。
+ * 本脚本不依赖任何 proxy-providers 名称。
+ *
+ * 结构：
+ * 1. 主策略组
+ * 2. 普通服务策略组
+ * 3. 根据实际节点动态生成地区 Auto
+ * 4. APNs-Fallback
+ * 5. Global-Fallback
+ * 6. Rules
+ * 7. Rule Providers
+ */
+
+function main(config) {
+  // Hako 当前选中的所有机场节点都会合并到 config.proxies。
+  const currentProxies = Array.isArray(config && config.proxies)
+    ? config.proxies
+    : [];
+
+  const currentProxyNames = currentProxies
+    .map(p =>
+      typeof p === "string"
+        ? p
+        : (p && typeof p.name === "string" ? p.name : null)
+    )
+    .filter(Boolean);
+
+  const fixed = {
+    "mixed-port": 7890,
+    "allow-lan": false,
+    "bind-address": "*",
+    "mode": "rule",
+    "log-level": "info",
+    "external-controller": "127.0.0.1:9090",
+    "unified-delay": true,
+    "tcp-concurrent": true,
+    "ipv6": true,
+
+    "tun": {
+      "enable": true,
+      "stack": "gvisor",
+      "auto-route": true,
+      "auto-detect-interface": true,
+      "strict-route": true,
+      "dns-hijack": [
+        "any:53"
+      ]
+    },
+
+    "dns": {
+      "enable": true,
+      "respect-rules": true,
+      "ipv6": true,
+      "prefer-h3": false,
+      "enhanced-mode": "fake-ip",
+      "fake-ip-range": "198.18.0.1/16",
+
+      "default-nameserver": [
+        "223.5.5.5",
+        "119.29.29.29",
+        "2400:3200::1"
+      ],
+
+      "nameserver": [
+        "https://dns.cloudflare.com/dns-query",
+        "https://dns.google/dns-query"
+      ],
+
+      "proxy-server-nameserver-policy": null,
+
+      "proxy-server-nameserver": [
+        "https://dns.alidns.com/dns-query",
+        "https://doh.pub/dns-query"
+      ],
+
+      "direct-nameserver": [
+        "https://dns.alidns.com/dns-query",
+        "https://doh.pub/dns-query"
+      ],
+
+      "nameserver-policy": {
+        "dns.cloudflare.com": [
+          "1.1.1.1",
+          "1.0.0.1"
+        ],
+
+        "dns.google": [
+          "8.8.8.8",
+          "8.8.4.4"
+        ],
+
+        "dns.alidns.com": [
+          "223.5.5.5",
+          "223.6.6.6"
+        ],
+
+        "doh.pub": [
+          "1.12.12.12",
+          "120.53.53.53"
+        ],
+
+        "geosite:cn": [
+          "https://dns.alidns.com/dns-query",
+          "https://doh.pub/dns-query"
+        ]
+      },
+
+      "fallback": [
+        "https://anycast.uncensoreddns.org/dns-query"
+      ],
+
+      "fallback-filter": {
+        "geoip": true,
+        "geoip-code": "CN",
+        "ipcidr": [
+          "240.0.0.0/4",
+          "127.0.0.0/8",
+          "0.0.0.0/32"
+        ]
+      },
+
+      "fake-ip-filter": [
+        "geosite:cn",
+        "*.lan",
+        "*.local",
+        "localhost",
+        "*.msftconnecttest.com",
+        "*.msftncsi.com",
+        "*.msidentity.com",
+        "captive.apple.com",
+        "*.push.apple.com",
+        "stun.*",
+        "+.stun.*.*",
+        "+.stun.*.*.*",
+        "+.stun.*.*.*.*",
+        "+.stun.*.*.*.*.*",
+        "speedtest.net"
+      ]
+    },
+
+    "profile": {
+      "store-selected": true,
+      "store-fake-ip": true
+    }
+  };
+  // ============================================================
+  // 节点池
+  // ============================================================
+
+  fixed.proxies = currentProxies;
+  fixed["proxy-groups"] = [];
+
+  // ============================================================
+  // 1. 主策略组
+  //
+  // Auto 组故意不在这里生成。
+  // Auto 会在所有普通服务策略组之后生成。
+  // ============================================================
+
+  fixed["proxy-groups"].push(
+    {
+      "name": "PROXY-Gate",
+      "type": "select",
+      "icon": "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Final.png",
+      "proxies": [
+        "🖥️ All-Nodes",
+        "DIRECT"
+      ]
+    },
+
+    {
+      "name": "Apple Push",
+      "type": "fallback",
+      "icon": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/applepush.png",
+      "proxies": [
+        "APNs-Fallback",
+        "DIRECT"
+      ],
+      "url": "http://captive.apple.com/hotspot-detect.html",
+      "interval": 300
+    },
+
+    {
+      "name": "🖥️ All-Nodes",
+      "type": "select",
+      "proxies": currentProxyNames.slice(),
+      "icon": "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Server.png"
+    }
+  );
+
+  // ============================================================
+  // 2. 普通服务策略组
+  //
+  // 这里暂时只放 All-Nodes / PROXY-Gate / DIRECT。
+  // 后面检测完节点地区后，再把实际存在的 Auto 组插入。
+  //
+  // ============================================================
+
+  fixed["proxy-groups"].push({
+    "name": "YouTube",
+    "type": "select",
+    "icon": "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/YouTube.png",
+    "proxies": [
+      "🖥️ All-Nodes",
+      "PROXY-Gate",
+      "DIRECT"
+    ]
+  });
+
+  fixed["proxy-groups"].push({
+    "name": "Netflix",
+    "type": "select",
+    "icon": "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Netflix.png",
+    "proxies": [
+      "🖥️ All-Nodes",
+      "PROXY-Gate",
+      "DIRECT"
+    ]
+  });
+
+  fixed["proxy-groups"].push({
+    "name": "Disney+",
+    "type": "select",
+    "icon": "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Disney+.png",
+    "proxies": [
+      "🖥️ All-Nodes",
+      "PROXY-Gate",
+      "DIRECT"
+    ]
+  });
+
+  fixed["proxy-groups"].push({
+    "name": "Emby",
+    "type": "select",
+    "icon": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png",
+    "proxies": [
+      "🖥️ All-Nodes",
+      "PROXY-Gate",
+      "DIRECT"
+    ]
+  });
+
+  fixed["proxy-groups"].push({
+    "name": "Spotify",
+    "type": "select",
+    "icon": "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Spotify.png",
+    "proxies": [
+      "🖥️ All-Nodes",
+      "PROXY-Gate",
+      "DIRECT"
+    ]
+  });
+
+  fixed["proxy-groups"].push({
+    "name": "TikTok",
+    "type": "select",
+    "icon": "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/TikTok.png",
+    "proxies": [
+      "🖥️ All-Nodes",
+      "PROXY-Gate",
+      "DIRECT"
+    ]
+  });
+
+  fixed["proxy-groups"].push({
+    "name": "Twitch",
+    "type": "select",
+    "icon": "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Twitch.png",
+    "proxies": [
+      "🖥️ All-Nodes",
+      "PROXY-Gate",
+      "DIRECT"
+    ]
+  });
+
+  fixed["proxy-groups"].push({
+    "name": "GPT",
+    "type": "select",
+    "icon": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/ChatGPT.png",
+    "proxies": [
+      "🖥️ All-Nodes",
+      "PROXY-Gate",
+      "DIRECT"
+    ]
+  });
+
+  fixed["proxy-groups"].push({
+    "name": "Gemini",
+    "type": "select",
+    "icon": "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/google-gemini.png",
+    "proxies": [
+      "🖥️ All-Nodes",
+      "PROXY-Gate",
+      "DIRECT"
+    ]
+  });
+
+  fixed["proxy-groups"].push({
+    "name": "Claude",
+    "type": "select",
+    "icon": "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/anthropic.png",
+    "proxies": [
+      "🖥️ All-Nodes",
+      "PROXY-Gate",
+      "DIRECT"
+    ]
+  });
+
+  fixed["proxy-groups"].push({
+    "name": "Grok",
+    "type": "select",
+    "icon": "https://raw.githubusercontent.com/luestr/IconResource/main/App_icon/120px/Grok.png",
+    "proxies": [
+      "🖥️ All-Nodes",
+      "PROXY-Gate",
+      "DIRECT"
+    ]
+  });
+
+  // ============================================================
+  // Meta
+  //
+  // Facebook / Instagram / Threads / Meta AI / Muse
+  // 统一使用 Meta 策略组。
+  //
+  // WhatsApp 保持独立策略组，不归入 Meta。
+  // ============================================================
+
+  fixed["proxy-groups"].push({
+    "name": "Meta",
+    "type": "select",
+    "icon": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/Meta.png",
+    "proxies": [
+      "🖥️ All-Nodes",
+      "PROXY-Gate",
+      "DIRECT"
+    ]
+  });
+
+
+  fixed["proxy-groups"].push({
+    "name": "WhatsApp",
+    "type": "select",
+    "icon": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/WhatsApp.svg",
+    "proxies": [
+      "🖥️ All-Nodes",
+      "PROXY-Gate",
+      "DIRECT"
+    ]
+  });
+
+  fixed["proxy-groups"].push({
+    "name": "Telegram",
+    "type": "select",
+    "icon": "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Telegram.png",
+    "proxies": [
+      "🖥️ All-Nodes",
+      "PROXY-Gate",
+      "DIRECT"
+    ]
+  });
+
+  fixed["proxy-groups"].push({
+    "name": "LINE",
+    "type": "select",
+    "icon": "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Line.png",
+    "proxies": [
+      "🖥️ All-Nodes",
+      "PROXY-Gate",
+      "DIRECT"
+    ]
+  });
+
+  // ============================================================
+  // Microsoft
+  //
+  // Microsoft / Copilot 共用 Microsoft 策略组。
+  // 具体规则通过 Microsoft.mrs、Copilot_Domain.mrs
+  // 和 Copilot_IP.mrs 提供。
+  // ============================================================
+
+  fixed["proxy-groups"].push({
+    "name": "Microsoft",
+    "type": "select",
+    "icon": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png",
+    "proxies": [
+      "🖥️ All-Nodes",
+      "PROXY-Gate",
+      "DIRECT"
+    ]
+  });
+
+  fixed["proxy-groups"].push({
+    "name": "Google",
+    "type": "select",
+    "icon": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/Google.PNG",
+    "proxies": [
+      "🖥️ All-Nodes",
+      "PROXY-Gate",
+      "DIRECT"
+    ]
+  });
+
+  // ============================================================
+  // Apple
+  // ============================================================
+
+  fixed["proxy-groups"].push({
+    "name": "Apple",
+    "type": "select",
+    "icon": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_2.png",
+    "proxies": [
+      "🖥️ All-Nodes",
+      "PROXY-Gate",
+      "DIRECT"
+    ]
+  });
+
+  // ============================================================
+  // iCloud
+  //
+  // 独立于 Apple 策略组。
+  // 规则来源：
+  // MRS/iCloud.mrs
+  // ============================================================
+
+  fixed["proxy-groups"].push({
+    "name": "iCloud",
+    "type": "select",
+    "icon": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/iCloud.png",
+    "proxies": [
+      "🖥️ All-Nodes",
+      "PROXY-Gate",
+      "DIRECT"
+    ]
+  });
+
+  fixed["proxy-groups"].push({
+    "name": "Amazon",
+    "type": "select",
+    "icon": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Amazon.png",
+    "proxies": [
+      "🖥️ All-Nodes",
+      "PROXY-Gate",
+      "DIRECT"
+    ]
+  });
+
+
+  fixed["proxy-groups"].push({
+    "name": "X",
+    "type": "select",
+    "icon": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/X.png",
+    "proxies": [
+      "🖥️ All-Nodes",
+      "PROXY-Gate",
+      "DIRECT"
+    ]
+  });
+
+  fixed["proxy-groups"].push({
+    "name": "Github",
+    "type": "select",
+    "icon": "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/GitHub.png",
+    "proxies": [
+      "🖥️ All-Nodes",
+      "PROXY-Gate",
+      "DIRECT"
+    ]
+  });
+
+  fixed["proxy-groups"].push({
+    "name": "Speedtest",
+    "type": "select",
+    "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Speedtest.png",
+    "proxies": [
+      "🖥️ All-Nodes",
+      "PROXY-Gate",
+      "DIRECT"
+    ]
+  });
+
+  // ============================================================
+  // 3. 地区 Auto
+  //
+  // 直接读取 Hako 合并后的完整 config.proxies。
+  //
+  //
+  // 所有 Auto 组统一使用 Auto.png 图标。
+  // ============================================================
+
+  const regionGroups = [
+    {
+      key: "US",
+      name: "🇺🇸 US",
+      filter: /([\[]US[\]]|^US$|USA|United[ _-]?States|\bUS\b|美国|美國|🇺🇸)/i,
+      icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"
+    },
+
+    {
+      key: "SG",
+      name: "🇸🇬 SG",
+      filter: /([\[]SG[\]]|^SG$|Singapore|\bSG\b|新加坡|狮城|🇸🇬)/i,
+      icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"
+    },
+
+    {
+      key: "HK",
+      name: "🇭🇰 HK",
+      filter: /([\[]HK[\]]|^HK$|Hong[ _-]?Kong|\bHK\b|香港|🇭🇰)/i,
+      icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"
+    },
+
+    {
+      key: "MO",
+      name: "🇲🇴 MO",
+      filter: /([\[]MO[\]]|^MO$|Macau|Macao|\bMO\b|澳门|澳門|🇲🇴)/i,
+      icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"
+    },
+
+    {
+      key: "JP",
+      name: "🇯🇵 JP",
+      filter: /([\[]JP[\]]|^JP$|Japan|\bJP\b|日本|东京|大阪|🇯🇵)/i,
+      icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"
+    },
+
+    {
+      key: "TW",
+      name: "🇹🇼 TW",
+      filter: /([\[]TW[\]]|^TW$|Taiwan|Taibei|Taipei|\bTW\b|台湾|臺灣|台北|高雄|🇹🇼)/i,
+      icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"
+    },
+
+    {
+      key: "UK",
+      name: "🇬🇧 UK",
+      filter: /([\[]UK[\]]|^UK$|United[ _-]?Kingdom|Britain|England|\bUK\b|英国|英國|伦敦|🇬🇧)/i,
+      icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"
+    },
+
+    {
+      key: "DE",
+      name: "🇩🇪 DE",
+      filter: /([\[]DE[\]]|^DE$|Germany|Deutschland|\bDE\b|德国|德國|法兰克福|🇩🇪)/i,
+      icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"
+    },
+
+    {
+      key: "FR",
+      name: "🇫🇷 FR",
+      filter: /([\[]FR[\]]|^FR$|France|\bFR\b|法国|法國|巴黎|🇫🇷)/i,
+      icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"
+    },
+
+    {
+      key: "RU",
+      name: "🇷🇺 RU",
+      filter: /([\[]RU[\]]|^RU$|Russia|Russian[ _-]?Federation|\bRU\b|俄罗斯|俄羅斯|莫斯科|伯力|🇷🇺)/i,
+      icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"
+    },
+
+    {
+      key: "CA",
+      name: "🇨🇦 CA",
+      filter: /([\[]CA[\]]|^CA$|Canada|\bCA\b|加拿大|🇨🇦)/i,
+      icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"
+    },
+
+    {
+      key: "AU",
+      name: "🇦🇺 AU",
+      filter: /([\[]AU[\]]|^AU$|Australia|\bAU\b|澳大利亚|澳洲|澳大利亞|🇦🇺)/i,
+      icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"
+    },
+
+    {
+      key: "KR",
+      name: "🇰🇷 KR",
+      filter: /([\[]KR[\]]|^KR$|Korea|South[ _-]?Korea|\bKR\b|韩国|韓國|首尔|首爾|🇰🇷)/i,
+      icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"
+    },
+
+    {
+      key: "IT",
+      name: "🇮🇹 IT",
+      filter: /([\[]IT[\]]|^IT$|Italy|Italian|\bIT\b|意大利|義大利|米兰|米蘭|罗马|羅馬|🇮🇹)/i,
+      icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"
+    },
+
+    {
+      key: "ES",
+      name: "🇪🇸 ES",
+      filter: /([\[]ES[\]]|^ES$|Spain|Spanish|\bES\b|西班牙|马德里|馬德里|🇪🇸)/i,
+      icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"
+    },
+
+    {
+      key: "NL",
+      name: "🇳🇱 NL",
+      filter: /([\[]NL[\]]|^NL$|Netherlands|Dutch|\bNL\b|荷兰|荷蘭|阿姆斯特丹|🇳🇱)/i,
+      icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"
+    },
+
+    {
+      key: "FI",
+      name: "🇫🇮 FI",
+      filter: /([\[]FI[\]]|^FI$|Finland|Finnish|\bFI\b|芬兰|芬蘭|赫尔辛基|赫爾辛基|🇫🇮)/i,
+      icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"
+    },
+
+    {
+      key: "NO",
+      name: "🇳🇴 NO",
+      filter: /([\[]NO[\]]|^NO$|Norway|Norwegian|\bNO\b|挪威|奥斯陆|奧斯陸|🇳🇴)/i,
+      icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"
+    },
+
+    {
+      key: "SE",
+      name: "🇸🇪 SE",
+      filter: /([\[]SE[\]]|^SE$|Sweden|Swedish|\bSE\b|瑞典|斯德哥尔摩|斯德哥爾摩|🇸🇪)/i,
+      icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"
+    },
+
+    {
+      key: "CH",
+      name: "🇨🇭 CH",
+      filter: /([\[]CH[\]]|^CH$|Switzerland|Swiss|\bCH\b|瑞士|苏黎世|蘇黎世|日内瓦|日內瓦|🇨🇭)/i,
+      icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"
+    },
+
+    {
+      key: "PL",
+      name: "🇵🇱 PL",
+      filter: /([\[]PL[\]]|^PL$|Poland|Polish|\bPL\b|波兰|波蘭|华沙|華沙|🇵🇱)/i,
+      icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"
+    },
+
+    {
+      key: "IN",
+      name: "🇮🇳 IN",
+      filter: /([\[]IN[\]]|^IN$|India|Indian|\bIN\b|印度|🇮🇳)/i,
+      icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"
+    },
+
+    {
+      key: "PH",
+      name: "🇵🇭 PH",
+      filter: /([\[]PH[\]]|^PH$|Philippines|Filipino|\bPH\b|菲律宾|菲律賓|马尼拉|馬尼拉|🇵🇭)/i,
+      icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"
+    },
+
+    {
+      key: "VN",
+      name: "🇻🇳 VN",
+      filter: /([\[]VN[\]]|^VN$|Vietnam|Vietnamese|\bVN\b|越南|河内|河內|胡志明|🇻🇳)/i,
+      icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"
+    },
+
+    {
+      key: "MY",
+      name: "🇲🇾 MY",
+      filter: /([\[]MY[\]]|^MY$|Malaysia|Malaysian|\bMY\b|马来西亚|馬來西亞|吉隆坡|🇲🇾)/i,
+      icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"
+    }
+  ];
+
+  const existingRegionalAutos = [];
+
+  regionGroups.forEach(region => {
+    const matched = currentProxyNames.filter(
+      name => region.filter.test(name)
+    );
+
+    const autoName = region.name + "-Auto";
+
+    // 现在只要有 1 个及以上节点，就生成该地区 Auto。
+    if (matched.length < 1) {
+      return;
+    }
+
+    fixed["proxy-groups"].push({
+      name: autoName,
+      type: "url-test",
+      proxies: matched,
+      icon: region.icon,
+      url: "http://www.gstatic.com/generate_204",
+      interval: 900,
+      tolerance: 50
+    });
+
+    existingRegionalAutos.push(autoName);
+  });
+
+  // ============================================================
+  // 4. 将实际存在的 Auto 组加入服务策略组
+  //
+  // 顺序固定为：
+  //
+  // 🖥️ All-Nodes
+  // 🌍 Global-Fallback
+  // 🇺🇸 US-Auto
+  // 🇸🇬 SG-Auto
+  // ...
+  // PROXY-Gate
+  // DIRECT
+  //
+  // Global-Fallback 是用户主动选择的跨地区容灾模式。
+  // ============================================================
+
+  const serviceProxyChoices = [
+    "🖥️ All-Nodes",
+    ...(existingRegionalAutos.length
+      ? ["🌍 Global-Fallback"]
+      : []),
+    ...existingRegionalAutos,
+    "PROXY-Gate",
+    "DIRECT"
+  ];
+
+  const serviceGroupNames = [
+    "YouTube",
+    "Netflix",
+    "Disney+",
+    "Emby",
+    "Spotify",
+    "TikTok",
+    "Twitch",
+    "GPT",
+    "Gemini",
+    "Claude",
+    "Grok",
+    "Meta",
+    "WhatsApp",
+    "Telegram",
+    "LINE",
+    "Microsoft",
+    "Google",
+    "Apple",
+    "iCloud",
+    "Amazon",
+    "X",
+    "Github",
+    "Speedtest"
+  ];
+
+  fixed["proxy-groups"].forEach(group => {
+    if (serviceGroupNames.includes(group.name)) {
+      group.proxies = serviceProxyChoices.slice();
+    }
+  });
+
+  // ============================================================
+  // 5. PROXY-Gate
+  //
+  // 顺序固定为：
+  //
+  // 🖥️ All-Nodes
+  // 🌍 Global-Fallback
+  // 🇺🇸 US-Auto
+  // 🇸🇬 SG-Auto
+  // ...
+  // DIRECT
+  // ============================================================
+
+  const proxyGate = fixed["proxy-groups"].find(
+    group => group.name === "PROXY-Gate"
+  );
+
+  if (proxyGate) {
+    proxyGate.proxies = [
+      "🖥️ All-Nodes",
+      ...(existingRegionalAutos.length
+        ? ["🌍 Global-Fallback"]
+        : []),
+      ...existingRegionalAutos,
+      "DIRECT"
+    ];
+  }
+
+  // ============================================================
+  // 6. Apple Push 专用 APNs-Fallback
+  //
+  // 只引用实际生成的地区 Auto。
+  //
+  // 现在地区只需要 2 个节点即可进入这里。
+  // ============================================================
+
+  fixed["proxy-groups"].push({
+    name: "APNs-Fallback",
+    type: "fallback",
+    proxies: existingRegionalAutos,
+    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png",
+    url: "http://captive.apple.com/hotspot-detect.html",
+    interval: 300
+  });
+
+  // ============================================================
+  // 7. Global-Fallback
+  //
+  // 放在整个策略组列表最后，与 APNs-Fallback 相邻。
+  // ============================================================
+
+  if (existingRegionalAutos.length) {
+    fixed["proxy-groups"].push({
+      name: "🌍 Global-Fallback",
+      type: "fallback",
+      proxies: existingRegionalAutos,
+      icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png",
+      url: "http://www.gstatic.com/generate_204",
+      interval: 600
+    });
+  }
+
+  // ============================================================
+  // Rules
+  // ============================================================
+
+  fixed.rules = [
+    "IP-CIDR,192.168.0.0/16,DIRECT,no-resolve",
+    "IP-CIDR,10.0.0.0/8,DIRECT,no-resolve",
+    "IP-CIDR,172.16.0.0/12,DIRECT,no-resolve",
+    "IP-CIDR,127.0.0.0/8,DIRECT,no-resolve",
+    "GEOIP,LAN,DIRECT,no-resolve",
+
+    // Apple Push 必须在普通 Apple / iCloud 规则之前
+    "DOMAIN-SUFFIX,push.apple.com,Apple Push",
+    "DOMAIN-SUFFIX,push-apple.com.akadns.net,Apple Push",
+    "DOMAIN-KEYWORD,apple.com.edgekey.net,Apple Push",
+
+    "IP-CIDR,17.249.0.0/16,Apple Push,no-resolve",
+    "IP-CIDR,17.252.0.0/16,Apple Push,no-resolve",
+    "IP-CIDR,17.57.144.0/22,Apple Push,no-resolve",
+    "IP-CIDR,17.188.128.0/18,Apple Push,no-resolve",
+    "IP-CIDR,17.188.20.0/23,Apple Push,no-resolve",
+
+    "IP-CIDR6,2620:149:a44::/48,Apple Push,no-resolve",
+    "IP-CIDR6,2403:300:a42::/48,Apple Push,no-resolve",
+    "IP-CIDR6,2403:300:a51::/48,Apple Push,no-resolve",
+    "IP-CIDR6,2a01:b740:a42::/48,Apple Push,no-resolve",
+
+    // 广告 / 隐私
+    "RULE-SET,AdvertisingLite,REJECT",
+    "RULE-SET,AdvertisingLite_Domain,REJECT",
+    "RULE-SET,Privacy,REJECT",
+    "RULE-SET,Privacy_Domain,REJECT",
+    "RULE-SET,ACL4SSR_BanAD,REJECT",
+    "RULE-SET,ACL4SSR_BanProgramAD,REJECT",
+    "RULE-SET,ACL4SSR_BanProgramAD_iP,REJECT",
+    // 加密货币App
+    "DOMAIN-SUFFIX,aicoin.com,PROXY-Gate",
+    "DOMAIN-SUFFIX,coinbase.com,PROXY-Gate",
+    "DOMAIN-SUFFIX,binance.com,PROXY-Gate",
+    "DOMAIN-SUFFIX,kraken.com,PROXY-Gate",
+    "DOMAIN-SUFFIX,crypto.com,PROXY-Gate",
+    "DOMAIN-SUFFIX,okx.com,PROXY-Gate",
+    "DOMAIN-SUFFIX,bybit.com,PROXY-Gate",
+    "DOMAIN-SUFFIX,bitget.com,PROXY-Gate",
+    "DOMAIN-SUFFIX,metamask.io,PROXY-Gate",
+    "DOMAIN-SUFFIX,phantom.com,PROXY-Gate",
+    "DOMAIN-SUFFIX,trustwallet.com,PROXY-Gate",
+    "DOMAIN-SUFFIX,ledger.com,PROXY-Gate",
+
+    // YouTube
+    //"RULE-SET,YouTube_Domain,YouTube",
+    "DOMAIN-SUFFIX,youtube.com,YouTube",
+    "DOMAIN-SUFFIX,youtu.be,YouTube",
+    "DOMAIN-SUFFIX,youtube-nocookie.com,YouTube",
+    "DOMAIN-SUFFIX,youtubei.googleapis.com,YouTube",
+    "DOMAIN-SUFFIX,youtube.googleapis.com,YouTube",
+    "DOMAIN-SUFFIX,ytimg.com,YouTube",
+    "DOMAIN-SUFFIX,googlevideo.com,YouTube",
+    "DOMAIN-SUFFIX,ggpht.com,YouTube",
+    // Netflix
+    "RULE-SET,Netflix_Domain,Netflix",
+    "RULE-SET,Netflix_IP,Netflix",
+    "DOMAIN-KEYWORD,apiproxy-device-prod-nlb-,Netflix",
+    "DOMAIN-KEYWORD,dualstack.apiproxy-,Netflix",
+    "DOMAIN-KEYWORD,dualstack.ichnaea-web-,Netflix",
+    "DOMAIN-KEYWORD,netflixdnstest,Netflix",
+    "PROCESS-NAME,com.netflix.mediaclient,Netflix",
+    // Disney+
+    "DOMAIN-SUFFIX,disneyplus.com,Disney+",
+    "DOMAIN-SUFFIX,disney-plus.net,Disney+",
+    "DOMAIN-SUFFIX,dssott.com,Disney+",
+    "DOMAIN-SUFFIX,dssedge.com,Disney+",
+    "DOMAIN-SUFFIX,bamgrid.com,Disney+",
+    "DOMAIN-SUFFIX,media.dssott.com,Disney+",
+    "DOMAIN-SUFFIX,disney.playback.edge.bamgrid.com,Disney+",
+    "DOMAIN-SUFFIX,star.playback.edge.bamgrid.com,Disney+",
+    "DOMAIN-SUFFIX,search-api-disney.bamgrid.com,Disney+",
+
+    // Emby
+    "RULE-SET,Emby,Emby",
+
+    // Spotify
+    "RULE-SET,Spotify_Domain,Spotify",
+
+    // TikTok
+    "RULE-SET,TikTok_Domain,TikTok",
+
+    // Twitch
+    "DOMAIN-SUFFIX,twitch.tv,Twitch",
+    "DOMAIN-SUFFIX,twitchcdn.net,Twitch",
+    "DOMAIN-SUFFIX,jtvnw.net,Twitch",
+    "DOMAIN-SUFFIX,ttvnw.net,Twitch",
+    "DOMAIN-SUFFIX,twitchsvc.net,Twitch",
+
+    // GPT
+    "RULE-SET,OpenAI_Domain,GPT",
+    "DOMAIN,cdn.openaimerge.com,GPT",
+    "DOMAIN,setup.auth.openai.com,GPT",
+    "DOMAIN,cdn.workos.com,GPT",
+    "DOMAIN,forwarder.workos.com,GPT",
+    "DOMAIN,images.workoscdn.com,GPT",
+    "DOMAIN,workos.imgix.net,GPT",
+    "DOMAIN,setup.workos.com,GPT",
+    "DOMAIN,ct.sendgrid.net,GPT",
+    "DOMAIN,oaistatsig.com,GPT",
+    "DOMAIN,rum.browser-intake-datadoghq.com,GPT",
+    "DOMAIN,challenges.cloudflare.com,GPT",
+    "DOMAIN-KEYWORD,openai,GPT",
+    "IP-CIDR,64.23.132.171/32,GPT",
+    "IP-ASN,20473,GPT",
+
+    // Gemini
+    "DOMAIN-SUFFIX,gemini.google.com,Gemini",
+    "DOMAIN-SUFFIX,aistudio.google.com,Gemini",
+    "DOMAIN-SUFFIX,deepmind.com,Gemini",
+    "DOMAIN-SUFFIX,deepmind.google,Gemini",
+    "DOMAIN-SUFFIX,gemini.googleusercontent.com,Gemini",
+    "DOMAIN-SUFFIX,makersuite.google.com,Gemini",
+
+    // Claude
+    "DOMAIN-SUFFIX,claude.ai,Claude",
+    "DOMAIN-SUFFIX,anthropic.com,Claude",
+    "DOMAIN-SUFFIX,claudeusercontent.com,Claude",
+    "DOMAIN-SUFFIX,claudeusercontent.com.cdn.cloudflare.net,Claude",
+
+    // Grok
+    "DOMAIN-SUFFIX,grok.com,Grok",
+    "DOMAIN-SUFFIX,x.ai,Grok",
+    "DOMAIN-KEYWORD,grok,Grok",
+
+    // WhatsApp
+    "DOMAIN-SUFFIX,whatsapp.com,WhatsApp",
+    "DOMAIN-SUFFIX,whatsapp.net,WhatsApp",
+    "DOMAIN-SUFFIX,wa.me,WhatsApp",
+    "DOMAIN-SUFFIX,whatsapp.org,WhatsApp",
+    "DOMAIN-SUFFIX,whatsapp.biz,WhatsApp",
+    "DOMAIN-SUFFIX,whatsapp.info,WhatsApp",
+    "DOMAIN-KEYWORD,whatsapp,WhatsApp",
+    "DOMAIN,graph.facebook.com,WhatsApp",
+
+    // Meta
+    "DOMAIN-SUFFIX,meta.com,Meta",
+    "DOMAIN-SUFFIX,facebook.com,Meta",
+    "DOMAIN-SUFFIX,facebook.net,Meta",
+    "DOMAIN-SUFFIX,fbcdn.net,Meta",
+    "DOMAIN-SUFFIX,fbsbx.com,Meta",
+    "DOMAIN-SUFFIX,fb.com,Meta",
+    "DOMAIN-SUFFIX,facebook-hardware.com,Meta",
+    "DOMAIN-SUFFIX,fb.me,Meta",
+    "DOMAIN-SUFFIX,fb.gg,Meta",
+    "DOMAIN-SUFFIX,graph.facebook.com,Meta",
+    "DOMAIN-SUFFIX,graph.instagram.com,Meta",
+    "DOMAIN-SUFFIX,fbcdn.com,Meta",
+    "DOMAIN-SUFFIX,messengerplatform.com,Meta",
+    "DOMAIN-SUFFIX,fbcdn.com,Meta",
+    "DOMAIN-SUFFIX,instagram.com,Meta",
+
+    "DOMAIN-SUFFIX,instagram.com,Meta",
+    "DOMAIN-SUFFIX,cdninstagram.com,Meta",
+    "DOMAIN-SUFFIX,instagram.net,Meta",
+    "DOMAIN-SUFFIX,ig.me,Meta",
+
+    "DOMAIN-SUFFIX,threads.com,Meta",
+    "DOMAIN-SUFFIX,threads.net,Meta",
+    "DOMAIN-SUFFIX,threadsusercontent.com,Meta",
+
+    "DOMAIN-SUFFIX,messenger.com,Meta",
+    "DOMAIN-SUFFIX,messengerplatform.com,Meta",
+    "DOMAIN-SUFFIX,m.me,Meta",
+
+    "DOMAIN-SUFFIX,meta.ai,Meta",
+    "DOMAIN-SUFFIX,ai.meta.com,Meta",
+    "DOMAIN-SUFFIX,muse.ai,Meta",
+    "DOMAIN-SUFFIX,metaaivm.com,Meta",
+    "IP-CIDR,157.240.0.0/16,Meta,no-resolve",
+    "IP-CIDR,31.13.64.0/18,Meta,no-resolve",
+    "IP-CIDR,69.171.224.0/19,Meta,no-resolve",
+    "IP-CIDR,173.252.64.0/18,Meta,no-resolve",
+
+    // LINE
+    "DOMAIN-SUFFIX,line.me,LINE",
+    "DOMAIN-SUFFIX,line-apps.com,LINE",
+    "DOMAIN-SUFFIX,line-scdn.net,LINE",
+    "DOMAIN-SUFFIX,line.naver.jp,LINE",
+    "DOMAIN-SUFFIX,lin.ee,LINE",
+    "DOMAIN-SUFFIX,line.biz,LINE",
+    "DOMAIN-SUFFIX,linecorp.com,LINE",
+    "DOMAIN-SUFFIX,line-website.com,LINE",
+    "DOMAIN-SUFFIX,lineblog.me,LINE",
+    "DOMAIN-SUFFIX,linetoday.com,LINE",
+
+    // Microsoft / Copilot
+    "RULE-SET,Copilot_Domain,Microsoft",
+    "RULE-SET,Copilot_IP,Microsoft",
+    "RULE-SET,Microsoft,Microsoft",
+
+    // iCloud
+    "DOMAIN,mask.icloud.com,iCloud",
+    "DOMAIN,mask-h2.icloud.com,iCloud",
+    "DOMAIN,mask-api.icloud.com,iCloud",
+    "DOMAIN,probe.icloud.com,iCloud",
+    "DOMAIN,pong.icloud.com,iCloud",
+    "DOMAIN,metrics.icloud.com,iCloud",
+    "DOMAIN-SUFFIX,apple-dns.net,iCloud",
+    "DOMAIN-KEYWORD,icloud.com.akadns.net,iCloud",
+    "RULE-SET,iCloud,iCloud",
+
+    // Apple
+    "RULE-SET,Apple,Apple",
+    "RULE-SET,Apple_Domain,Apple",
+
+    // ========================================================
+    // Amazon
+    // ========================================================
+    "RULE-SET,Amazon_Domain,Amazon",
+
+    // Google
+    //"RULE-SET,Google_Domain,Google",
+    "DOMAIN-KEYWORD,google,Google",
+    "DOMAIN-SUFFIX,gmail.com,Google",
+    "DOMAIN-SUFFIX,googleusercontent.com,Google",
+    "DOMAIN-SUFFIX,gstatic.com,Google",
+    "DOMAIN-SUFFIX,googleapis.com,Google",
+
+    // X
+    "DOMAIN-SUFFIX,x.com,X",
+    "DOMAIN-SUFFIX,twitter.com,X",
+    "DOMAIN-SUFFIX,t.co,X",
+    "DOMAIN-SUFFIX,twimg.com,X",
+    "DOMAIN-SUFFIX,tweetdeck.com,X",
+    "DOMAIN-SUFFIX,pscp.tv,X",
+    "DOMAIN-SUFFIX,periscope.tv,X",
+    "DOMAIN-SUFFIX,twtrdns.net,X",
+    // Telegram
+    "DOMAIN-SUFFIX,telegram.org,Telegram",
+    "DOMAIN-SUFFIX,telegram.me,Telegram",
+    "DOMAIN-SUFFIX,t.me,Telegram",
+    "DOMAIN-SUFFIX,tdesktop.com,Telegram",
+    "DOMAIN-SUFFIX,telegra.ph,Telegram",
+    "DOMAIN-SUFFIX,telegram.dog,Telegram",
+    "IP-CIDR,91.108.4.0/22,Telegram,no-resolve",
+    "IP-CIDR,91.108.8.0/22,Telegram,no-resolve",
+    "IP-CIDR,91.108.12.0/22,Telegram,no-resolve",
+    "IP-CIDR,91.108.16.0/22,Telegram,no-resolve",
+    "IP-CIDR,91.108.20.0/22,Telegram,no-resolve",
+    "IP-CIDR,91.108.56.0/22,Telegram,no-resolve",
+    "IP-CIDR,149.154.160.0/20,Telegram,no-resolve",
+    "IP-CIDR6,2001:b28:f23d::/48,Telegram,no-resolve",
+    "IP-CIDR6,2001:b28:f23f::/48,Telegram,no-resolve",
+    "IP-CIDR6,2001:67c:4e8::/48,Telegram,no-resolve",
+
+    // Github
+    "DOMAIN-SUFFIX,github.com,Github",
+    "DOMAIN-SUFFIX,githubusercontent.com,Github",
+    "DOMAIN-SUFFIX,githubassets.com,Github",
+    "DOMAIN-SUFFIX,raw.githubusercontent.com,Github",
+    "DOMAIN-SUFFIX,github.io,Github",
+    "DOMAIN-SUFFIX,github.dev,Github",
+    "DOMAIN-SUFFIX,githubstatus.com,Github",
+
+    // Speedtest
+    "DOMAIN-SUFFIX,speedtest.net,Speedtest",
+    "DOMAIN-SUFFIX,speedtest.com,Speedtest",
+    "DOMAIN-SUFFIX,ookla.com,Speedtest",
+    "DOMAIN-SUFFIX,ooklaserver.net,Speedtest",
+    "DOMAIN-SUFFIX,ookla.net,Speedtest",
+    "DOMAIN-SUFFIX,speedtestcustom.com,Speedtest",
+
+    // 中国大陆
+    "GEOSITE,CN,DIRECT",
+    "GEOIP,CN,DIRECT,no-resolve",
+
+    // 最终兜底
+    "MATCH,PROXY-Gate"
+  ];
+
+  // ============================================================
+  // Rule Providers
+  // ============================================================
+
+  fixed["rule-providers"] = {
+    "Apple": {
+      "type": "http",
+      "behavior": "classical",
+      "format": "yaml",
+      "interval": 86400,
+      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Rules/Apple.yaml"
+    },
+
+    "Apple_Domain": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Apple_Domain.mrs"
+    },
+
+    "iCloud": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/iCloud.mrs"
+    },
+
+    "AdvertisingLite": {
+      "type": "http",
+      "behavior": "classical",
+      "format": "yaml",
+      "interval": 86400,
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/AdvertisingLite/AdvertisingLite.yaml"
+    },
+
+    "AdvertisingLite_Domain": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/AdvertisingLite_Domain.mrs"
+    },
+
+    "Privacy": {
+      "type": "http",
+      "behavior": "classical",
+      "format": "yaml",
+      "interval": 86400,
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Privacy/Privacy.yaml"
+    },
+
+    "Privacy_Domain": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Privacy_Domain.mrs"
+    },
+
+    "ACL4SSR_BanAD": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/mrs/BanAD_domain.mrs"
+    },
+
+    "ACL4SSR_BanProgramAD": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/mrs/BanProgramAD_domain.mrs"
+    },
+
+    "ACL4SSR_BanProgramAD_iP": {
+      "type": "http",
+      "behavior": "ipcidr",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/mrs/BanProgramAD_ip.mrs"
+    },
+
+    "OpenAI_Domain": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/OpenAI_Domain.mrs"
+    },
+
+    "Amazon_Domain": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Amazon_Domain.mrs"
+    },
+
+    "Netflix_Domain": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Netflix_Domain.mrs"
+    },
+
+    "Netflix_IP": {
+      "type": "http",
+      "behavior": "ipcidr",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Netflix_IP.mrs"
+    },
+
+    "Spotify_Domain": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Spotify_Domain.mrs"
+    },
+
+    "TikTok_Domain": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/TikTok_Domain.mrs"
+    },
+
+    "Microsoft": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Microsoft.mrs"
+    },
+
+    "Copilot_Domain": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Copilot_Domain.mrs"
+    },
+
+    "Copilot_IP": {
+      "type": "http",
+      "behavior": "ipcidr",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Copilot_IP.mrs"
+    },
+
+    "Emby": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Emby.mrs"
+    }
+  };
+
+  return fixed;
+}
