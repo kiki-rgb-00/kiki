@@ -66,7 +66,7 @@ function main(config) {
         "APNs-Fallback",
         "DIRECT"
       ],
-      "url": "http://captive.apple.com/hotspot-detect.html",
+      "url": "https://captive.apple.com/hotspot-detect.html",
       "interval": 300
     },
 
@@ -477,7 +477,7 @@ function main(config) {
       type: "url-test",
       proxies: matched,
       icon: region.icon,
-      url: "http://www.gstatic.com/generate_204",
+      url: "https://www.gstatic.com/generate_204",
       interval: 900,
       tolerance: 50
     });
@@ -592,7 +592,7 @@ function main(config) {
     type: "fallback",
     proxies: existingRegionalAutos.length ? existingRegionalAutos : currentProxyNames.slice(),
     icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Apple.png",
-    url: "http://captive.apple.com/hotspot-detect.html",
+    url: "https://captive.apple.com/hotspot-detect.html",
     interval: 300
   });
 
@@ -602,7 +602,7 @@ function main(config) {
       type: "fallback",
       proxies: existingRegionalAutos.slice(),
       icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png",
-      url: "http://www.gstatic.com/generate_204",
+      url: "https://www.gstatic.com/generate_204",
       interval: 600
     });
 
@@ -611,7 +611,7 @@ function main(config) {
       type: "url-test",
       proxies: existingRegionalAutos.slice(),
       icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png",
-      url: "http://www.gstatic.com/generate_204",
+      url: "https://www.gstatic.com/generate_204",
       interval: 600,
       tolerance: 50
     });
