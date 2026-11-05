@@ -488,7 +488,10 @@ function main(config) {
   // Cross-region fallback is available only when regional Auto groups exist.
   // It remains an explicit choice; service groups keep their first candidate.
   const globalFallbackChoices = existingRegionalAutos.length
-    ? ["🌍 Global-Fallback"]
+    ? [
+        "🌍 Global-Fallback",
+        "🌍 Global-Auto"
+      ]
     : [];
 
   // ============================================================
@@ -601,6 +604,16 @@ function main(config) {
       icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png",
       url: "http://www.gstatic.com/generate_204",
       interval: 600
+    });
+
+    fixed["proxy-groups"].push({
+      name: "🌍 Global-Auto",
+      type: "url-test",
+      proxies: existingRegionalAutos.slice(),
+      icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png",
+      url: "http://www.gstatic.com/generate_204",
+      interval: 600,
+      tolerance: 50
     });
   }
 
