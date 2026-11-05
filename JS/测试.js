@@ -846,6 +846,7 @@ function main(config) {
     // 广告 / 隐私
     "RULE-SET,AdvertisingLite,REJECT",
     "RULE-SET,AdvertisingLite_Domain,REJECT",
+    "RULE-SET,AdvertisingLite_iP,REJECT",
     "RULE-SET,Privacy,REJECT",
     "RULE-SET,Privacy_Domain,REJECT",
     "RULE-SET,ACL4SSR_BanAD,REJECT",
