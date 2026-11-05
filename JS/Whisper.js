@@ -715,7 +715,10 @@ function main(config) {
   const serviceProxyChoices = [
     "🖥️ All-Nodes",
     ...(existingRegionalAutos.length
-      ? ["🌍 Global-Fallback"]
+      ? [
+          "🌍 Global-Fallback",
+          "🌍 Global-Auto"
+         ]
       : []),
     ...existingRegionalAutos,
     "PROXY-Gate",
@@ -775,7 +778,10 @@ function main(config) {
     proxyGate.proxies = [
       "🖥️ All-Nodes",
       ...(existingRegionalAutos.length
-        ? ["🌍 Global-Fallback"]
+        ? [
+            "🌍 Global-Fallback",
+            "🌍 Global-Auto"
+           ]
         : []),
       ...existingRegionalAutos,
       "DIRECT"
@@ -800,12 +806,17 @@ function main(config) {
   });
 
   // ============================================================
-  // 7. Global-Fallback
+  // 7. Global-Fallback / Global-Auto
   //
-  // 放在整个策略组列表最后，与 APNs-Fallback 相邻。
+  // 两个组均引用所有实际生成的地区 Auto。
+  //
+  // Global-Fallback：跨地区故障转移
+  // Global-Auto：跨地区自动测速，选择最快地区
   // ============================================================
 
   if (existingRegionalAutos.length) {
+
+    // Global-Fallback
     fixed["proxy-groups"].push({
       name: "🌍 Global-Fallback",
       type: "fallback",
@@ -813,6 +824,17 @@ function main(config) {
       icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png",
       url: "http://www.gstatic.com/generate_204",
       interval: 600
+    });
+
+    // Global-Auto
+    fixed["proxy-groups"].push({
+      name: "🌍 Global-Auto",
+      type: "url-test",
+      proxies: existingRegionalAutos,
+      icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png",
+      url: "http://www.gstatic.com/generate_204",
+      interval: 600,
+      tolerance: 50
     });
   }
 
