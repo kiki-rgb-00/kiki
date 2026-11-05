@@ -74,7 +74,6 @@ jobs:
           wget -O Rules/Apple.yaml \
             https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Apple/Apple.yaml
 
-
       # =========================
       # Netflix Domain
       # =========================
@@ -338,7 +337,6 @@ jobs:
             .tmp/rules/Emby_Domain.txt \
             MRS/Emby.mrs
 
-
       # =========================
       # ChinaMax
       # ChinaMax.yaml is kept as
@@ -472,46 +470,16 @@ jobs:
             .tmp/rules/ChinaMax_IP.txt \
             MRS/ChinaMax_IP.mrs
 
-
       # =========================
-      # Privacy Domain
-      #
-      # MagicRule YAML
-      # -> Mihomo MRS
+      # Privacy
+      # Privacy.yaml is kept as
+      # repository rule source.
       # =========================
 
       - name: Download Privacy Domain
         run: |
           wget -O .tmp/rules/Privacy_Domain.yaml \
-            https://magicrule.pages.dev/data/_shared/artifacts/Privacy_domain_ab0398564876b1eb.yaml
-
-      - name: Validate Privacy Domain
-        run: |
-          python - <<'PY'
-          import yaml
-          from pathlib import Path
-
-          path = Path(".tmp/rules/Privacy_Domain.yaml")
-
-          with path.open("r", encoding="utf-8") as f:
-              data = yaml.safe_load(f)
-
-          if not isinstance(data, dict):
-              raise SystemExit("Invalid Privacy YAML structure")
-
-          payload = data.get("payload")
-
-          if not isinstance(payload, list) or not payload:
-              raise SystemExit("Privacy Domain payload is missing or empty")
-
-          domains = [str(x).strip() for x in payload if str(x).strip()]
-
-          if not any("analytics.tiktok.com" in x for x in domains):
-              raise SystemExit("Expected test domain is missing")
-
-          print(f"Privacy Domain entries: {len(domains)}")
-          print("Privacy Domain YAML validation passed")
-          PY
+            https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Privacy/Privacy_Domain.yaml
 
       - name: Convert Privacy Domain
         run: |
