@@ -1229,7 +1229,7 @@ function main(config) {
       "behavior": "classical",
       "format": "mrs",
       "interval": 86400,
-      "url": "https://magicrule.pages.dev/data/_shared/artifacts/TikTok_classical-rest_ce7e008edf07f40a.yaml.mrs"
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/TikTok_classical-rest_ce7e008edf07f40a.yaml"
     },
 
     "TikTok_Domain": {
