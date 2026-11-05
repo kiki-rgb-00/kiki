@@ -646,7 +646,7 @@ function main(config) {
     "RULE-SET,Advertising_iP,REJECT",
     "RULE-SET,ACL4SSR_BanAD,REJECT",
     "RULE-SET,ACL4SSR_BanProgramAD,REJECT",
-    "RULE-SET,ACL4SSR_BanProgramAD_IP,REJECT,no-resolve",
+    "RULE-SET,ACL4SSR_BanProgramAD_iP,REJECT,no-resolve",
 
     // 加密货币App
     "DOMAIN-SUFFIX,aicoin.com,PROXY-Gate",
