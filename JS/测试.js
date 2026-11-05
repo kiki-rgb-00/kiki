@@ -1122,42 +1122,26 @@ function main(config) {
       "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/iCloud.mrs"
     },
 
-    "AdvertisingLite": {
+    "Advertising": {
       "type": "http",
       "behavior": "classical",
       "format": "yaml",
       "interval": 86400,
-      "url": "https://magicrule.pages.dev/data/_shared/artifacts/AdvertisingLite_classical-rest_baba1ca44b0104db.yaml"
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Advertising_classical-rest_4cbe8ce66543d1b4.yaml"
     },
-    "AdvertisingLite_Domain": {
+    "Advertising_Domain": {
       "type": "http",
       "behavior": "domain",
       "format": "mrs",
       "interval": 86400,
-      "url": "https://magicrule.pages.dev/data/_shared/artifacts/AdvertisingLite_domain-mrs_031c041beecdb751.mrs"
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Advertising_domain-mrs_8ac20dd3ffdba08d.mrs"
     },
-    "AdvertisingLite_iP": {
+    "Advertising_iP": {
       "type": "http",
       "behavior": "ipcidr",
       "format": "mrs",
       "interval": 86400,
-      "url": "https://magicrule.pages.dev/data/_shared/artifacts/AdvertisingLite_ipcidr-mrs_7c4341c5ef69ce38.mrs"
-    },
-
-    "Privacy": {
-      "type": "http",
-      "behavior": "classical",
-      "format": "yaml",
-      "interval": 86400,
-      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Privacy/Privacy.yaml"
-    },
-
-    "Privacy_Domain": {
-      "type": "http",
-      "behavior": "domain",
-      "format": "mrs",
-      "interval": 86400,
-      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Privacy_Domain.mrs"
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Advertising_ipcidr-mrs_987068ba16404730.mrs"
     },
 
     "ACL4SSR_BanAD": {
