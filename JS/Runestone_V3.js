@@ -641,10 +641,9 @@ function main(config) {
 
 
     // 广告 / 隐私
-    "RULE-SET,AdvertisingLite,REJECT",
-    "RULE-SET,AdvertisingLite_Domain,REJECT",
-    "RULE-SET,Privacy,REJECT",
-    "RULE-SET,Privacy_Domain,REJECT",
+    "RULE-SET,Advertising,REJECT",
+    "RULE-SET,Advertising_Domain,REJECT",
+    "RULE-SET,Advertising_iP,REJECT",
     "RULE-SET,ACL4SSR_BanAD,REJECT",
     "RULE-SET,ACL4SSR_BanProgramAD,REJECT",
     "RULE-SET,ACL4SSR_BanProgramAD_IP,REJECT,no-resolve",
@@ -676,6 +675,7 @@ function main(config) {
     "DOMAIN-SUFFIX,ggpht.com,YouTube",
 
     // Netflix
+    "RULE-SET,Netflix,Netflix",
     "RULE-SET,Netflix_Domain,Netflix",
     "RULE-SET,Netflix_IP,Netflix",
 
@@ -693,8 +693,8 @@ function main(config) {
     // Emby
     "RULE-SET,Emby,Emby",
 
-
     // Spotify
+    "RULE-SET,Spotify,Spotify",
     "RULE-SET,Spotify_Domain,Spotify",
 
     // TikTok
@@ -884,7 +884,7 @@ function main(config) {
       "behavior": "classical",
       "format": "yaml",
       "interval": 86400,
-      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Rules/Apple.yaml"
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Apple_classical-rest_b2adb0dcf08c81dc.yaml"
     },
 
     "Apple_Domain": {
@@ -892,7 +892,7 @@ function main(config) {
       "behavior": "domain",
       "format": "mrs",
       "interval": 86400,
-      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Apple_Domain.mrs"
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Apple_domain-mrs_7e2479ae82882b86.mrs"
     },
 
     "iCloud": {
@@ -900,39 +900,29 @@ function main(config) {
       "behavior": "domain",
       "format": "mrs",
       "interval": 86400,
-      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/iCloud.mrs"
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/iCloud_domain-mrs_e744848b935bbd23.mrs"
     },
 
-    "AdvertisingLite": {
+    "Advertising": {
       "type": "http",
       "behavior": "classical",
       "format": "yaml",
       "interval": 86400,
-      "url": "https://raw.githubusercontent.com/" + RUNESTONE.repository + "/main/Rules/AdvertisingLite.yaml"
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Advertising_classical-rest_4cbe8ce66543d1b4.yaml"
     },
-
-    "AdvertisingLite_Domain": {
+    "Advertising_Domain": {
       "type": "http",
       "behavior": "domain",
       "format": "mrs",
       "interval": 86400,
-      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/AdvertisingLite_Domain.mrs"
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Advertising_domain-mrs_8ac20dd3ffdba08d.mrs"
     },
-
-    "Privacy": {
+    "Advertising_iP": {
       "type": "http",
-      "behavior": "classical",
-      "format": "yaml",
-      "interval": 86400,
-      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Privacy/Privacy.yaml"
-    },
-
-    "Privacy_Domain": {
-      "type": "http",
-      "behavior": "domain",
+      "behavior": "ipcidr",
       "format": "mrs",
       "interval": 86400,
-      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Privacy_Domain.mrs"
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Advertising_ipcidr-mrs_987068ba16404730.mrs"
     },
 
     "ACL4SSR_BanAD": {
@@ -951,7 +941,7 @@ function main(config) {
       "url": "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/mrs/BanProgramAD_domain.mrs"
     },
 
-    "ACL4SSR_BanProgramAD_IP": {
+    "ACL4SSR_BanProgramAD_iP": {
       "type": "http",
       "behavior": "ipcidr",
       "format": "mrs",
@@ -964,7 +954,23 @@ function main(config) {
       "behavior": "domain",
       "format": "mrs",
       "interval": 86400,
-      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/OpenAI_Domain.mrs"
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/OpenAI_domain-mrs_fadf486f6b825017.mrs"
+    },
+
+    "Amazon_Domain": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Amazon_domain-mrs_4a6c32e895a0946e.mrs"
+    },
+
+    "Netflix": {
+      "type": "http",
+      "behavior": "classical",
+      "format": "yaml",
+      "interval": 86400,
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Netflix_classical-rest_0f95e4fd9944542b.yaml"
     },
 
     "Netflix_Domain": {
@@ -972,7 +978,7 @@ function main(config) {
       "behavior": "domain",
       "format": "mrs",
       "interval": 86400,
-      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Netflix_Domain.mrs"
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Netflix_domain-mrs_e186b4515be192fe.mrs"
     },
 
     "Netflix_IP": {
@@ -980,7 +986,15 @@ function main(config) {
       "behavior": "ipcidr",
       "format": "mrs",
       "interval": 86400,
-      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Netflix_IP.mrs"
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Netflix_ipcidr-mrs_91e76c41ba675173.mrs"
+    },
+
+    "Spotify": {
+      "type": "http",
+      "behavior": "classical",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Spotify_classical-rest_086d447211d7d08e.yaml"
     },
 
     "Spotify_Domain": {
@@ -988,7 +1002,7 @@ function main(config) {
       "behavior": "domain",
       "format": "mrs",
       "interval": 86400,
-      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Spotify_Domain.mrs"
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Spotify_domain-mrs_41ab1792bfc28985.mrs"
     },
 
     "TikTok_Domain": {
@@ -996,7 +1010,7 @@ function main(config) {
       "behavior": "domain",
       "format": "mrs",
       "interval": 86400,
-      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/TikTok_Domain.mrs"
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/TikTok_domain-mrs_48fd44c890a0784e.mrs"
     },
 
     "Microsoft": {
@@ -1004,7 +1018,7 @@ function main(config) {
       "behavior": "domain",
       "format": "mrs",
       "interval": 86400,
-      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Microsoft.mrs"
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Microsoft_domain-mrs_da6a9c1ccdacd1d9.mrs"
     },
 
     "Copilot_Domain": {
@@ -1012,7 +1026,7 @@ function main(config) {
       "behavior": "domain",
       "format": "mrs",
       "interval": 86400,
-      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Copilot_Domain.mrs"
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Copilot_domain-mrs_5b77563f4d477ade.mrs"
     },
 
     "Copilot_IP": {
@@ -1020,7 +1034,7 @@ function main(config) {
       "behavior": "ipcidr",
       "format": "mrs",
       "interval": 86400,
-      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Copilot_IP.mrs"
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Copilot_ipcidr-mrs_8f64d7506c0c44b1.mrs"
     },
 
     "Emby": {
@@ -1028,7 +1042,7 @@ function main(config) {
       "behavior": "domain",
       "format": "mrs",
       "interval": 86400,
-      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Emby.mrs"
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Emby_domain-mrs_2f9d44394facab13.mrs"
     }
   };
 
