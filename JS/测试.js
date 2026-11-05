@@ -1227,7 +1227,7 @@ function main(config) {
     "TikTok": {
       "type": "http",
       "behavior": "classical",
-      "format": "mrs",
+      "format": "yaml",
       "interval": 86400,
       "url": "https://magicrule.pages.dev/data/_shared/artifacts/TikTok_classical-rest_ce7e008edf07f40a.yaml"
     },
