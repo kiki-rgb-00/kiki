@@ -694,7 +694,6 @@ function main(config) {
     "RULE-SET,Emby,Emby",
 
     // Spotify
-    "RULE-SET,Spotify,Spotify",
     "RULE-SET,Spotify_Domain,Spotify",
 
     // TikTok
@@ -987,14 +986,6 @@ function main(config) {
       "format": "mrs",
       "interval": 86400,
       "url": "https://magicrule.pages.dev/data/_shared/artifacts/Netflix_ipcidr-mrs_91e76c41ba675173.mrs"
-    },
-
-    "Spotify": {
-      "type": "http",
-      "behavior": "classical",
-      "format": "mrs",
-      "interval": 86400,
-      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Spotify_classical-rest_086d447211d7d08e.yaml"
     },
 
     "Spotify_Domain": {
