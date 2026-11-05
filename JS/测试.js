@@ -901,7 +901,6 @@ function main(config) {
     "RULE-SET,Spotify_Domain,Spotify",
 
     // TikTok
-    "RULE-SET,TikTok,TikTok",
     "RULE-SET,TikTok_Domain,TikTok",
 
     // Twitch
@@ -1222,14 +1221,6 @@ function main(config) {
       "format": "mrs",
       "interval": 86400,
       "url": "https://magicrule.pages.dev/data/_shared/artifacts/Spotify_domain-mrs_41ab1792bfc28985.mrs"
-    },
-
-    "TikTok": {
-      "type": "http",
-      "behavior": "classical",
-      "format": "yaml",
-      "interval": 86400,
-      "url": "https://magicrule.pages.dev/data/_shared/artifacts/TikTok_classical-rest_ce7e008edf07f40a.yaml"
     },
 
     "TikTok_Domain": {
