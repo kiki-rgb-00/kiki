@@ -865,8 +865,7 @@ function main(config) {
     "IP-CIDR6,2403:300:a51::/48,Apple Push,no-resolve",
     "IP-CIDR6,2a01:b740:a42::/48,Apple Push,no-resolve",
 
-    //以下规则为广告规则集误匹配
-    //因此需放在广告规则集之前
+    //下方为广告/隐私规则集误拦截的规则
     "DOMAIN,hatch.metaaivm.com,Meta",
 
 
