@@ -867,7 +867,7 @@ function main(config) {
 
     //下方为广告/隐私规则集误拦截的规则
     "DOMAIN,hatch.metaaivm.com,Meta",
-
+    "DOMAIN-SUFFIX,ilce.alicdn.com,DIRECT",
 
     // 广告 / 隐私
     "RULE-SET,Advertising,REJECT",
