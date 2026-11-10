@@ -1,6 +1,6 @@
 /*
  * 服务分类配置｜Hako版
- * 11-9-2026
+ * 11-10-2026
  * Hako 会将当前选中的多个节点来源合并到 config.proxies。
  * 本脚本不依赖任何 proxy-providers 名称。
  *
@@ -470,6 +470,39 @@ function main(config) {
     ]
   });
 
+
+  // ============================================================
+  // Fallback 策略组
+  // ============================================================
+
+  fixed["proxy-groups"].push({
+    name: "APNs-Fallback",
+    type: "fallback",
+    proxies: [],
+    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png",
+    url: "https://captive.apple.com/hotspot-detect.html",
+    interval: 300
+  });
+
+  fixed["proxy-groups"].push({
+    name: "🌍 Global-Fallback",
+    type: "fallback",
+    proxies: [],
+    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png",
+    url: "https://www.gstatic.com/generate_204",
+    interval: 600
+  });
+
+  fixed["proxy-groups"].push({
+    name: "🌍 Global-Auto",
+    type: "url-test",
+    proxies: [],
+    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png",
+    url: "https://www.gstatic.com/generate_204",
+    interval: 600,
+    tolerance: 50
+  });
+
   // ============================================================
   // 3. 地区 Auto
   //
@@ -700,15 +733,15 @@ function main(config) {
   // ============================================================
 
   const serviceProxyChoices = [
-    "🖥️ All-Nodes",
+    "PROXY-Gate",
     ...(existingRegionalAutos.length
       ? [
           "🌍 Global-Fallback",
-          "🌍 Global-Auto"
+          "🌍 Global-Auto",
+          "🖥️ All-Nodes"
          ]
       : []),
     ...existingRegionalAutos,
-    "PROXY-Gate",
     "DIRECT"
   ];
 
@@ -775,23 +808,6 @@ function main(config) {
   }
 
   // ============================================================
-  // 6. Apple Push 专用 APNs-Fallback
-  //
-  // 只引用实际生成的地区 Auto。
-  //
-  // 现在地区只需要 2 个节点即可进入这里。
-  // ============================================================
-
-  fixed["proxy-groups"].push({
-    name: "APNs-Fallback",
-    type: "fallback",
-    proxies: existingRegionalAutos,
-    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png",
-    url: "https://captive.apple.com/hotspot-detect.html",
-    interval: 300
-  });
-
-  // ============================================================
   // 7. Global-Fallback / Global-Auto
   //
   // 两个组均引用所有实际生成的地区 Auto。
@@ -799,31 +815,20 @@ function main(config) {
   // Global-Fallback：跨地区故障转移
   // Global-Auto：跨地区自动测速，选择最快地区
   // ============================================================
+  // ============================================================
 
-  if (existingRegionalAutos.length) {
+  const fallbackNames = [
+    "APNs-Fallback",
+    "🌍 Global-Fallback",
+    "🌍 Global-Auto"
+  ];
 
-    // Global-Fallback
-    fixed["proxy-groups"].push({
-      name: "🌍 Global-Fallback",
-      type: "fallback",
-      proxies: existingRegionalAutos,
-      icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png",
-      url: "https://www.gstatic.com/generate_204",
-      interval: 600
-    });
-
-    // Global-Auto
-    fixed["proxy-groups"].push({
-      name: "🌍 Global-Auto",
-      type: "url-test",
-      proxies: existingRegionalAutos,
-      icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png",
-      url: "https://www.gstatic.com/generate_204",
-      interval: 600,
-      tolerance: 50
-    });
-  }
-
+  fixed["proxy-groups"].forEach(group => {
+    if (fallbackNames.includes(group.name)) {
+      group.proxies = existingRegionalAutos.slice();
+    }
+  });
+  
   // ============================================================
   // Rules
   // ============================================================
