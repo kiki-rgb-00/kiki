@@ -796,41 +796,31 @@ function main(config) {
     // ============================================================
     // Meta
     //
-    // Facebook / Instagram / Threads / Messenger /
+    // Facebook / Instagram / Threads / Messenger / WhatsApp
     // Meta AI / Muse 统一进入 Meta 策略组。
     //
-    // WhatsApp 保持独立，不归入 Meta。
     // ============================================================
 
-    // Facebook
-    "DOMAIN-SUFFIX,facebook.com,Meta",
-    "DOMAIN-SUFFIX,facebook.net,Meta",
-    "DOMAIN-SUFFIX,fbcdn.net,Meta",
-    "DOMAIN-SUFFIX,fbsbx.com,Meta",
-    "DOMAIN-SUFFIX,fb.com,Meta",
+    // Meta
+    "RULE-SET,Facebook,Meta",
+    "RULE-SET,Facebook_Domain,Meta",
+    "RULE-SET,Instagram_Domain,Meta",
+    "RULE-SET,WhatsApp_Domain,Meta",
 
-    // Instagram
-    "DOMAIN-SUFFIX,instagram.com,Meta",
-    "DOMAIN-SUFFIX,cdninstagram.com,Meta",
-    "DOMAIN-SUFFIX,instagram.net,Meta",
+    "DOMAIN-KEYWORD,whatsapp,Meta",
 
-    // Threads
     "DOMAIN-SUFFIX,threads.com,Meta",
     "DOMAIN-SUFFIX,threads.net,Meta",
+    "DOMAIN-SUFFIX,threadsusercontent.com,Meta",
 
-    // Messenger
-    "DOMAIN-SUFFIX,messenger.com,Meta",
-
-    // Meta AI / Muse
     "DOMAIN-SUFFIX,meta.ai,Meta",
     "DOMAIN-SUFFIX,ai.meta.com,Meta",
     "DOMAIN-SUFFIX,muse.ai,Meta",
-
-    // WhatsApp
-    "DOMAIN-SUFFIX,whatsapp.com,WhatsApp",
-    "DOMAIN-SUFFIX,whatsapp.net,WhatsApp",
-    "DOMAIN-SUFFIX,wa.me,WhatsApp",
-    "DOMAIN-SUFFIX,whatsapp.org,WhatsApp",
+    "DOMAIN-SUFFIX,metaaivm.com,Meta",
+    "IP-CIDR,157.240.0.0/16,Meta,no-resolve",
+    "IP-CIDR,31.13.64.0/18,Meta,no-resolve",
+    "IP-CIDR,69.171.224.0/19,Meta,no-resolve",
+    "IP-CIDR,173.252.64.0/18,Meta,no-resolve",
 
     // Telegram
     "DOMAIN-SUFFIX,telegram.org,Telegram",
