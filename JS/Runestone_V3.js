@@ -301,17 +301,6 @@ function main(config) {
   });
 
   fixed["proxy-groups"].push({
-    "name": "WhatsApp",
-    "type": "select",
-    "icon": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/WhatsApp.svg",
-    "proxies": [
-      "🖥️ All-Nodes",
-      "PROXY-Gate",
-      "DIRECT"
-    ]
-  });
-
-  fixed["proxy-groups"].push({
     "name": "Telegram",
     "type": "select",
     "icon": "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Telegram.png",
@@ -538,7 +527,6 @@ function main(config) {
     "iCloud",
     "X",
     "Meta",
-    "WhatsApp",
     "Telegram",
     "LINE",
     "Github",
