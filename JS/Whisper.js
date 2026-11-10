@@ -1,6 +1,6 @@
 /*
  * 服务分类配置｜Hako版
- * 11-4-2026
+ * 11-9-2026
  * Hako 会将当前选中的多个节点来源合并到 config.proxies。
  * 本脚本不依赖任何 proxy-providers 名称。
  *
@@ -323,28 +323,15 @@ function main(config) {
   // ============================================================
   // Meta
   //
-  // Facebook / Instagram / Threads / Meta AI / Muse
+  // Facebook / Instagram / Threads / Meta AI / Muse / WhatsApp
   // 统一使用 Meta 策略组。
   //
-  // WhatsApp 保持独立策略组，不归入 Meta。
   // ============================================================
 
   fixed["proxy-groups"].push({
     "name": "Meta",
     "type": "select",
     "icon": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/Meta.png",
-    "proxies": [
-      "🖥️ All-Nodes",
-      "PROXY-Gate",
-      "DIRECT"
-    ]
-  });
-
-
-  fixed["proxy-groups"].push({
-    "name": "WhatsApp",
-    "type": "select",
-    "icon": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/WhatsApp.svg",
     "proxies": [
       "🖥️ All-Nodes",
       "PROXY-Gate",
@@ -738,7 +725,6 @@ function main(config) {
     "Claude",
     "Grok",
     "Meta",
-    "WhatsApp",
     "Telegram",
     "LINE",
     "Microsoft",
@@ -971,45 +957,17 @@ function main(config) {
     "DOMAIN-SUFFIX,x.ai,Grok",
     "DOMAIN-KEYWORD,grok,Grok",
 
-    // WhatsApp
-    "DOMAIN-SUFFIX,whatsapp.com,WhatsApp",
-    "DOMAIN-SUFFIX,whatsapp.net,WhatsApp",
-    "DOMAIN-SUFFIX,wa.me,WhatsApp",
-    "DOMAIN-SUFFIX,whatsapp.org,WhatsApp",
-    "DOMAIN-SUFFIX,whatsapp.biz,WhatsApp",
-    "DOMAIN-SUFFIX,whatsapp.info,WhatsApp",
-    "DOMAIN-KEYWORD,whatsapp,WhatsApp",
-    "DOMAIN,graph.facebook.com,WhatsApp",
-
     // Meta
-    "DOMAIN-SUFFIX,meta.com,Meta",
-    "DOMAIN-SUFFIX,facebook.com,Meta",
-    "DOMAIN-SUFFIX,facebook.net,Meta",
-    "DOMAIN-SUFFIX,fbcdn.net,Meta",
-    "DOMAIN-SUFFIX,fbsbx.com,Meta",
-    "DOMAIN-SUFFIX,fb.com,Meta",
-    "DOMAIN-SUFFIX,facebook-hardware.com,Meta",
-    "DOMAIN-SUFFIX,fb.me,Meta",
-    "DOMAIN-SUFFIX,fb.gg,Meta",
-    "DOMAIN-SUFFIX,graph.facebook.com,Meta",
-    "DOMAIN-SUFFIX,graph.instagram.com,Meta",
-    "DOMAIN-SUFFIX,fbcdn.com,Meta",
-    "DOMAIN-SUFFIX,messengerplatform.com,Meta",
-    "DOMAIN-SUFFIX,fbcdn.com,Meta",
-    "DOMAIN-SUFFIX,instagram.com,Meta",
+    "RULE-SET,Facebook,Meta",
+    "RULE-SET,Facebook_Domain,Meta",
+    "RULE-SET,Instagram_Domain,Meta",
+    "RULE-SET,WhatsApp_Domain,Meta",
 
-    "DOMAIN-SUFFIX,instagram.com,Meta",
-    "DOMAIN-SUFFIX,cdninstagram.com,Meta",
-    "DOMAIN-SUFFIX,instagram.net,Meta",
-    "DOMAIN-SUFFIX,ig.me,Meta",
+    "DOMAIN-KEYWORD,whatsapp,Meta",
 
     "DOMAIN-SUFFIX,threads.com,Meta",
     "DOMAIN-SUFFIX,threads.net,Meta",
     "DOMAIN-SUFFIX,threadsusercontent.com,Meta",
-
-    "DOMAIN-SUFFIX,messenger.com,Meta",
-    "DOMAIN-SUFFIX,messengerplatform.com,Meta",
-    "DOMAIN-SUFFIX,m.me,Meta",
 
     "DOMAIN-SUFFIX,meta.ai,Meta",
     "DOMAIN-SUFFIX,ai.meta.com,Meta",
@@ -1270,6 +1228,38 @@ function main(config) {
       "format": "mrs",
       "interval": 86400,
       "url": "https://magicrule.pages.dev/data/_shared/artifacts/Copilot_ipcidr-mrs_8f64d7506c0c44b1.mrs"
+    },
+
+    "Facebook": {
+      "type": "http",
+      "behavior": "classical",
+      "format": "yaml",
+      "interval": 86400,
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Facebook_classical-rest_29f7afa153d0d58f.yaml"
+    },
+
+    "Facebook_Domain": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Facebook_domain-mrs_34b1cdae86751d29.mrs"
+    },
+
+    "Instagram_Domain": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Instagram_domain-mrs_4e9bcf7287f125ac.mrs"
+    },
+
+    "WhatsApp_Domain": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Whatsapp_domain-mrs_44f7a8ecf6dc7e33.mrs"
     },
 
     "Emby": {
