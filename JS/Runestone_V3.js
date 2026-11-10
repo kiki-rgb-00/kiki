@@ -502,10 +502,10 @@ function main(config) {
   // ============================================================
 
   const serviceProxyChoices = [
+    "PROXY-Gate",
     "🖥️ All-Nodes",
     ...globalFallbackChoices,
     ...existingRegionalAutos,
-    "PROXY-Gate",
     "DIRECT"
   ];
 
