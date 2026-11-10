@@ -1033,6 +1033,38 @@ function main(config) {
       "url": "https://magicrule.pages.dev/data/_shared/artifacts/Copilot_ipcidr-mrs_8f64d7506c0c44b1.mrs"
     },
 
+    "Facebook": {
+      "type": "http",
+      "behavior": "classical",
+      "format": "yaml",
+      "interval": 86400,
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Facebook_classical-rest_29f7afa153d0d58f.yaml"
+    },
+
+    "Facebook_Domain": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Facebook_domain-mrs_34b1cdae86751d29.mrs"
+    },
+
+    "Instagram_Domain": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Instagram_domain-mrs_4e9bcf7287f125ac.mrs"
+    },
+
+    "WhatsApp_Domain": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Whatsapp_domain-mrs_44f7a8ecf6dc7e33.mrs"
+    },
+
     "Emby": {
       "type": "http",
       "behavior": "domain",
