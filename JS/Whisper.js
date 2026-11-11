@@ -543,7 +543,6 @@ function main(config) {
   // ============================================================
 
   const regionGroups = [
-
     {
       key: "SG",
       name: "🇸🇬 SG",
