@@ -543,12 +543,6 @@ function main(config) {
   // ============================================================
 
   const regionGroups = [
-    {
-      key: "US",
-      name: "🇺🇸 US",
-      filter: /([\[]US[\]]|^US$|USA|United[ _-]?States|\bUS\b|美国|美國|🇺🇸)/i,
-      icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"
-    },
 
     {
       key: "SG",
@@ -582,6 +576,13 @@ function main(config) {
       key: "TW",
       name: "🇹🇼 TW",
       filter: /([\[]TW[\]]|^TW$|Taiwan|Taibei|Taipei|\bTW\b|台湾|臺灣|台北|高雄|🇹🇼)/i,
+      icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"
+    },
+
+    {
+      key: "US",
+      name: "🇺🇸 US",
+      filter: /([\[]US[\]]|^US$|USA|United[ _-]?States|\bUS\b|美国|美國|🇺🇸)/i,
       icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"
     },
 
