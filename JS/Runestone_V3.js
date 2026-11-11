@@ -389,13 +389,6 @@ function main(config) {
 
   const regionGroups = [
     {
-      key: "US",
-      name: "🇺🇸 US",
-      filter: /([\[]US[\]]|^US$|USA|United[ _-]?States|\bUS\b|美国|美國|🇺🇸)/i,
-      icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/United_States.png"
-    },
-
-    {
       key: "SG",
       name: "🇸🇬 SG",
       filter: /([\[]SG[\]]|^SG$|Singapore|\bSG\b|新加坡|狮城|🇸🇬)/i,
@@ -428,6 +421,13 @@ function main(config) {
       name: "🇹🇼 TW",
       filter: /([\[]TW[\]]|^TW$|Taiwan|Taibei|Taipei|\bTW\b|台湾|臺灣|台北|高雄|🇹🇼)/i,
       icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Taiwan.png"
+    },
+
+    {
+      key: "US",
+      name: "🇺🇸 US",
+      filter: /([\[]US[\]]|^US$|USA|United[ _-]?States|\bUS\b|美国|美國|🇺🇸)/i,
+      icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/United_States.png"
     },
 
     {
