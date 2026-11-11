@@ -1,6 +1,6 @@
 /*
  * 服务分类配置｜Hako版
- * 11-10-2026
+ * 11-9-2026
  * Hako 会将当前选中的多个节点来源合并到 config.proxies。
  * 本脚本不依赖任何 proxy-providers 名称。
  *
@@ -27,6 +27,40 @@ function main(config) {
         : (p && typeof p.name === "string" ? p.name : null)
     )
     .filter(Boolean);
+    
+      // ============================================================
+  // 节点名称过滤
+  //
+  // 仅排除中文机场杂项信息。
+  // 不修改原始 config.proxies。
+  // ============================================================
+
+  const excludedProxyName = [
+    /套餐/,
+    /剩余流量/,
+    /流量剩余/,
+    /流量用量/,
+    /已用流量/,
+    /总流量/,
+    /流量重置/,
+    /到期/,
+    /过期/,
+    /有效期/,
+    /剩余时间/,
+    /官网/,
+    /续费/,
+    /公告/,
+    /通知/,
+    /客服/,
+    /工单/,
+    /邀请链接/,
+    /使用说明/,
+    /天/
+  ];
+
+  const usableProxyNames = currentProxyNames.filter(name =>
+    !excludedProxyName.some(pattern => pattern.test(name))
+  );
 
   const fixed = {
     "mixed-port": 7890,
@@ -162,13 +196,20 @@ function main(config) {
 
   fixed["proxy-groups"].push(
     {
-      "name": "PROXY-Gate",
+      "name": "🔘 PROXY-Gate",
       "type": "select",
-      "icon": "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Final.png",
+      "icon": "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Proxy.png",
       "proxies": [
         "🖥️ All-Nodes",
         "DIRECT"
       ]
+    },
+
+    {
+      "name": "🖥️ All-Nodes",
+      "type": "select",
+      "proxies": usableProxyNames.slice(),
+      "icon": "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Server.png"
     },
 
     {
@@ -181,13 +222,6 @@ function main(config) {
       ],
       "url": "https://captive.apple.com/hotspot-detect.html",
       "interval": 300
-    },
-
-    {
-      "name": "🖥️ All-Nodes",
-      "type": "select",
-      "proxies": currentProxyNames.slice(),
-      "icon": "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Server.png"
     }
   );
 
@@ -204,8 +238,8 @@ function main(config) {
     "type": "select",
     "icon": "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/YouTube.png",
     "proxies": [
-      "🖥️ All-Nodes",
-      "PROXY-Gate",
+      
+      "🔘 PROXY-Gate",
       "DIRECT"
     ]
   });
@@ -215,8 +249,8 @@ function main(config) {
     "type": "select",
     "icon": "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Netflix.png",
     "proxies": [
-      "🖥️ All-Nodes",
-      "PROXY-Gate",
+      
+      "🔘 PROXY-Gate",
       "DIRECT"
     ]
   });
@@ -226,8 +260,8 @@ function main(config) {
     "type": "select",
     "icon": "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Disney+.png",
     "proxies": [
-      "🖥️ All-Nodes",
-      "PROXY-Gate",
+      
+      "🔘 PROXY-Gate",
       "DIRECT"
     ]
   });
@@ -237,8 +271,8 @@ function main(config) {
     "type": "select",
     "icon": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png",
     "proxies": [
-      "🖥️ All-Nodes",
-      "PROXY-Gate",
+      
+      "🔘 PROXY-Gate",
       "DIRECT"
     ]
   });
@@ -248,8 +282,8 @@ function main(config) {
     "type": "select",
     "icon": "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Spotify.png",
     "proxies": [
-      "🖥️ All-Nodes",
-      "PROXY-Gate",
+      
+      "🔘 PROXY-Gate",
       "DIRECT"
     ]
   });
@@ -259,8 +293,8 @@ function main(config) {
     "type": "select",
     "icon": "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/TikTok.png",
     "proxies": [
-      "🖥️ All-Nodes",
-      "PROXY-Gate",
+      
+      "🔘 PROXY-Gate",
       "DIRECT"
     ]
   });
@@ -270,19 +304,19 @@ function main(config) {
     "type": "select",
     "icon": "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Twitch.png",
     "proxies": [
-      "🖥️ All-Nodes",
-      "PROXY-Gate",
+      
+      "🔘 PROXY-Gate",
       "DIRECT"
     ]
   });
 
   fixed["proxy-groups"].push({
-    "name": "GPT",
+    "name": "ChatGPT",
     "type": "select",
     "icon": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/ChatGPT.png",
     "proxies": [
-      "🖥️ All-Nodes",
-      "PROXY-Gate",
+      
+      "🔘 PROXY-Gate",
       "DIRECT"
     ]
   });
@@ -292,8 +326,8 @@ function main(config) {
     "type": "select",
     "icon": "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/google-gemini.png",
     "proxies": [
-      "🖥️ All-Nodes",
-      "PROXY-Gate",
+      
+      "🔘 PROXY-Gate",
       "DIRECT"
     ]
   });
@@ -303,8 +337,8 @@ function main(config) {
     "type": "select",
     "icon": "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/anthropic.png",
     "proxies": [
-      "🖥️ All-Nodes",
-      "PROXY-Gate",
+      
+      "🔘 PROXY-Gate",
       "DIRECT"
     ]
   });
@@ -314,18 +348,16 @@ function main(config) {
     "type": "select",
     "icon": "https://raw.githubusercontent.com/luestr/IconResource/main/App_icon/120px/Grok.png",
     "proxies": [
-      "🖥️ All-Nodes",
-      "PROXY-Gate",
+      
+      "🔘 PROXY-Gate",
       "DIRECT"
     ]
   });
 
   // ============================================================
-  // Meta
   //
   // Facebook / Instagram / Threads / Meta AI / Muse / WhatsApp
   // 统一使用 Meta 策略组。
-  //
   // ============================================================
 
   fixed["proxy-groups"].push({
@@ -333,8 +365,8 @@ function main(config) {
     "type": "select",
     "icon": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/Meta.png",
     "proxies": [
-      "🖥️ All-Nodes",
-      "PROXY-Gate",
+      
+      "🔘 PROXY-Gate",
       "DIRECT"
     ]
   });
@@ -344,8 +376,8 @@ function main(config) {
     "type": "select",
     "icon": "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Telegram.png",
     "proxies": [
-      "🖥️ All-Nodes",
-      "PROXY-Gate",
+      
+      "🔘 PROXY-Gate",
       "DIRECT"
     ]
   });
@@ -355,8 +387,8 @@ function main(config) {
     "type": "select",
     "icon": "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Line.png",
     "proxies": [
-      "🖥️ All-Nodes",
-      "PROXY-Gate",
+      
+      "🔘 PROXY-Gate",
       "DIRECT"
     ]
   });
@@ -365,8 +397,6 @@ function main(config) {
   // Microsoft
   //
   // Microsoft / Copilot 共用 Microsoft 策略组。
-  // 具体规则通过 Microsoft.mrs、Copilot_Domain.mrs
-  // 和 Copilot_IP.mrs 提供。
   // ============================================================
 
   fixed["proxy-groups"].push({
@@ -374,8 +404,8 @@ function main(config) {
     "type": "select",
     "icon": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png",
     "proxies": [
-      "🖥️ All-Nodes",
-      "PROXY-Gate",
+      
+      "🔘 PROXY-Gate",
       "DIRECT"
     ]
   });
@@ -385,8 +415,8 @@ function main(config) {
     "type": "select",
     "icon": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Ti/Google.PNG",
     "proxies": [
-      "🖥️ All-Nodes",
-      "PROXY-Gate",
+      
+      "🔘 PROXY-Gate",
       "DIRECT"
     ]
   });
@@ -400,8 +430,8 @@ function main(config) {
     "type": "select",
     "icon": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_2.png",
     "proxies": [
-      "🖥️ All-Nodes",
-      "PROXY-Gate",
+      
+      "🔘 PROXY-Gate",
       "DIRECT"
     ]
   });
@@ -419,8 +449,8 @@ function main(config) {
     "type": "select",
     "icon": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/iCloud.png",
     "proxies": [
-      "🖥️ All-Nodes",
-      "PROXY-Gate",
+      
+      "🔘 PROXY-Gate",
       "DIRECT"
     ]
   });
@@ -430,8 +460,8 @@ function main(config) {
     "type": "select",
     "icon": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Amazon.png",
     "proxies": [
-      "🖥️ All-Nodes",
-      "PROXY-Gate",
+      
+      "🔘 PROXY-Gate",
       "DIRECT"
     ]
   });
@@ -442,8 +472,8 @@ function main(config) {
     "type": "select",
     "icon": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/X.png",
     "proxies": [
-      "🖥️ All-Nodes",
-      "PROXY-Gate",
+      
+      "🔘 PROXY-Gate",
       "DIRECT"
     ]
   });
@@ -453,8 +483,8 @@ function main(config) {
     "type": "select",
     "icon": "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/GitHub.png",
     "proxies": [
-      "🖥️ All-Nodes",
-      "PROXY-Gate",
+      
+      "🔘 PROXY-Gate",
       "DIRECT"
     ]
   });
@@ -464,15 +494,15 @@ function main(config) {
     "type": "select",
     "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Speedtest.png",
     "proxies": [
-      "🖥️ All-Nodes",
-      "PROXY-Gate",
+      
+      "🔘 PROXY-Gate",
       "DIRECT"
     ]
   });
 
 
   // ============================================================
-  // Fallback 策略组
+  // Fallback/Auto全地区策略组
   // ============================================================
 
   fixed["proxy-groups"].push({
@@ -692,13 +722,13 @@ function main(config) {
   const existingRegionalAutos = [];
 
   regionGroups.forEach(region => {
-    const matched = currentProxyNames.filter(
-      name => region.filter.test(name)
-    );
+    const matched = usableProxyNames.filter(
+  name => region.filter.test(name)
+  );
 
     const autoName = region.name + "-Auto";
 
-    // 现在只要有 1 个及以上节点，就生成该地区 Auto。
+    // 只要有 1 个及以上节点，就生成该地区 Auto组
     if (matched.length < 1) {
       return;
     }
@@ -720,9 +750,10 @@ function main(config) {
   // 4. 将实际存在的 Auto 组加入服务策略组
   //
   // 顺序固定为：
-  //
+  // 🔘 PROXY-Gate
   // 🖥️ All-Nodes
   // 🌍 Global-Fallback
+  // 🌍 Global-Auto
   // 🇺🇸 US-Auto
   // 🇸🇬 SG-Auto
   // ...
@@ -733,12 +764,12 @@ function main(config) {
   // ============================================================
 
   const serviceProxyChoices = [
-    "PROXY-Gate",
+    "🔘 PROXY-Gate",
     ...(existingRegionalAutos.length
       ? [
+          "🖥️ All-Nodes",
           "🌍 Global-Fallback",
-          "🌍 Global-Auto",
-          "🖥️ All-Nodes"
+          "🌍 Global-Auto"
          ]
       : []),
     ...existingRegionalAutos,
@@ -753,7 +784,7 @@ function main(config) {
     "Spotify",
     "TikTok",
     "Twitch",
-    "GPT",
+    "ChatGPT",
     "Gemini",
     "Claude",
     "Grok",
@@ -781,28 +812,29 @@ function main(config) {
   //
   // 顺序固定为：
   //
-  // 🖥️ All-Nodes
   // 🌍 Global-Fallback
+  // 🌍 Global-Auto
   // 🇺🇸 US-Auto
   // 🇸🇬 SG-Auto
   // ...
+  // 🖥️ All-Nodes
   // DIRECT
   // ============================================================
 
   const proxyGate = fixed["proxy-groups"].find(
-    group => group.name === "PROXY-Gate"
+    group => group.name === "🔘 PROXY-Gate"
   );
 
   if (proxyGate) {
     proxyGate.proxies = [
-      "🖥️ All-Nodes",
+      "🌍 Global-Fallback",
       ...(existingRegionalAutos.length
         ? [
-            "🌍 Global-Fallback",
-            "🌍 Global-Auto"
+            "🌍 Global-Auto",
            ]
         : []),
       ...existingRegionalAutos,
+      "🖥️ All-Nodes",
       "DIRECT"
     ];
   }
@@ -815,6 +847,8 @@ function main(config) {
   // Global-Fallback：跨地区故障转移
   // Global-Auto：跨地区自动测速，选择最快地区
   // ============================================================
+
+  // 更新 Fallback / Auto 组的地区节点引用
   // ============================================================
 
   const fallbackNames = [
@@ -868,18 +902,18 @@ function main(config) {
     "RULE-SET,ACL4SSR_BanProgramAD,REJECT",
     "RULE-SET,ACL4SSR_BanProgramAD_iP,REJECT",
     // 加密货币App
-    "DOMAIN-SUFFIX,aicoin.com,PROXY-Gate",
-    "DOMAIN-SUFFIX,coinbase.com,PROXY-Gate",
-    "DOMAIN-SUFFIX,binance.com,PROXY-Gate",
-    "DOMAIN-SUFFIX,kraken.com,PROXY-Gate",
-    "DOMAIN-SUFFIX,crypto.com,PROXY-Gate",
-    "DOMAIN-SUFFIX,okx.com,PROXY-Gate",
-    "DOMAIN-SUFFIX,bybit.com,PROXY-Gate",
-    "DOMAIN-SUFFIX,bitget.com,PROXY-Gate",
-    "DOMAIN-SUFFIX,metamask.io,PROXY-Gate",
-    "DOMAIN-SUFFIX,phantom.com,PROXY-Gate",
-    "DOMAIN-SUFFIX,trustwallet.com,PROXY-Gate",
-    "DOMAIN-SUFFIX,ledger.com,PROXY-Gate",
+    "DOMAIN-SUFFIX,aicoin.com,🔘 PROXY-Gate",
+    "DOMAIN-SUFFIX,coinbase.com,🔘 PROXY-Gate",
+    "DOMAIN-SUFFIX,binance.com,🔘 PROXY-Gate",
+    "DOMAIN-SUFFIX,kraken.com,🔘 PROXY-Gate",
+    "DOMAIN-SUFFIX,crypto.com,🔘 PROXY-Gate",
+    "DOMAIN-SUFFIX,okx.com,🔘 PROXY-Gate",
+    "DOMAIN-SUFFIX,bybit.com,🔘 PROXY-Gate",
+    "DOMAIN-SUFFIX,bitget.com,🔘 PROXY-Gate",
+    "DOMAIN-SUFFIX,metamask.io,🔘 PROXY-Gate",
+    "DOMAIN-SUFFIX,phantom.com,🔘 PROXY-Gate",
+    "DOMAIN-SUFFIX,trustwallet.com,🔘 PROXY-Gate",
+    "DOMAIN-SUFFIX,ledger.com,🔘 PROXY-Gate",
 
     // YouTube
     "DOMAIN-SUFFIX,youtube.com,YouTube",
@@ -926,22 +960,22 @@ function main(config) {
     "DOMAIN-SUFFIX,ttvnw.net,Twitch",
     "DOMAIN-SUFFIX,twitchsvc.net,Twitch",
 
-    // GPT
-    "RULE-SET,OpenAI_Domain,GPT",
-    "DOMAIN,cdn.openaimerge.com,GPT",
-    "DOMAIN,setup.auth.openai.com,GPT",
-    "DOMAIN,cdn.workos.com,GPT",
-    "DOMAIN,forwarder.workos.com,GPT",
-    "DOMAIN,images.workoscdn.com,GPT",
-    "DOMAIN,workos.imgix.net,GPT",
-    "DOMAIN,setup.workos.com,GPT",
-    "DOMAIN,ct.sendgrid.net,GPT",
-    "DOMAIN,oaistatsig.com,GPT",
-    "DOMAIN,rum.browser-intake-datadoghq.com,GPT",
-    "DOMAIN,challenges.cloudflare.com,GPT",
-    "DOMAIN-KEYWORD,openai,GPT",
-    "IP-CIDR,64.23.132.171/32,GPT",
-    "IP-ASN,20473,GPT",
+    // ChatGPT
+    "RULE-SET,OpenAI_Domain,ChatGPT",
+    "DOMAIN,cdn.openaimerge.com,ChatGPT",
+    "DOMAIN,setup.auth.openai.com,ChatGPT",
+    "DOMAIN,cdn.workos.com,ChatGPT",
+    "DOMAIN,forwarder.workos.com,ChatGPT",
+    "DOMAIN,images.workoscdn.com,ChatGPT",
+    "DOMAIN,workos.imgix.net,ChatGPT",
+    "DOMAIN,setup.workos.com,ChatGPT",
+    "DOMAIN,ct.sendgrid.net,ChatGPT",
+    "DOMAIN,oaistatsig.com,ChatGPT",
+    "DOMAIN,rum.browser-intake-datadoghq.com,ChatGPT",
+    "DOMAIN,challenges.cloudflare.com,ChatGPT",
+    "DOMAIN-KEYWORD,openai,ChatGPT",
+    "IP-CIDR,64.23.132.171/32,ChatGPT",
+    "IP-ASN,20473,ChatGPT",
 
     // Gemini
     "DOMAIN-SUFFIX,gemini.google.com,Gemini",
@@ -1077,7 +1111,7 @@ function main(config) {
     "GEOIP,CN,DIRECT,no-resolve",
 
     // 最终兜底
-    "MATCH,PROXY-Gate"
+    "MATCH,🔘 PROXY-Gate"
   ];
 
   // ============================================================
