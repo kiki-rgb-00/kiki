@@ -679,7 +679,7 @@ function main(config) {
     //以下规则为广告规则集误匹配
     "DOMAIN,hatch.metaaivm.com,Meta",
     "DOMAIN-SUFFIX,ilce.alicdn.com,DIRECT",
-
+    "DOMAIN-SUFFIX,geminiweb-pa.clients6.google.com,Gemini",
     // 广告 / 隐私
     "RULE-SET,Advertising,REJECT",
     "RULE-SET,Advertising_Domain,REJECT",
