@@ -893,7 +893,7 @@ function main(config) {
     //下方为广告/隐私规则集误拦截的规则
     "DOMAIN,hatch.metaaivm.com,Meta",
     "DOMAIN-SUFFIX,ilce.alicdn.com,DIRECT",
-
+    "DOMAIN-SUFFIX,geminiweb-pa.clients6.google.com,Gemini",
     // 广告 / 隐私
     "RULE-SET,Advertising,REJECT",
     "RULE-SET,Advertising_Domain,REJECT",
