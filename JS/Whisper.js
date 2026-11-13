@@ -962,6 +962,7 @@ function main(config) {
 
     // ChatGPT
     "RULE-SET,OpenAI_Domain,ChatGPT",
+    "DOMAIN-SUFFIX,chatgpt.com,ChatGPT",
     "DOMAIN,cdn.openaimerge.com,ChatGPT",
     "DOMAIN,setup.auth.openai.com,ChatGPT",
     "DOMAIN,cdn.workos.com,ChatGPT",
