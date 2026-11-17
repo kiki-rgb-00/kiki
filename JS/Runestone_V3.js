@@ -765,29 +765,23 @@ function main(config) {
     "IP-ASN,20473,ChatGPT",
 
     // Gemini
-    "DOMAIN-SUFFIX,gemini.google.com,Gemini",
-    "DOMAIN-SUFFIX,aistudio.google.com,Gemini",
-    "DOMAIN-SUFFIX,deepmind.com,Gemini",
-    "DOMAIN-SUFFIX,deepmind.google,Gemini",
+    "RULE-SET,Gemini,Gemini",
     "DOMAIN-SUFFIX,gemini.googleusercontent.com,Gemini",
-    "DOMAIN-SUFFIX,makersuite.google.com,Gemini",
 
     // Claude
+    "RULE-SET,Anthropic,Claude",
+    "RULE-SET,Anthropic_Domain,Claude",
+    "RULE-SET,Anthropic_IP,Claude",
     "DOMAIN-SUFFIX,claude.ai,Claude",
     "DOMAIN-SUFFIX,anthropic.com,Claude",
     "DOMAIN-SUFFIX,claudeusercontent.com,Claude",
     "DOMAIN-SUFFIX,claudeusercontent.com.cdn.cloudflare.net,Claude",
 
-    // ============================================================
+
     // Microsoft / Copilot
     //
     // Microsoft.mrs / Copilot_Domain.mrs / Copilot_IP.mrs
     // 统一进入 Microsoft 策略组。
-    //
-    // Microsoft.mrs 已经在构建阶段排除了 OneDrive、
-    // Outlook、PROCESS-NAME、DOMAIN-KEYWORD 等规则。
-    // ============================================================
-
     "RULE-SET,Copilot_Domain,Microsoft",
     "RULE-SET,Copilot_IP,Microsoft",
     "RULE-SET,Microsoft,Microsoft",
@@ -806,7 +800,8 @@ function main(config) {
     "RULE-SET,Apple_Domain,Apple",
 
     // Google
-    //"RULE-SET,Google_Domain,Google",
+    "RULE-SET,Google,Google",
+    "RULE-SET,Google_Domain,Google",
     "DOMAIN-KEYWORD,google,Google",
     "DOMAIN-SUFFIX,gmail.com,Google",
     "DOMAIN-SUFFIX,googleusercontent.com,Google",
@@ -849,13 +844,9 @@ function main(config) {
     "IP-CIDR,173.252.64.0/18,Meta,no-resolve",
 
     // Telegram
-    "DOMAIN-SUFFIX,telegram.org,Telegram",
-    "DOMAIN-SUFFIX,telegram.me,Telegram",
-    "DOMAIN-SUFFIX,t.me,Telegram",
-    "DOMAIN-SUFFIX,tdesktop.com,Telegram",
-    "DOMAIN-SUFFIX,telegra.ph,Telegram",
-    "DOMAIN-SUFFIX,telegram.dog,Telegram",
-
+    "RULE-SET,Telegram,Telegram",
+    "RULE-SET,Telegram_Domain,Telegram",
+    "RULE-SET,Telegram_IP,Telegram",
     "IP-CIDR,91.108.4.0/22,Telegram,no-resolve",
     "IP-CIDR,91.108.8.0/22,Telegram,no-resolve",
     "IP-CIDR,91.108.12.0/22,Telegram,no-resolve",
@@ -987,6 +978,54 @@ function main(config) {
       "url": "https://magicrule.pages.dev/data/_shared/artifacts/OpenAI_domain-mrs_fadf486f6b825017.mrs"
     },
 
+    "Anthropic": {
+      "type": "http",
+      "behavior": "classical",
+      "format": "yaml",
+      "interval": 86400,
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Anthropic_classical-rest_110041703b11ecf4.yaml"
+    },
+
+    "Anthropic_Domain": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Anthropic_domain-mrs_df6512db07edff18.mrs"
+    },
+
+    "Anthropic_IP": {
+      "type": "http",
+      "behavior": "ipcidr",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Anthropic_ipcidr-mrs_c7d968da97972833.mrs"
+    },
+
+    "Gemini": {
+      "type": "http",
+      "behavior": "classical",
+      "format": "yaml",
+      "interval": 86400,
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Gemini_classical_5cce94bda31ad8d5.yaml"
+    },
+
+    "Google": {
+      "type": "http",
+      "behavior": "classical",
+      "format": "yaml",
+      "interval": 86400,
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Google_classical-rest_bac5fc473d665b26.yaml"
+    },
+
+    "Google_Domain": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Google_domain-mrs_bf3ab049cabc9d56.mrs"
+    },
+
     "Amazon_Domain": {
       "type": "http",
       "behavior": "domain",
@@ -1090,6 +1129,31 @@ function main(config) {
       "interval": 86400,
       "url": "https://magicrule.pages.dev/data/_shared/artifacts/Whatsapp_domain-mrs_44f7a8ecf6dc7e33.mrs"
     },
+
+    "Telegram": {
+      "type": "http",
+      "behavior": "classical",
+      "format": "yaml",
+      "interval": 86400,
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Telegram_classical-rest_a10ac54bdba75cfe.yaml"
+    },
+
+    "Telegram_Domain": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Telegram_domain-mrs_da57f262d121afe2.mrs"
+    },
+
+    "Telegram_IP": {
+      "type": "http",
+      "behavior": "ipcidr",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Telegram_ipcidr-mrs_9f9c7386571fe662.mrs"
+    },
+
 
     "Emby": {
       "type": "http",
