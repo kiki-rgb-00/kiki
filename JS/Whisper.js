@@ -1,6 +1,6 @@
 /*
  * 服务分类配置｜Hako版
- * 11-9-2026
+ * 11-17-2026
  * Hako 会将当前选中的多个节点来源合并到 config.proxies。
  * 本脚本不依赖任何 proxy-providers 名称。
  *
