@@ -337,49 +337,49 @@ jobs:
             .tmp/rules/Emby_Domain.txt \
             MRS/Emby.mrs
 
+
       # =========================
-      # ChinaMax
-      # ChinaMax.yaml is kept as
-      # repository rule source.
+      # ChinaMax Domain
+      # Source: MetaCubeX/meta-rules-dat
       #
-      # Download upstream TXT files
-      # directly for MRS conversion.
+      # Download cn.yaml
+      # Remove BrowserLeaks
+      # Convert YAML -> MRS
       # =========================
 
       - name: Download ChinaMax Domain
         run: |
-          wget -O .tmp/rules/ChinaMax_Domain.txt \
-            https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMax/ChinaMax_Domain.txt
+          wget -O .tmp/rules/ChinaMax_Domain.yaml \
+            https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.yaml
 
       # =========================
       # Remove BrowserLeaks
-      #
-      # Keep BrowserLeaks excluded
-      # from ChinaMax Domain rules.
-      # The source TXT contains one
-      # domain per line.
+      # Preserve the original exclusion logic.
       # =========================
 
       - name: Remove BrowserLeaks from ChinaMax Domain
         run: |
           python - <<'PY'
           from pathlib import Path
+          import yaml
 
-          path = Path(".tmp/rules/ChinaMax_Domain.txt")
+          path = Path(".tmp/rules/ChinaMax_Domain.yaml")
           targets = {"browserleaks.com"}
 
-          lines = path.read_text(encoding="utf-8").splitlines()
+          data = yaml.safe_load(path.read_text(encoding="utf-8"))
+
+          if not isinstance(data, dict) or not isinstance(data.get("payload"), list):
+              raise ValueError("Unexpected ChinaMax YAML structure: payload list not found")
+
           output = []
           removed = []
 
-          for line in lines:
-              stripped = line.strip()
-
-              if not stripped or stripped.startswith("#"):
-                  output.append(line)
+          for rule in data["payload"]:
+              if not isinstance(rule, str):
+                  output.append(rule)
                   continue
 
-              domain = stripped.lower().rstrip(".")
+              domain = rule.strip().lower().rstrip(".")
 
               if domain.startswith("+."):
                   domain = domain[2:]
@@ -388,13 +388,19 @@ jobs:
                   domain == target or domain.endswith("." + target)
                   for target in targets
               ):
-                  removed.append(stripped)
+                  removed.append(rule)
                   continue
 
-              output.append(line)
+              output.append(rule)
+
+          data["payload"] = output
 
           path.write_text(
-              "\n".join(output) + "\n",
+              yaml.safe_dump(
+                  data,
+                  allow_unicode=True,
+                  sort_keys=False
+              ),
               encoding="utf-8"
           )
 
@@ -403,13 +409,19 @@ jobs:
               print(f"  REMOVE {rule}")
 
           print(f"Removed: {len(removed)}")
+          print(f"Remaining rules: {len(output)}")
           PY
+
+      # =========================
+      # Convert ChinaMax Domain
+      # YAML -> MRS
+      # =========================
 
       - name: Convert ChinaMax Domain
         run: |
           ./mihomo convert-ruleset \
-            domain text \
-            .tmp/rules/ChinaMax_Domain.txt \
+            domain yaml \
+            .tmp/rules/ChinaMax_Domain.yaml \
             MRS/ChinaMax_Domain.mrs
 
       # =========================
