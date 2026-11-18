@@ -1120,7 +1120,8 @@ function main(config) {
     "DOMAIN-SUFFIX,speedtestcustom.com,Speedtest",
 
     // 中国大陆
-    "GEOSITE,CN,DIRECT",
+    //"GEOSITE,CN,DIRECT",
+    "RULE-SET,ChinaMax_Domain,DIRECT",
     "GEOIP,CN,DIRECT,no-resolve",
 
     // 最终兜底
@@ -1200,6 +1201,14 @@ function main(config) {
       "format": "mrs",
       "interval": 86400,
       "url": "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/mrs/BanProgramAD_ip.mrs"
+    },
+
+    "ChinaMax_Domain": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/main/MRS/ChinaMax_Domain.mrs"
     },
 
     "OpenAI_Domain": {
