@@ -704,15 +704,40 @@ function main(config) {
     "DOMAIN-SUFFIX,ledger.com,🔘 PROXY-Gate",
 
     // YouTube
-    //"RULE-SET,YouTube_Domain,YouTube",
+    // YouTube 主站及地区域名
     "DOMAIN-SUFFIX,youtube.com,YouTube",
+    "DOMAIN-SUFFIX,youtube,YouTube",
     "DOMAIN-SUFFIX,youtu.be,YouTube",
-    "DOMAIN-SUFFIX,youtube-nocookie.com,YouTube",
+    "DOMAIN-SUFFIX,yt.be,YouTube",
+    // music.youtube.com 已由 youtube.com 覆盖
+    // YouTube 视频播放及 CDN
+    "DOMAIN-SUFFIX,googlevideo.com,YouTube",
+    "DOMAIN-SUFFIX,wide-youtube.l.google.com,YouTube",
+    "DOMAIN-SUFFIX,video.google.com,YouTube",
+    "DOMAIN-SUFFIX,yt-video-upload.l.google.com,YouTube",
+    // YouTube 图片、缩略图及头像
+    "DOMAIN-SUFFIX,ytimg.com,YouTube",
+    "DOMAIN-SUFFIX,ytimg.l.google.com,YouTube",
+    "DOMAIN-SUFFIX,ggpht.com,YouTube",
+    "DOMAIN-SUFFIX,ggpht.cn,YouTube",
+    "DOMAIN,yt3.ggpht.com,YouTube",
+    "DOMAIN,yt3.googleusercontent.com,YouTube",
+    // YouTube API
     "DOMAIN-SUFFIX,youtubei.googleapis.com,YouTube",
     "DOMAIN-SUFFIX,youtube.googleapis.com,YouTube",
-    "DOMAIN-SUFFIX,ytimg.com,YouTube",
-    "DOMAIN-SUFFIX,googlevideo.com,YouTube",
-    "DOMAIN-SUFFIX,ggpht.com,YouTube",
+    "DOMAIN-SUFFIX,youtubeembeddedplayer.googleapis.com,YouTube",
+    // YouTube 播放器及嵌入服务
+    "DOMAIN-SUFFIX,youtube-nocookie.com,YouTube",
+    "DOMAIN-SUFFIX,youtube-ui.l.google.com,YouTube",
+    "DOMAIN-SUFFIX,withyoutube.com,YouTube",
+    "DOMAIN-SUFFIX,youtubeeducation.com,YouTube",
+    // YouTube 其他服务
+    "DOMAIN-SUFFIX,youtubekids.com,YouTube",
+    "DOMAIN-SUFFIX,youtubegaming.com,YouTube",
+    "DOMAIN-SUFFIX,youtubefanfest.com,YouTube",
+    "DOMAIN-SUFFIX,youtubego.com,YouTube",
+    "DOMAIN-SUFFIX,youtubemobilesupport.com,YouTube",
+    "DOMAIN-SUFFIX,ads.youtube.com,YouTube",
 
     // Netflix
     "RULE-SET,Netflix,Netflix",
