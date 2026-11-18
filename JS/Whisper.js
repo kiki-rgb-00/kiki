@@ -1056,9 +1056,6 @@ function main(config) {
     "RULE-SET,Google,Google",
     "RULE-SET,Google_Domain,Google",
     "DOMAIN-KEYWORD,google,Google",
-    "DOMAIN-SUFFIX,gmail.com,Google",
-    "DOMAIN-SUFFIX,googleusercontent.com,Google",
-    "DOMAIN-SUFFIX,gstatic.com,Google",
     "DOMAIN-SUFFIX,googleapis.com,Google",
 
     // X
