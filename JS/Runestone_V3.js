@@ -680,6 +680,8 @@ function main(config) {
     "DOMAIN,hatch.metaaivm.com,Meta",
     "DOMAIN-SUFFIX,ilce.alicdn.com,DIRECT",
     "DOMAIN-SUFFIX,geminiweb-pa.clients6.google.com,Gemini",
+    //以下规则为修正部分规则集的误匹配
+    "DOMAIN-SUFFIX,doubao.com,DIRECT",
     // 广告 / 隐私
     "RULE-SET,Advertising,REJECT",
     "RULE-SET,Advertising_Domain,REJECT",
