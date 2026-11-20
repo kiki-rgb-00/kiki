@@ -949,11 +949,6 @@ function main(config) {
     "RULE-SET,Netflix,Netflix",
     "RULE-SET,Netflix_Domain,Netflix",
     "RULE-SET,Netflix_IP,Netflix",
-    "DOMAIN-KEYWORD,apiproxy-device-prod-nlb-,Netflix",
-    "DOMAIN-KEYWORD,dualstack.apiproxy-,Netflix",
-    "DOMAIN-KEYWORD,dualstack.ichnaea-web-,Netflix",
-    "DOMAIN-KEYWORD,netflixdnstest,Netflix",
-    "PROCESS-NAME,com.netflix.mediaclient,Netflix",
 
     // Disney+
     "RULE-SET,Disney_Domain,Disney+",
