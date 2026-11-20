@@ -944,6 +944,7 @@ function main(config) {
     "DOMAIN-SUFFIX,youtubego.com,YouTube",
     "DOMAIN-SUFFIX,youtubemobilesupport.com,YouTube",
     "DOMAIN-SUFFIX,ads.youtube.com,YouTube",
+
     // Netflix
     "RULE-SET,Netflix,Netflix",
     "RULE-SET,Netflix_Domain,Netflix",
@@ -953,16 +954,9 @@ function main(config) {
     "DOMAIN-KEYWORD,dualstack.ichnaea-web-,Netflix",
     "DOMAIN-KEYWORD,netflixdnstest,Netflix",
     "PROCESS-NAME,com.netflix.mediaclient,Netflix",
+
     // Disney+
-    "DOMAIN-SUFFIX,disneyplus.com,Disney+",
-    "DOMAIN-SUFFIX,disney-plus.net,Disney+",
-    "DOMAIN-SUFFIX,dssott.com,Disney+",
-    "DOMAIN-SUFFIX,dssedge.com,Disney+",
-    "DOMAIN-SUFFIX,bamgrid.com,Disney+",
-    "DOMAIN-SUFFIX,media.dssott.com,Disney+",
-    "DOMAIN-SUFFIX,disney.playback.edge.bamgrid.com,Disney+",
-    "DOMAIN-SUFFIX,star.playback.edge.bamgrid.com,Disney+",
-    "DOMAIN-SUFFIX,search-api-disney.bamgrid.com,Disney+",
+    "RULE-SET,Disney_Domain,Disney+",
 
     // Emby
     "RULE-SET,Emby,Emby",
@@ -974,11 +968,7 @@ function main(config) {
     "RULE-SET,TikTok_Domain,TikTok",
 
     // Twitch
-    "DOMAIN-SUFFIX,twitch.tv,Twitch",
-    "DOMAIN-SUFFIX,twitchcdn.net,Twitch",
-    "DOMAIN-SUFFIX,jtvnw.net,Twitch",
-    "DOMAIN-SUFFIX,ttvnw.net,Twitch",
-    "DOMAIN-SUFFIX,twitchsvc.net,Twitch",
+    "RULE-SET,Twitch_Domain,Twitch",
 
     // OpenAi ChatGPT
     "RULE-SET,OpenAI_Domain,ChatGPT",
@@ -1012,22 +1002,17 @@ function main(config) {
     "DOMAIN-SUFFIX,claudeusercontent.com.cdn.cloudflare.net,Claude",
 
     // Grok
-    "DOMAIN-SUFFIX,grok.com,Grok",
-    "DOMAIN-SUFFIX,x.ai,Grok",
-    "DOMAIN-KEYWORD,grok,Grok",
+    "RULE-SET,Grok_Domain,Grok",
 
     // Meta
     "RULE-SET,Facebook,Meta",
     "RULE-SET,Facebook_Domain,Meta",
     "RULE-SET,Instagram_Domain,Meta",
     "RULE-SET,WhatsApp_Domain,Meta",
-
     "DOMAIN-KEYWORD,whatsapp,Meta",
-
     "DOMAIN-SUFFIX,threads.com,Meta",
     "DOMAIN-SUFFIX,threads.net,Meta",
     "DOMAIN-SUFFIX,threadsusercontent.com,Meta",
-
     "DOMAIN-SUFFIX,meta.ai,Meta",
     "DOMAIN-SUFFIX,ai.meta.com,Meta",
     "DOMAIN-SUFFIX,muse.ai,Meta",
@@ -1038,16 +1023,7 @@ function main(config) {
     "IP-CIDR,173.252.64.0/18,Meta,no-resolve",
 
     // LINE
-    "DOMAIN-SUFFIX,line.me,LINE",
-    "DOMAIN-SUFFIX,line-apps.com,LINE",
-    "DOMAIN-SUFFIX,line-scdn.net,LINE",
-    "DOMAIN-SUFFIX,line.naver.jp,LINE",
-    "DOMAIN-SUFFIX,lin.ee,LINE",
-    "DOMAIN-SUFFIX,line.biz,LINE",
-    "DOMAIN-SUFFIX,linecorp.com,LINE",
-    "DOMAIN-SUFFIX,line-website.com,LINE",
-    "DOMAIN-SUFFIX,lineblog.me,LINE",
-    "DOMAIN-SUFFIX,linetoday.com,LINE",
+    "RULE-SET,Line_Domain,LINE",
 
     // Microsoft / Copilot
     "RULE-SET,Copilot_Domain,Microsoft",
@@ -1103,13 +1079,9 @@ function main(config) {
     "IP-CIDR6,2001:67c:4e8::/48,Telegram,no-resolve",
 
     // Github
+    "RULE-SET,GitHub_Domain,Github",
     "DOMAIN-SUFFIX,github.com,Github",
-    "DOMAIN-SUFFIX,githubusercontent.com,Github",
-    "DOMAIN-SUFFIX,githubassets.com,Github",
     "DOMAIN-SUFFIX,raw.githubusercontent.com,Github",
-    "DOMAIN-SUFFIX,github.io,Github",
-    "DOMAIN-SUFFIX,github.dev,Github",
-    "DOMAIN-SUFFIX,githubstatus.com,Github",
 
     // Speedtest
     "DOMAIN-SUFFIX,speedtest.net,Speedtest",
@@ -1394,6 +1366,46 @@ function main(config) {
       "format": "mrs",
       "interval": 86400,
       "url": "https://magicrule.pages.dev/data/_shared/artifacts/Telegram_ipcidr-mrs_9f9c7386571fe662.mrs"
+    },
+
+    "Grok_Domain": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Grok_domain-mrs_38856ec822fbcc6a.mrs"
+    },
+
+    "Disney_Domain": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Disney_domain-mrs_31cfeb93da298a54.mrs"
+    },
+
+    "Twitch_Domain": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Twitch_domain-mrs_449a5e8084acdd99.mrs"
+    },
+
+    "Line_Domain": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Line_domain-mrs_825f50af92b53c9a.mrs"
+    },
+
+    "GitHub_Domain": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://magicrule.pages.dev/data/_shared/artifacts/GitHub_domain-mrs_e6c22fb59671e56e.mrs"
     },
 
     "Emby": {
