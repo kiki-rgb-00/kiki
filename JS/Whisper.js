@@ -890,10 +890,12 @@ function main(config) {
     "IP-CIDR6,2403:300:a51::/48,Apple Push,no-resolve",
     "IP-CIDR6,2a01:b740:a42::/48,Apple Push,no-resolve",
 
-    //下方为广告/隐私规则集误拦截的规则
+    //下方为广告规则集误拦截的规则
     "DOMAIN,hatch.metaaivm.com,Meta",
     "DOMAIN-SUFFIX,ilce.alicdn.com,DIRECT",
     "DOMAIN-SUFFIX,geminiweb-pa.clients6.google.com,Gemini",
+    //下方为各类规则集误匹配规则
+    "DOMAIN-SUFFIX,doubao.com,DIRECT",
     // 广告 / 隐私
     "RULE-SET,Advertising,REJECT",
     "RULE-SET,Advertising_Domain,REJECT",
