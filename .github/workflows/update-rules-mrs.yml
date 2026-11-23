@@ -343,7 +343,7 @@ jobs:
       # Source: MetaCubeX/meta-rules-dat
       #
       # Download cn.yaml
-      # Remove BrowserLeaks
+      # Remove DNS/IP Leak Test Domains
       # Convert YAML -> MRS
       # =========================
 
@@ -353,18 +353,24 @@ jobs:
             https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.yaml
 
       # =========================
-      # Remove BrowserLeaks
+      # Remove DNS/IP Leak Test Domains
       # Preserve the original exclusion logic.
       # =========================
 
-      - name: Remove BrowserLeaks from ChinaMax Domain
+      - name: Remove DNS/IP Leak Test Domains from ChinaMax Domain
         run: |
           python - <<'PY'
           from pathlib import Path
           import yaml
 
           path = Path(".tmp/rules/ChinaMax_Domain.yaml")
-          targets = {"browserleaks.com"}
+
+          targets = {
+              "browserleaks.com",
+              "browserleaks.net",
+              "whoami.akamai.net",
+              "whatismyip.akamai.com",
+          }
 
           data = yaml.safe_load(path.read_text(encoding="utf-8"))
 
@@ -404,7 +410,7 @@ jobs:
               encoding="utf-8"
           )
 
-          print("Removed BrowserLeaks rules from ChinaMax:")
+          print("Removed DNS/IP Leak Test Domains from ChinaMax:")
           for rule in removed:
               print(f"  REMOVE {rule}")
 
