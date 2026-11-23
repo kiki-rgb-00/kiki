@@ -370,6 +370,7 @@ jobs:
               "browserleaks.net",
               "whoami.akamai.net",
               "whatismyip.akamai.com",
+              "stun.voip.blackberry.com",
           }
 
           data = yaml.safe_load(path.read_text(encoding="utf-8"))
