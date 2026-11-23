@@ -140,7 +140,7 @@ function main(config) {
           "120.53.53.53"
         ],
 
-        "geosite:cn": [
+        "rule-set:ChinaMax_Domain": [
           "https://dns.alidns.com/dns-query",
           "https://doh.pub/dns-query"
         ]
@@ -161,7 +161,7 @@ function main(config) {
       },
 
       "fake-ip-filter": [
-        "geosite:cn",
+        "rule-set:ChinaMax_Domain",
         "*.lan",
         "*.local",
         "localhost",
