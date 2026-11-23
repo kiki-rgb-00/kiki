@@ -83,7 +83,8 @@ function main(config) {
       "auto-detect-interface": true,
       "strict-route": true,
       "dns-hijack": [
-        "any:53"
+        "any:53",
+        "tcp://any:53"
       ]
     },
 
