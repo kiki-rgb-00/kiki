@@ -1028,7 +1028,6 @@ function main(config) {
 
     // Microsoft / Copilot
     "RULE-SET,Copilot_Domain,Microsoft",
-    "RULE-SET,Copilot_IP,Microsoft",
     "RULE-SET,Microsoft,Microsoft",
 
     // iCloud
@@ -1303,14 +1302,6 @@ function main(config) {
       "format": "mrs",
       "interval": 86400,
       "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Copilot_Domain.mrs"
-    },
-
-    "Copilot_IP": {
-      "type": "http",
-      "behavior": "ipcidr",
-      "format": "mrs",
-      "interval": 86400,
-      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Copilot_ipcidr-mrs_8f64d7506c0c44b1.mrs"
     },
 
     "Facebook": {
