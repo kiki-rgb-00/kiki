@@ -2,9 +2,10 @@
 # AUTHOR: OpenAI
 # DESCRIPTION: Douyin and related mainland China ByteDance services
 # BEHAVIOR: domain
-# DOMAIN: 287
+# DOMAIN: 268
 
 payload:
+  - '+.zjcdn.com'
   - '+.activity-wbsj.com'
   - '+.aihst8.com'
   - '+.amemv.cn'
