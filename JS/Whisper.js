@@ -1122,7 +1122,7 @@ function main(config) {
       "behavior": "domain",
       "format": "mrs",
       "interval": 86400,
-      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Apple_domain-mrs_7e2479ae82882b86.mrs"
+      "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple.mrs"
     },
 
     "iCloud": {
