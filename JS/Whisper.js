@@ -1030,6 +1030,7 @@ function main(config) {
     "RULE-SET,Line_Domain,LINE",
 
     // Microsoft / Copilot
+    "DOMAIN,res.public.onecdn.static.microsoft,Microsoft",
     "RULE-SET,Copilot_Domain,Microsoft",
     "RULE-SET,Microsoft,Microsoft",
 
