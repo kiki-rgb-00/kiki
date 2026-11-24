@@ -400,32 +400,6 @@ jobs:
 
           data["payload"] = output
 
-          # Check whether excluded domains are still covered
-          # by broader suffix rules.
-          print("\nChecking remaining rules that cover excluded domains:")
-
-          for target in sorted(targets):
-              covering = []
-
-              for rule in output:
-                  if not isinstance(rule, str):
-                      continue
-
-                  domain = rule.strip().lower().rstrip(".")
-
-                  if domain.startswith("+."):
-                      domain = domain[2:]
-
-                  if target == domain or target.endswith("." + domain):
-                      covering.append(rule)
-
-              if covering:
-                  print(f"  STILL COVERED: {target}")
-                  for rule in covering:
-                      print(f"    BY: {rule}")
-              else:
-                  print(f"  NOT COVERED: {target}")
-
           path.write_text(
               yaml.safe_dump(
                   data,
