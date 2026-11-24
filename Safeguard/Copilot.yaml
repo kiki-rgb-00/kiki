@@ -1,0 +1,115 @@
+# NAME: Copilot
+# AUTHOR: OpenAI
+# UPDATED: 2026-11-24
+# BEHAVIOR: domain
+# DESCRIPTION: Microsoft Copilot + GitHub Copilot
+#
+# MRS conversion source for Mihomo.
+# Convert with:
+#   mihomo convert-ruleset domain yaml Copilot.yaml Copilot.mrs
+#
+# Scope:
+#   - Microsoft Copilot
+#   - GitHub Copilot
+#
+# Intentionally excluded:
+#   - General Microsoft services already covered by the Microsoft rules
+#   - General GitHub services already covered by the GitHub rules
+#   - Other AI providers and AI coding products
+#   - Generic cloud/CDN/telemetry domains without a Copilot-specific purpose
+#
+# Rule conversion:
+#   DOMAIN,example.com        -> full:example.com
+#   DOMAIN-SUFFIX,example.com -> .example.com
+#
+# Notes:
+#   - .cloud.microsoft intentionally covers copilot.cloud.microsoft and
+#     Microsoft's broader cloud.microsoft Copilot endpoint family.
+#   - .githubcopilot.com covers plan-specific Copilot subdomains.
+#   - GitHub Copilot cloud-session WebSocket hosts are listed as exact domains.
+#   - General GitHub login/UI/static domains are omitted because the existing
+#     GitHub rule set already handles them.
+#   - Some Microsoft identity/profile endpoints are shared with other
+#     Microsoft products, but are listed in Microsoft's Copilot endpoint
+#     guidance.
+#
+# All entries below are Mihomo domain rules, suitable for domain MRS conversion.
+
+payload:
+  # =========================================================
+  # Microsoft Copilot - current service entry point
+  # =========================================================
+  - 'full:copilot.cloud.microsoft'
+  - '.cloud.microsoft'
+
+  # Legacy / consumer Copilot web service
+  - 'full:copilot.microsoft.com'
+  - 'full:sydney.bing.com'
+
+  # =========================================================
+  # Microsoft Copilot - app update and configuration
+  # =========================================================
+  - 'full:msedge.api.cdp.microsoft.com'
+  - 'full:config.edge.skype.com'
+
+  # Microsoft Copilot app download hosts
+  - 'full:msedge.f.tlu.dl.delivery.mp.microsoft.com'
+  - 'full:msedge.f.dl.delivery.mp.microsoft.com'
+  - 'full:msedge.b.tlu.dl.delivery.mp.microsoft.com'
+  - 'full:msedge.b.dl.delivery.mp.microsoft.com'
+  - 'full:msedge.sf.tlu.dl.delivery.mp.microsoft.com'
+  - 'full:msedge.sf.dl.delivery.mp.microsoft.com'
+  - 'full:msedge.sb.tlu.dl.delivery.mp.microsoft.com'
+  - 'full:msedge.sb.dl.delivery.mp.microsoft.com'
+
+  # =========================================================
+  # Microsoft Copilot - sign-in and profile dependencies
+  # Some endpoints are shared Microsoft identity / Microsoft 365 services.
+  # =========================================================
+  - 'full:login.live.com'
+  - 'full:login.microsoftonline.com'
+  - 'full:login.microsoft.com'
+  - 'full:login.windows.net'
+  - 'full:odc.officeapps.live.com'
+  - 'full:graph.microsoft.com'
+  - 'full:substrate.office.com'
+  - 'full:privacy.microsoft.com'
+  - 'full:cdn.odc.officeapps.live.com'
+  - 'full:logincdn.msauth.net'
+
+  # =========================================================
+  # GitHub Copilot - dedicated service endpoints
+  # =========================================================
+  - '.githubcopilot.com'
+  - 'full:copilot-proxy.githubusercontent.com'
+  - 'full:copilot-telemetry.githubusercontent.com'
+  - 'full:origin-tracker.githubusercontent.com'
+  - 'full:default.exp-tas.com'
+  - 'full:collector.github.com'
+  - 'full:copilot-reports.github.com'
+
+  # =========================================================
+  # GitHub Copilot - cloud session WebSocket endpoints
+  # Exact hosts documented by GitHub. Requires WSS over TCP/443.
+  # =========================================================
+  - 'full:production-copilot-host-centralus.webpubsub.azure.com'
+  - 'full:production-copilot-host-centralus-02.webpubsub.azure.com'
+  - 'full:production-copilot-host-eastasia.webpubsub.azure.com'
+  - 'full:production-copilot-host-austriaeast.webpubsub.azure.com'
+  - 'full:production-copilot-host-westus.webpubsub.azure.com'
+  - 'full:production-copilot-host-westus3.webpubsub.azure.com'
+  - 'full:production-copilot-host.webpubsub.azure.com'
+
+  # =========================================================
+  # OPTIONAL - Microsoft 365 Copilot WebSocket support
+  # Microsoft's guidance lists *.office.com for Microsoft 365 Copilot WSS.
+  # Left disabled because the existing Microsoft rules should cover it.
+  # =========================================================
+  # - '.office.com'
+
+  # =========================================================
+  # OPTIONAL - GitHub Copilot editor/client dependencies
+  # VS Code / Visual Studio may require their own product endpoints.
+  # Not included because they are not exclusive to Copilot and should be
+  # handled by existing Microsoft/GitHub or editor-specific rule sets.
+  # =========================================================
