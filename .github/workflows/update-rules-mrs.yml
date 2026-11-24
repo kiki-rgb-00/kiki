@@ -293,6 +293,19 @@ jobs:
             domain yaml \
             .tmp/rules/Copilot.yaml \
             MRS/Copilot_Domain.mrs
+
+      - name: Download ByteDance CN Rules
+        run: |
+          wget -O .tmp/rules/ByteDance_CN_Domain.yaml \
+            https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/Safeguard/ByteDance_CN_Domain.yaml
+
+      - name: Convert ByteDance CN Rules
+        run: |
+          ./mihomo convert-ruleset \
+            domain yaml \
+            .tmp/rules/ByteDance_CN_Domain.yaml \
+            MRS/ByteDance_CN_Domain.mrs
+
       # =========================
       # Emby
       #
