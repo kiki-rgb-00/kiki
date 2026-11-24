@@ -681,7 +681,8 @@ function main(config) {
     "DOMAIN-SUFFIX,ilce.alicdn.com,DIRECT",
     "DOMAIN-SUFFIX,geminiweb-pa.clients6.google.com,Gemini",
     //以下规则为修正部分规则集的误匹配
-    "DOMAIN-SUFFIX,doubao.com,DIRECT",
+
+
     // 广告 / 隐私
     "RULE-SET,Advertising,REJECT",
     "RULE-SET,Advertising_Domain,REJECT",
@@ -797,8 +798,8 @@ function main(config) {
     //
     // Microsoft.mrs / Copilot_Domain.mrs / Copilot_IP.mrs
     // 统一进入 Microsoft 策略组。
+    "DOMAIN,res.public.onecdn.static.microsoft,Microsoft",
     "RULE-SET,Copilot_Domain,Microsoft",
-    "RULE-SET,Copilot_IP,Microsoft",
     "RULE-SET,Microsoft,Microsoft",
 
     // Grok
@@ -910,7 +911,7 @@ function main(config) {
       "behavior": "domain",
       "format": "mrs",
       "interval": 86400,
-      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Apple_domain-mrs_7e2479ae82882b86.mrs"
+      "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple.mrs"
     },
 
     "iCloud": {
@@ -1092,15 +1093,7 @@ function main(config) {
       "behavior": "domain",
       "format": "mrs",
       "interval": 86400,
-      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Copilot_domain-mrs_5b77563f4d477ade.mrs"
-    },
-
-    "Copilot_IP": {
-      "type": "http",
-      "behavior": "ipcidr",
-      "format": "mrs",
-      "interval": 86400,
-      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Copilot_ipcidr-mrs_8f64d7506c0c44b1.mrs"
+      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Copilot_Domain.mrs"
     },
 
     "Facebook": {
