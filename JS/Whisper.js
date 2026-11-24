@@ -1302,7 +1302,7 @@ function main(config) {
       "behavior": "domain",
       "format": "mrs",
       "interval": 86400,
-      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Copilot_domain-mrs_5b77563f4d477ade.mrs"
+      "url": "https://raw.githubusercontent.com/kiki-rgb-00/kiki/refs/heads/main/MRS/Copilot_Domain.mrs"
     },
 
     "Copilot_IP": {
