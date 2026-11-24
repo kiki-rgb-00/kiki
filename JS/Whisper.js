@@ -900,7 +900,9 @@ function main(config) {
     "DOMAIN-SUFFIX,ilce.alicdn.com,DIRECT",
     "DOMAIN-SUFFIX,geminiweb-pa.clients6.google.com,Gemini",
     //下方为各类规则集误匹配规则
-    "DOMAIN-SUFFIX,doubao.com,DIRECT",
+
+
+
     // 广告 / 隐私
     "RULE-SET,Advertising,REJECT",
     "RULE-SET,Advertising_Domain,REJECT",
