@@ -1,22 +1,85 @@
+
 /*
- * 服务分类配置｜Hako版
- * App设置说明：
- * 1.使用覆写脚本后 请进入（工具）-（DNS查询）-清除两个缓存
- * 2.使用覆写脚本后 在（更多）-（VPN）里面打开（包括所有网络）
- * 3.在当前使用的勾选的配置里，请选择（默认规则）
- * 11-22-2026
- * Hako 会将当前选中的多个节点来源合并到 config.proxies。
- * 本脚本不依赖任何 proxy-providers 名称。
+ * ============================================================
+ * 服务分类 配置覆写脚本｜Clash Hako版
+ * ============================================================
+ * 【简介】
  *
- * 结构：
- * 1. 主策略组
- * 2. 普通服务策略组
- * 3. 根据实际节点动态生成地区 Auto
- * 4. APNs-Fallback
- * 5. Global-Fallback
- * 6. Rules
- * 7. Rule Providers
+ * 本脚基于Mihomo/部分Clash设计，通过覆写方式重新构建配置中的
+ * 策略组、分流规则及 DNS 设置。
+ * 脚本直接读取Clash Hako当前选中的所有节点来源，并根据节点名称
+ * 自动识别地区，动态生成对应的地区 Auto 策略组。
+ * 无需指定机场名称、订阅名称或 proxy-providers，
+ * 支持多个节点来源合并使用。
+ * ------------------------------------------------------------
+ * 【主要功能】
+ *
+ * 1. 动态节点识别
+ *    自动读取当前配置中的全部节点，根据节点名称识别地区，
+ *    仅生成实际存在节点的地区 Auto 组。
+ *
+ * 2. 服务分类管理
+ *    为 YouTube、Netflix、Disney+、Emby、Spotify、TikTok、
+ *    ChatGPT、Gemini、Claude、Grok、Meta、Telegram、
+ *    Microsoft、Google、Apple、iCloud 等服务建立独立策略组。
+ *
+ * 3. 全局自动与故障切换
+ *    PROXY-Gate：统一出口。
+ *    All-Nodes：手动选择全部可用节点。
+ *    Global-Auto：跨地区自动测速。
+ *    Global-Fallback：跨地区故障切换。
+ *    APNs-Fallback：Apple Push 地区故障切换。
+ *
+ * 4. DNS 与网络设置
+ *    内置 Fake-IP DNS、国内外 DoH 解析、备用 DNS、
+ *    DNS 劫持、TUN 及 IPv6 支持。
+ *
+ * 5. 分流规则与规则集
+ *    内置常用应用及服务分流规则，使用远程 Rule Providers
+ *    加载 少量YAML、大量MRS 等格式的规则集，更新间隔为24小时。
+ * ------------------------------------------------------------
+ * 【使用说明】
+ *
+ * 1. 在 Clash Hako 中选择需要使用的配置及节点来源。
+ * 2. 添加并启用本覆写脚本。
+ * 3. 使用脚本后，进入「工具」-「DNS 查询」，
+ *    分别清除 DNS 缓存及 Fake-IP 缓存。
+ * 4. 进入「更多」-「VPN」，建议开启「包括所有网络」。
+ * 5. 在当前使用的配置中选择「默认规则」。
+ *
+ * 【策略组使用】
+ *
+ * 日常使用：通过 PROXY-Gate 统一选择代理出口。
+ * 指定地区：选择对应地区的 Auto 策略组。
+ * 全局自动：选择 Global-Auto。
+ * 故障切换：选择 Global-Fallback。
+ * 手动选节点：通过 All-Nodes 选择具体节点。
+ * 直连：选择 DIRECT。
+ * ------------------------------------------------------------
+ * 【注意事项】
+ *
+ * 1. 地区 Auto 组根据节点名称识别，需要包含可识别的
+ *    国家或地区缩写、英文名称、中文名称或国旗标识。
+ *
+ * 2. 未识别到节点的地区不会生成对应的 Auto 策略组。
+ *
+ * 3. Hako 会将当前选中的多个节点来源合并到 config.proxies，
+ *    本脚本直接读取合并后的节点池，不依赖任何
+ *    proxy-providers 名称。
+ *
+ * 4. 本脚本会重新构建主要配置项目，包括代理组、规则、
+ *    规则集、DNS 及 TUN 设置，对应原有配置项目将被替换。
+ *
+ * 5. 远程规则集需要能够正常下载和更新，否则可能影响
+ *    对应服务的分流效果。
+ *
+ * 6. 实际使用效果取决于节点质量、网络环境及上游规则集。
+ *
+ * ============================================================
+ * 版本：11-22-2026
+ * ============================================================
  */
+
 
 function main(config) {
   // Hako 当前选中的所有机场节点都会合并到 config.proxies。
@@ -233,8 +296,8 @@ function main(config) {
   // ============================================================
   // 2. 普通服务策略组
   //
-  // 这里暂时只放 All-Nodes / PROXY-Gate / DIRECT。
-  // 后面检测完节点地区后，再把实际存在的 Auto 组插入。
+  // 暂时只放 PROXY-Gate / DIRECT。
+  // 后面检测完节点地区后，再把实际存在的其他组插入。
   //
   // ============================================================
 
@@ -360,7 +423,6 @@ function main(config) {
   });
 
   // ============================================================
-  //
   // Facebook / Instagram / Threads / Meta AI / Muse / WhatsApp
   // 统一使用 Meta 策略组。
   // ============================================================
@@ -400,7 +462,6 @@ function main(config) {
 
   // ============================================================
   // Microsoft
-  //
   // Microsoft / Copilot 共用 Microsoft 策略组。
   // ============================================================
 
@@ -443,7 +504,6 @@ function main(config) {
 
   // ============================================================
   // iCloud
-  //
   // 独立于 Apple 策略组。
   // 规则来源：
   // MRS/iCloud.mrs
@@ -759,13 +819,9 @@ function main(config) {
   // 🖥️ All-Nodes
   // 🌍 Global-Fallback
   // 🌍 Global-Auto
-  // 🇺🇸 US-Auto
   // 🇸🇬 SG-Auto
   // ...
-  // PROXY-Gate
   // DIRECT
-  //
-  // Global-Fallback 是用户主动选择的跨地区容灾模式。
   // ============================================================
 
   const serviceProxyChoices = [
@@ -813,13 +869,12 @@ function main(config) {
   });
 
   // ============================================================
-  // 5. PROXY-Gate
+  // 5. PROXY-Gate 总出口组
   //
   // 顺序固定为：
   //
   // 🌍 Global-Fallback
   // 🌍 Global-Auto
-  // 🇺🇸 US-Auto
   // 🇸🇬 SG-Auto
   // ...
   // 🖥️ All-Nodes
@@ -910,7 +965,7 @@ function main(config) {
     "RULE-SET,ACL4SSR_BanAD,REJECT",
     "RULE-SET,ACL4SSR_BanProgramAD,REJECT",
     "RULE-SET,ACL4SSR_BanProgramAD_iP,REJECT",
-    // 加密货币App
+    // 加密货币相关
     "DOMAIN-SUFFIX,aicoin.com,🔘 PROXY-Gate",
     "DOMAIN-SUFFIX,coinbase.com,🔘 PROXY-Gate",
     "DOMAIN-SUFFIX,binance.com,🔘 PROXY-Gate",
@@ -1067,6 +1122,7 @@ function main(config) {
     "DOMAIN-SUFFIX,pscp.tv,X",
     "DOMAIN-SUFFIX,periscope.tv,X",
     "DOMAIN-SUFFIX,twtrdns.net,X",
+
     // Telegram
     "RULE-SET,Telegram,Telegram",
     "RULE-SET,Telegram_Domain,Telegram",
