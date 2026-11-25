@@ -745,7 +745,6 @@ function main(config) {
     // Netflix
     "RULE-SET,Netflix,Netflix",
     "RULE-SET,Netflix_Domain,Netflix",
-    "RULE-SET,Netflix_IP,Netflix",
 
     // Disney+
     "RULE-SET,Disney_Domain,Disney+",
@@ -793,6 +792,10 @@ function main(config) {
     "DOMAIN-SUFFIX,claudeusercontent.com,Claude",
     "DOMAIN-SUFFIX,claudeusercontent.com.cdn.cloudflare.net,Claude",
 
+    // Github
+    "RULE-SET,GitHub_Domain,Github",
+    "DOMAIN-SUFFIX,github.com,Github",
+    "DOMAIN-SUFFIX,githubusercontent.com,Github",
 
     // Microsoft / Copilot
     //
@@ -871,11 +874,6 @@ function main(config) {
 
     // LINE
     "RULE-SET,Line_Domain,LINE",
-
-    // Github
-    "RULE-SET,GitHub_Domain,Github",
-    "DOMAIN-SUFFIX,github.com,Github",
-    "DOMAIN-SUFFIX,githubusercontent.com,Github",
 
     // Speedtest
     "DOMAIN-SUFFIX,speedtest.net,Speedtest",
@@ -1054,14 +1052,6 @@ function main(config) {
       "format": "mrs",
       "interval": 86400,
       "url": "https://magicrule.pages.dev/data/_shared/artifacts/Netflix_domain-mrs_e186b4515be192fe.mrs"
-    },
-
-    "Netflix_IP": {
-      "type": "http",
-      "behavior": "ipcidr",
-      "format": "mrs",
-      "interval": 86400,
-      "url": "https://magicrule.pages.dev/data/_shared/artifacts/Netflix_ipcidr-mrs_91e76c41ba675173.mrs"
     },
 
     "Spotify_Domain": {
