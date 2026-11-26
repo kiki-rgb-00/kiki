@@ -935,7 +935,7 @@ function main(config) {
 
     // Apple Push 必须在普通 Apple / iCloud 规则之前
     "DOMAIN-SUFFIX,push.apple.com,Apple Push",
-    "DOMAIN-SUFFIX,push-apple.com.akadns.net,Apple Push",
+    "DOMAIN-KEYWORD,push-apple.com.akadns.net,Apple Push",
     "DOMAIN-KEYWORD,apple.com.edgekey.net,Apple Push",
 
     "IP-CIDR,17.249.0.0/16,Apple Push,no-resolve",
